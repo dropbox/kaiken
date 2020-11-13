@@ -1,12 +1,8 @@
 package com.dropbox.kaiken.scoping
 
-import com.dropbox.common.inject.AUserScope
-import com.squareup.anvil.annotations.ContributesTo
-
 /**
  * Marker interface for object that can provide user scoped dependencies.
  */
-@ContributesTo(AUserScope::class)
 interface UserServices : Teardownable
 
 /**

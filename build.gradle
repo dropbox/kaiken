@@ -25,7 +25,7 @@ apply from: 'dependencies.gradle'
 apply plugin: 'binary-compatibility-validator'
 
 apiValidation {
-    // ignoredProjects += ["sample"]
+    ignoredProjects += ["sample"]
 }
 
 allprojects {
@@ -45,6 +45,16 @@ allprojects {
     // https://gist.github.com/artem-zinnatullin/4c250e04636e25797165
     tasks.withType(JavaForkOptions) {
         jvmArgs '-Djava.awt.headless=true'
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+        kotlinOptions {
+            jvmTarget = '1.8'
+            freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=compatibility']
+        }
     }
 }
 

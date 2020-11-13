@@ -1,8 +1,14 @@
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+}
 
 dependencies {
+    debugImplementation deps.androidx_fragment
     debugImplementation deps.appcompat
     debugImplementation deps.kotlinStdLib
     debugImplementation deps.javaxInject
