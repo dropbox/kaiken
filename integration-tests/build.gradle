@@ -1,0 +1,26 @@
+import dependencies.commonlibs
+import dependencies.testlibs
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    debugImplementation commonlibs.appcompat
+    debugImplementation commonlibs.kotlinStdLib
+    debugImplementation commonlibs.javaxInject
+
+    debugImplementation project(":common:kaiken:annotations")
+    debugImplementation project(":common:kaiken:runtime")
+
+    kaptDebug project(":common:kaiken:processor")
+
+    androidTestImplementation testlibs.androidx_test_core
+    androidTestImplementation testlibs.androidx_test_rules
+    androidTestImplementation testlibs.androidx_test_ext_junit
+    androidTestImplementation testlibs.testrunner
+    androidTestImplementation testlibs.truth
+
+    androidTestImplementation project(':common:kaiken-testing')
+    androidTestImplementation project(':common:test:runner')
+    androidTestImplementation project(':dbx:core:test:uidriver')
+}

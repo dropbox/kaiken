@@ -1,0 +1,19 @@
+<!--
+  ~ Copyright (c) 2020, Dropbox, Inc. All rights reserved.
+  -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity android:name="test.com.dropbox.kaiken.scoping.TestAuthRequiredActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false">
+        </activity>
+        <activity android:name="test.com.dropbox.kaiken.scoping.TestAuthOptionalActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false">
+        </activity>
+        <activity android:name="test.com.dropbox.kaiken.scoping.TestSimpleActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false">
+        </activity>
+    </application>
+</manifest>

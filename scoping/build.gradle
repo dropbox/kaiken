@@ -1,0 +1,31 @@
+import dependencies.commonlibs
+import dependencies.testlibs
+
+apply plugin: 'com.android.library'
+
+dependencies {
+    implementation commonlibs.androidx_fragment
+    implementation commonlibs.kotlinStdLib
+    implementation commonlibs.lifecycle_viewmodel
+    implementation project(':common:inject')
+
+    debugImplementation commonlibs.appcompat
+
+    testImplementation testlibs.kotlintestjunit
+    testImplementation testlibs.truth
+
+    androidTestImplementation project(':common:test:runner')
+    androidTestImplementation project(':dbx:core:test:uidriver')
+    androidTestImplementation testlibs.kotlintestjunit
+    androidTestImplementation testlibs.androidx_test_core
+    androidTestImplementation testlibs.androidx_test_rules
+    androidTestImplementation testlibs.truth
+}
+
+apply plugin: 'kotlin-android-extensions'
+
+// To use the @Parcelize annotation
+// https://blog.jetbrains.com/kotlin/2017/08/kotlin-1-1-4-is-out/
+androidExtensions {
+    experimental = true
+}
