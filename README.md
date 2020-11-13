@@ -14,26 +14,34 @@ Kaiken is composed of two libraries that can be used independetely of each other
 
 ### Kaiken guiding principles
 
-+ Support modules that be can be used by different Android apps
+**Support modules that be can be used by different Android apps**
 Every app should be able to declare a different set of user dependences. The implication of this is that there cannot be a single “UserServices” interface that the feature modules can rely on.  
 
+**Allow for a gradual migration**
+Allow adoptions feature by feature, instead of requiring a massive rearchitecture of the app.
 
-+ Allow for a gradual migration
-+ Support for multiple concurrent users (N users)
+**Support for multiple concurrent users (N users)**
 We need to allow multiple users to be logged in at the same time. While only one user will be an “active user” for UI purposes, we need to allow for other user's services to run on the background. 
-+ Support for modules that work in both Auth and NoAuth scenarios.
+
+**Support for modules that work in both Auth and NoAuth scenarios**
 The app could support features that can work in both authenticated and not authenticated scenarios (e.g. file previewing).
-+ Allow location of dependencies by top level UI components
+
+**Allow location of dependencies by top level UI components**
 - Location of app/global services and user scoped level services. 
 - Provide access to those services from Activities and Fragments.
-+ Isolation of user services 
+
+**Isolation of user services**
 We need to make sure that there's no possibility of code running under the wrong user. We need to maintain the current behavior of tearing down all user services as well as related UI when a user is logged out.
-+ Allow explicit teardown of services
+
+**Allow explicit teardown of services**
 We need to allow user services to expose “teardown” code. Code should be guaranteed to be called before the service is removed from memory. This allows for closing of streams and flushing of caches and queues.
-+ Compatible with open source UI Frameworks
-+ Do not marry the framework
+
+**Compatible with open source UI Frameworks**
+
+**Do not marry the framework**
 While we need to ensure compatibility with Dagger, given that it is the standard for Android Injection in Android. The common interfaces shouldn't be tied to it. It is OK to depend on the `@Inject` annotation (which is part of the Java Spec), but not on Dagger specific behavior.
-+ Composition over inheritance
+
+**Composition over inheritance**
 We will aim for a composition implementation that avoid base classes in favor of base interfaces.
 
 ### Kaiken non-goals
@@ -71,7 +79,7 @@ class MyActivity : AppCompatActivity, AuthRequiredActivity {
 }
 ```
 
-You'll notice that we're referencing a `MyActivitiDependencies` type. This is an interface that you should define for your "feature". In a world were we could expose constructors in Activities and Fragments, these would be parameters that those constructors would take. The feature doesn't really care were those dependencies come from, as long as they're satisfied. Going back to the example, the interface would be defines like this:
+You'll notice that we're referencing a `MyActivityDependencies` type. This is an interface that you should define for your "feature". In a world were we could expose constructors in Activities and Fragments, these would be parameters that those constructors would take. The feature doesn't really care were those dependencies come from, as long as they're satisfied. Going back to the example, the interface would be defines like this:
 
 ```
 interface MyActivityDependencies {
