@@ -1,25 +1,26 @@
-import dependencies.commonlibs
-import dependencies.testlibs
-
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+}
 
 dependencies {
-    implementation commonlibs.androidx_fragment
-    implementation commonlibs.kotlinStdLib
-    implementation commonlibs.lifecycle_viewmodel
-    implementation project(':common:inject')
+    implementation deps.androidx_fragment
+    implementation deps.kotlinStdLib
+    implementation deps.lifecycle_viewmodel
 
-    debugImplementation commonlibs.appcompat
+    debugImplementation deps.appcompat
 
-    testImplementation testlibs.kotlintestjunit
-    testImplementation testlibs.truth
+    testImplementation deps.kotlintestjunit
+    testImplementation deps.truth
 
-    androidTestImplementation project(':common:test:runner')
-    androidTestImplementation project(':dbx:core:test:uidriver')
-    androidTestImplementation testlibs.kotlintestjunit
-    androidTestImplementation testlibs.androidx_test_core
-    androidTestImplementation testlibs.androidx_test_rules
-    androidTestImplementation testlibs.truth
+    androidTestImplementation deps.androidx_test_runner
+    androidTestImplementation deps.kotlintestjunit
+    androidTestImplementation deps.androidx_test_core
+    androidTestImplementation deps.androidx_test_rules
+    androidTestImplementation deps.truth
 }
 
 apply plugin: 'kotlin-android-extensions'

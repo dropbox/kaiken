@@ -1,21 +1,18 @@
-import dependencies.commonlibs
-import dependencies.annotationprocessors
-
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-    implementation commonlibs.kotlinStdLib
+    implementation deps.kotlinStdLib
 
-    implementation project(":common:kaiken:annotations")
+    implementation project(":annotations")
 
-    implementation annotationprocessors.autoservice_annotations
-    kapt annotationprocessors.autoservice_processor
+    implementation deps.autoservice_annotations
+    kapt deps.autoservice_processor
 
-    implementation annotationprocessors.incap_annotations
-    kapt annotationprocessors.incap_processor
+    implementation deps.incap_annotations
+    kapt deps.incap_processor
 
-    implementation annotationprocessors.javapoet
-    implementation annotationprocessors.kotlinpoet
+    implementation deps.javapoet
+    implementation deps.kotlinpoet
 }

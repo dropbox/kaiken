@@ -1,0 +1,65 @@
+ext.versions = [
+        minSdk            : 16,
+        targetSdk         : 29,
+        compileSdk        : 29,
+        buildTools        : '29.0.3',
+        kotlin            : '1.4.10',
+        ktlint            : '0.39.0',
+
+        // Plugins
+        androidGradlePlugin         : '4.0.0',
+        dokkaGradlePlugin           : '0.10.0',
+        ktlintGradle                : '9.1.1',
+        spotlessGradlePlugin        : '3.26.1',
+        jacocoGradlePlugin          : '0.8.5',
+        binaryCompatibilityValidator: '0.2.3',
+        atomicFuPlugin              : '0.14.2',
+
+        // Other
+        javaxInject                 : '1',
+
+        // UI libraries
+        androidxFragment            : '1.2.5',
+        androidxAppCompat           : '1.1.0',
+        androidLifecycle            : '2.2.0',
+
+        // Annotation Processing
+        autoservice                 : '1.0-rc6',
+        incap                       : '0.2',
+        javapoet                    : '1.11.1',
+        kotlinpooet                 : '1.5.0',
+
+        // Testing
+        androidxTestCore            : '1.2.0',
+        androidxTestExtJunit        : '1.1.1',
+        junit                       : '4.13',
+        truth                       : '1.0',
+]
+
+ext.deps = [
+        // Other
+        kotlinStdLib                : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
+        javaxInject                 : "javax.inject:javax.inject:$versions.javaxInject",
+
+        // UI Libraries
+        androidx_fragment           : "androidx.fragment:fragment:$versions.androidxFragment",
+        appcompat                   : "androidx.appcompat:appcompat:$versions.androidxAppCompat",
+        lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
+
+        // Annotation Processing
+        autoservice_annotations     : "com.google.auto.service:auto-service-annotations:$versions.autoservice",
+        autoservice_processor       : "com.google.auto.service:auto-service:$versions.autoservice",
+        incap_annotations           : "net.ltgt.gradle.incap:incap:$versions.incap",
+        incap_processor             : "net.ltgt.gradle.incap:incap-processor:$versions.incap",
+        javapoet                    : "com.squareup:javapoet:$versions.javapoet",
+        kotlinpoet                  : "com.squareup:kotlinpoet:$versions.kotlinpooet",
+
+        // Testing
+        androidx_test_core          : "androidx.test:core:$versions.androidxTestCore",
+        androidx_test_rules         : "androidx.test:rules:$versions.androidxTestCore",
+        androidx_test_runner        : "androidx.test:runner:$versions.androidxTestCore",
+        androidx_test_ext_junit     : "androidx.test.ext:junit:$versions.androidxTestExtJunit",
+        junit                       : "org.apache.ant:ant-junit:$versions.junit",
+        kotlintestjunit             : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
+        truth                       : "com.google.truth:truth:$versions.truth",
+]

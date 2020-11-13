@@ -1,0 +1,7 @@
+include ':annotations'
+//include ':integration-tests'
+include ':processor'
+include ':runtime'
+include ':sample'
+include ':scoping'
+include ':testing'

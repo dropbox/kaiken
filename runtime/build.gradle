@@ -1,12 +1,10 @@
-import dependencies.commonlibs
-
-apply plugin: 'com.android.library'
+apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-    implementation commonlibs.kotlinStdLib
-    implementation commonlibs.androidx_fragment
-    implementation commonlibs.lifecycle_viewmodel
+    implementation deps.kotlinStdLib
+    implementation deps.androidx_fragment
+    implementation deps.lifecycle_viewmodel
 
-    implementation project(":common:kaiken:annotations")
+    implementation project(":annotations")
 }
