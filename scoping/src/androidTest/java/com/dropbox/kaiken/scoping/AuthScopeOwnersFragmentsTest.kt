@@ -51,7 +51,7 @@ class AuthScopeOwnersFragmentsTest {
     }
 
     @Test
-    @Ignore("MF-796")
+    @Ignore("Flake")
     fun givenAuthRequiredFragmentWithNoViewingSelectorThenActivityFinishesImmediately() {
         scenario = launchSimpleActivity()
 

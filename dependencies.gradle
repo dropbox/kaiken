@@ -1,7 +1,7 @@
 ext.versions = [
         minSdk            : 16,
-        targetSdk         : 29,
-        compileSdk        : 29,
+        targetSdk         : 30,
+        compileSdk        : 30,
         buildTools        : '29.0.3',
         kotlin            : '1.4.10',
         ktlint            : '0.39.0',

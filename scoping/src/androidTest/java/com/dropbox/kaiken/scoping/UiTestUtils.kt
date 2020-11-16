@@ -75,11 +75,13 @@ object UiTestUtils {
      * Throws an exception if called from the main thread.
      */
     private fun assertNotMainThread() {
-        check(Looper.getMainLooper() == Looper.myLooper()) { "Shouldn't be running on main thread" }
+        check(!isCurrentMainThread()) { "Shouldn't be running on main thread" }
     }
 
+    private fun isCurrentMainThread() = (Looper.getMainLooper() == Looper.myLooper())
+
     @JvmStatic
-    fun sleep(sleepTimeMillis: Long) {
+    private fun sleep(sleepTimeMillis: Long) {
         Espresso.onView(ViewMatchers.isRoot())
             .perform(
                 object : ViewAction {
