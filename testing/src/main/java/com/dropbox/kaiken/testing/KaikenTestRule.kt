@@ -1,4 +1,4 @@
-package com.dropbox.common.kaiken.testing
+package com.dropbox.kaiken.testing
 
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder

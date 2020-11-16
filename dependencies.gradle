@@ -32,7 +32,8 @@ ext.versions = [
         // Testing
         androidxTestCore            : '1.2.0',
         androidxTestExtJunit        : '1.1.1',
-        junit                       : '4.13',
+        espresso                    : '3.1.0',
+        junit                       : '1.8.4',
         truth                       : '1.0',
 ]
 
@@ -59,6 +60,7 @@ ext.deps = [
         androidx_test_rules         : "androidx.test:rules:$versions.androidxTestCore",
         androidx_test_runner        : "androidx.test:runner:$versions.androidxTestCore",
         androidx_test_ext_junit     : "androidx.test.ext:junit:$versions.androidxTestExtJunit",
+        espresso_core               : "androidx.test.espresso:espresso-core:$versions.espresso",
         junit                       : "org.apache.ant:ant-junit:$versions.junit",
         kotlintestjunit             : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
         truth                       : "com.google.truth:truth:$versions.truth",

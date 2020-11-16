@@ -2,7 +2,6 @@ package com.dropbox.kaiken.scoping
 
 import androidx.fragment.app.FragmentActivity
 import androidx.test.core.app.ActivityScenario
-import com.dropbox.core.test.uidriver.UiTestUtils
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test

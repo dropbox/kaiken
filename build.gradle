@@ -58,6 +58,25 @@ allprojects {
     }
 }
 
+subprojects { Project project ->
+    project.plugins.withId('com.android.library') {
+        project.android {
+            compileSdkVersion versions.compileSdk
+            buildToolsVersion versions.buildTools
+
+            defaultConfig {
+                minSdkVersion versions.minSdk
+                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            }
+
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
+        }
+    }
+}
+
 ext {
     // POM file
     GROUP = "com.dropbox.kaiken"
@@ -85,4 +104,8 @@ subprojects {
             target 'src/**/*.kt'
         }
     }
+}
+
+dependencies {
+
 }

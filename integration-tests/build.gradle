@@ -2,26 +2,22 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
-}
-
 dependencies {
-    debugImplementation deps.androidx_fragment
-    debugImplementation deps.appcompat
-    debugImplementation deps.kotlinStdLib
-    debugImplementation deps.javaxInject
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.kotlinStdLib
+    implementation deps.javaxInject
 
     debugImplementation project(":annotations")
     debugImplementation project(":runtime")
 
-    kapt project(":processor")
+    kaptDebug project(":processor")
 
     androidTestImplementation deps.androidx_test_core
     androidTestImplementation deps.androidx_test_ext_junit
     androidTestImplementation deps.androidx_test_rules
     androidTestImplementation deps.androidx_test_runner
+    androidTestImplementation deps.espresso_core
     androidTestImplementation deps.truth
 
     androidTestImplementation project(':testing')

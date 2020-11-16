@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.dropbox.core.test.uidriver.UiTestUtils
 import com.google.common.truth.Truth.assertThat
 import kotlin.test.Ignore
 import org.junit.After

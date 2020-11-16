@@ -1,16 +1,8 @@
 apply plugin: 'com.android.library'
-
-android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
-}
+apply plugin: 'kotlin-android'
 
 dependencies {
     implementation project(':runtime')
+    implementation deps.androidx_test_rules
     implementation deps.kotlinStdLib
-    implementation deps.junit
-
-    testImplementation deps.kotlintestjunit
-
-    androidTestImplementation deps.appcompat
 }

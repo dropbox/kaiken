@@ -1,15 +1,17 @@
 package com.dropbox.kaiken.integration_tests
 
 import androidx.test.core.app.ActivityScenario
-import com.dropbox.common.kaiken.testing.KaikenTestRule
-import com.dropbox.core.test.uidriver.UiTestUtils
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.testing.KaikenTestRule
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class TestKaikenTestRule {
     private var injectorHolderScenario: ActivityScenario<TestInjectorHolderActivity>? = null
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null

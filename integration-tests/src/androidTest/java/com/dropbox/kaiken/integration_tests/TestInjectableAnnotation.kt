@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.dropbox.core.test.uidriver.UiTestUtils
 import com.dropbox.kaiken.runtime.InjectorNotFoundException
 import com.google.common.truth.Truth.assertThat
 import java.lang.RuntimeException
