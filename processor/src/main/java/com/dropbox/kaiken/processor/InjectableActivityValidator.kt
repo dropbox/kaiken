@@ -17,21 +17,20 @@ internal class InjectableActivityValidator(
 
         return when {
             !typeElement.isPublic() -> {
-                messager.error(
-                    typeElement, "The class ${typeElement.qualifiedName} is not public")
+                messager.error(typeElement, "The class ${typeElement.qualifiedName} is not public")
                 false
             }
 
             typeElement.isAbstract() -> {
-                messager.error(
-                    typeElement, "The class ${typeElement.qualifiedName} is abstract")
+                messager.error(typeElement, "The class ${typeElement.qualifiedName} is abstract")
                 false
             }
 
             !typeElement.isAndroidActivity() -> {
                 messager.error(
                     typeElement,
-                    "The class ${typeElement.qualifiedName} is not an Android activity")
+                    "The class ${typeElement.qualifiedName} is not an Android activity"
+                )
                 messager.printMessage(Diagnostic.Kind.NOTE, typeElement.superclass.kind.name)
                 false
             }
@@ -40,7 +39,8 @@ internal class InjectableActivityValidator(
                 messager.error(
                     typeElement,
                     "The class ${typeElement.qualifiedName} does not implement" +
-                        " DependencyProviderResolver")
+                        " DependencyProviderResolver"
+                )
                 typeElement.interfaces.forEach {
                     messager.printMessage(Diagnostic.Kind.NOTE, it.kind.name)
                 }

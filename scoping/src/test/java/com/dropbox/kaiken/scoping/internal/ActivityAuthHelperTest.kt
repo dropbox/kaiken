@@ -5,8 +5,8 @@ import com.dropbox.kaiken.scoping.ScopedServicesProvider
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.google.common.truth.Truth.assertThat
-import kotlin.test.fail
 import org.junit.Test
+import kotlin.test.fail
 
 class ActivityAuthHelperTest {
     private val fakeScopedServicesProvider = FakeScopeServicesProvider()

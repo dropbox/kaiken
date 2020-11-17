@@ -42,9 +42,10 @@ private fun generateInjectorInterface(
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addParameter(
                     ParameterSpec.builder(
-                    TypeName.get(targetType),
-                        paramName)
-                    .build())
+                        TypeName.get(targetType),
+                        paramName
+                    ).build()
+                )
                 .build()
         ).build()
 }

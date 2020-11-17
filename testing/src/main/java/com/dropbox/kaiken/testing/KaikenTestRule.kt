@@ -4,8 +4,8 @@ import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.runtime.InternalKaikenApi
 import com.dropbox.kaiken.runtime.Kaiken
-import kotlin.reflect.KClass
 import org.junit.rules.ExternalResource
+import kotlin.reflect.KClass
 
 class KaikenTestRule : ExternalResource() {
     @OptIn(InternalKaikenApi::class)

@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Looper
 import android.view.View
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage

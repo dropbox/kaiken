@@ -6,6 +6,8 @@ import com.dropbox.kaiken.processor.internal.isAndroidActivity
 import com.dropbox.kaiken.processor.internal.isAndroidFragment
 import com.dropbox.kaiken.processor.internal.validateIsClass
 import com.google.auto.service.AutoService
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Filer
 import javax.annotation.processing.Messager
@@ -16,8 +18,6 @@ import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
-import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
-import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 
 @AutoService(Processor::class)
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
@@ -95,7 +95,8 @@ class InjectableProcessor : AbstractProcessor() {
                     messager.error(
                         typeElement,
                         "Only Android Activities or Fragments can be annotated with" +
-                            " ${Injectable::class.java.simpleName}")
+                            " ${Injectable::class.java.simpleName}"
+                    )
                 }
             }
         } catch (e: IllegalAccessException) {

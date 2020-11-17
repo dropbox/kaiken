@@ -59,7 +59,8 @@ internal class InjectableActivityWriter(
         activityType: TypeMirror
     ) {
         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-            pack, interfaceName, "activity", activityType)
+            pack, interfaceName, "activity", activityType
+        )
         interfaceFileSpec.writeTo(filer)
     }
 
@@ -69,7 +70,8 @@ internal class InjectableActivityWriter(
         activityType: TypeMirror
     ) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-            pack, interfaceName, activityType)
+            pack, interfaceName, activityType
+        )
 
         extensionFunctionFileSpec.writeTo(filer)
     }
@@ -80,7 +82,8 @@ internal class InjectableActivityWriter(
         activityType: TypeMirror
     ): FileSpec {
         val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
-            interfaceName, activityType)
+            interfaceName, activityType
+        )
 
         val fileBuilder = FileSpec.builder(pack, interfaceName)
 

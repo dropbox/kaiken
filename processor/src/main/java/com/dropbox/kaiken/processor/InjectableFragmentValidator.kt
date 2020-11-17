@@ -16,21 +16,20 @@ internal class InjectableFragmentValidator(
 
         return when {
             !typeElement.isPublic() -> {
-                messager.error(
-                    typeElement, "The class ${typeElement.qualifiedName} is not public")
+                messager.error(typeElement, "The class ${typeElement.qualifiedName} is not public")
                 false
             }
 
             typeElement.isAbstract() -> {
-                messager.error(
-                    typeElement, "The class ${typeElement.qualifiedName} is abstract")
+                messager.error(typeElement, "The class ${typeElement.qualifiedName} is abstract")
                 false
             }
 
             !typeElement.isAndroidFragment() -> {
                 messager.error(
                     typeElement,
-                    "The class ${typeElement.qualifiedName} is not an Android fragment")
+                    "The class ${typeElement.qualifiedName} is not an Android fragment"
+                )
                 messager.printMessage(Diagnostic.Kind.NOTE, typeElement.superclass.kind.name)
                 false
             }

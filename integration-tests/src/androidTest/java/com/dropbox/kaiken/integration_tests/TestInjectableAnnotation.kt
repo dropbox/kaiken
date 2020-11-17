@@ -6,10 +6,10 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.dropbox.kaiken.runtime.InjectorNotFoundException
 import com.google.common.truth.Truth.assertThat
-import java.lang.RuntimeException
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.RuntimeException
 
 @RunWith(AndroidJUnit4::class)
 class TestInjectableAnnotation {

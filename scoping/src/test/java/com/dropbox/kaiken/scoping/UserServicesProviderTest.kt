@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.scoping
 
 import com.google.common.truth.Truth.assertThat
-import kotlin.test.fail
 import org.junit.Test
+import kotlin.test.fail
 
 class UserServicesProviderTest {
     @Test

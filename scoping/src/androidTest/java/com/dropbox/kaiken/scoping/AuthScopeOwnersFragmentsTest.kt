@@ -5,12 +5,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.google.common.truth.Truth.assertThat
-import kotlin.test.Ignore
 import org.junit.After
 import org.junit.Test
 import test.com.dropbox.kaiken.scoping.TestAuthAwareFragment
 import test.com.dropbox.kaiken.scoping.TestAuthAwareScopedFragment
 import test.com.dropbox.kaiken.scoping.TestSimpleActivity
+import kotlin.test.Ignore
 
 class AuthScopeOwnersFragmentsTest {
     private lateinit var scenario: ActivityScenario<out TestSimpleActivity>
