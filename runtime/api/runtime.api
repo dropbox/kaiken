@@ -1,0 +1,48 @@
+public final class com/dropbox/kaiken/runtime/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/dropbox/kaiken/runtime/FragmentHelperKt {
+	public static final fun findInjector (Landroidx/fragment/app/Fragment;)Lcom/dropbox/kaiken/Injector;
+	public static final fun findInjectorHolder (Landroidx/fragment/app/Fragment;)Lcom/dropbox/kaiken/runtime/InjectorHolder;
+}
+
+public abstract interface class com/dropbox/kaiken/runtime/InjectorFactory {
+	public abstract fun createInjector ()Lcom/dropbox/kaiken/Injector;
+}
+
+public abstract interface class com/dropbox/kaiken/runtime/InjectorFactoryProvider {
+	public abstract fun getInjectorFactory ()Lcom/dropbox/kaiken/runtime/InjectorFactory;
+}
+
+public abstract interface class com/dropbox/kaiken/runtime/InjectorHolder : androidx/lifecycle/ViewModelStoreOwner, com/dropbox/kaiken/runtime/InjectorFactoryProvider {
+	public abstract fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+}
+
+public final class com/dropbox/kaiken/runtime/InjectorHolder$DefaultImpls {
+	public static fun locateInjector (Lcom/dropbox/kaiken/runtime/InjectorHolder;)Lcom/dropbox/kaiken/Injector;
+}
+
+public final class com/dropbox/kaiken/runtime/InjectorNotFoundException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/dropbox/kaiken/runtime/InjectorViewModel : androidx/lifecycle/ViewModel {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun getInjector ()Ljava/lang/Object;
+}
+
+public abstract interface annotation class com/dropbox/kaiken/runtime/InternalKaikenApi : java/lang/annotation/Annotation {
+}
+
+public final class com/dropbox/kaiken/runtime/Kaiken {
+	public static final field INSTANCE Lcom/dropbox/kaiken/runtime/Kaiken;
+	public final fun addInjectorFactoryOverride (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
+	public final fun clearAllInjectorFactoryOverrides ()V
+}
+

@@ -1,0 +1,6 @@
+public abstract interface class com/dropbox/kaiken/Injector {
+}
+
+public abstract interface annotation class com/dropbox/kaiken/annotation/Injectable : java/lang/annotation/Annotation {
+}
+

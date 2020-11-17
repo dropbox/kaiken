@@ -1,0 +1,14 @@
+public final class com/dropbox/kaiken/testing/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/dropbox/kaiken/testing/KaikenTestRule : org/junit/rules/ExternalResource {
+	public fun <init> ()V
+	public final fun setInjectorFactoryHolderOverrideFor (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
+}
+
