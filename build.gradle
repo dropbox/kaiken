@@ -79,26 +79,6 @@ subprojects { Project project ->
     }
 }
 
-ext {
-    // POM file
-    GROUP = "com.dropbox.kaiken"
-    VERSION_NAME = "1.0.2-SNAPSHOT"
-    POM_PACKAGING = "pom"
-    POM_DESCRIPTION = "Store4 is built with Kotlin Coroutines"
-
-    POM_URL = "https://github.com/dropbox/kaiken/"
-    POM_SCM_URL = "https://github.com/dropbox/Store/"
-    POM_SCM_CONNECTION = "scm:git:https://github.com/dropbox/kaiken.git"
-    POM_SCM_DEV_CONNECTION = "scm:git:git@github.com:dropbox/kaiken.git"
-
-    POM_LICENCE_NAME = "Apache License"
-    POM_LICENCE_URL = "http://www.apache.org/licenses/LICENSE-2.0"
-    POM_LICENCE_DIST = "repo"
-
-    POM_DEVELOPER_ID = "dropbox"
-    POM_DEVELOPER_NAME = "Dropbox"
-}
-
 subprojects {
     apply plugin: 'com.diffplug.gradle.spotless'
     spotless {
