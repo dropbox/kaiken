@@ -18,42 +18,42 @@ Kaiken is composed of two libraries that can be used independently of each other
 
 ## Kaiken guiding principles
 
-#####Support modules that be can be used by different apps
+##### Support modules that be can be used by different apps
 Every app should be able to declare a different set of user dependencies. The implication of this is that there cannot be a single *UserServices* interface that the feature modules can rely on.
 
-#####Allow for a gradual migration
+##### Allow for a gradual migration
 Allow adoption feature by feature, instead of requiring a massive rearchitecture of the app.
 
-#####Support for multiple concurrent users (N users)
+##### Support for multiple concurrent users (N users)
 We need to allow multiple users to be logged in at the same time. While only one user will be an “active user” for UI purposes, we need to allow for other user's services to run on the background.
 
-#####Support for modules that work in both Auth and NoAuth scenarios
+##### Support for modules that work in both Auth and NoAuth scenarios
 The app could support features that can work in both authenticated and not authenticated scenarios (e.g. file previewing).
 
-#####Allow location of dependencies by top-level UI components
+##### Allow location of dependencies by top-level UI components
 - Location of app/global services and user scoped level services.
 - Provide access to those services from Activities and Fragments.
 
-#####Isolation of user services
+##### Isolation of user services
 We need to make sure there's no possibility of code running under the wrong user.
 
-#####Allow explicit teardown of services
+##### Allow explicit teardown of services
 We need to allow user services to expose “teardown” code. Teardown code will be guaranteed to be called before the service is removed from memory. This allows for closing of streams and flushing of caches and queues.
 
-#####Compatible with open source UI Frameworks
+##### Compatible with open source UI Frameworks
 
-#####Do not marry the framework
+##### Do not marry the framework
 While we need to ensure compatibility with Dagger given that it is the standard for DI in Android. The common interfaces shouldn't be tied to it. It is OK to depend on the `@Inject` annotation (which is part of the Java Spec), but not on Dagger specific behavior.
 
-#####Composition over inheritance
+##### Composition over inheritance
 We will aim for a composition implementation that avoids base classes in favor of base interfaces.
 
 ## Kaiken non-goals
 + Dictate how initialization of Application Level Services should be performed
-#####Provide access to user dependencies below the fragment level
+##### Provide access to user dependencies below the fragment level
 While we will allow the immediate fragment children of activities to locate user dependencies. Location of dependencies below the fragment (i.e. views) is explicitly not addressed .
 
-#####Differentiation between background and foreground user services
+##### Differentiation between background and foreground user services
 There will be single unified user services. While it is up to the implementing app to define how the users services are initialized. So it can lazy initialize some of the services. We won't support the semantics of foreground vs background services.
 
 
@@ -171,14 +171,14 @@ class MyActivityComponent : MyActivityInjector {
 Unfortunately adding custom scopes in Hilt requires you to replicate the entire tree. Plus there's really not a good way of exposing user services for different applications. The user services of application A can be different from the user services of Application B. Passing a "UserManager" (that contains all possible user services) as a single dependency was not an option for us.
 
 
-### How to include in your project
+## How to include in your project
 
 Artifacts are hosted on **Maven Central**.
 
 ###### Latest version:
 
 ```groovy
-def kaiken_version = "1.0.0"
+def kaiken_version = "1.0.2"
 ```
 
 ###### Add the dependency to your `build.gradle`:
