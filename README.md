@@ -1,5 +1,9 @@
 # Kaiken
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/scoping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/scoping/)
+[![Build Status](https://travis-ci.org/dropbox/kaiken.svg?branch=master)](https://travis-ci.org/dropbox/kaiken)
+[![codecov](https://codecov.io/gh/dropbox/kaiken/branch/master/graph/badge.svg)](https://codecov.io/gh/dropbox/kaiken)
+
 Kaiken is a library and an annotation processor to facilitate management of dependencies in multi-app, multi-user and user optional Android environments.
 
 ## The problems:
