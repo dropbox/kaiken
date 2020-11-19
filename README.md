@@ -70,7 +70,7 @@ class MyActivity : AppCompatActivity, AuthRequiredActivity {
 
     @Override
     fun onCreate() {
-       if (finishIfInvalidAut()) {
+       if (finishIfInvalidAuth()) {
            return
        }
 
