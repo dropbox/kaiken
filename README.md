@@ -60,7 +60,7 @@ There will be single unified user services. While it is up to the implementing a
 ## Kaiken libraries
 ### Kaiken Scoping
 
-Let's say that you have an active you know always has to be run under a user scope (i.e. a user most be logged in to see that fragment). The activity requires two dependencies, an app scoped AppServiceFoo (e.g. network manager) and a user scoped UserServiceBar (e.g. user profile manager):
+Let's say that you have an activity you know always has to be run under a user scope (i.e. a user most be logged in to see that fragment). The activity requires two dependencies, an app scoped AppServiceFoo (e.g. network manager) and a user scoped UserServiceBar (e.g. user profile manager):
 
 ```kotlin
 class MyActivity : AppCompatActivity, AuthRequiredActivity {
