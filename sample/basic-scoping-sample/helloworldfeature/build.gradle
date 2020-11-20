@@ -1,0 +1,10 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+
+    implementation project(":scoping")
+}

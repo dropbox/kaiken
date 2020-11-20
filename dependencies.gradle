@@ -35,6 +35,9 @@ ext.versions = [
         espresso                    : '3.1.0',
         junit                       : '1.8.4',
         truth                       : '1.0',
+
+        // Samples
+        constraintLayout            : '2.0.4'
 ]
 
 ext.deps = [
@@ -64,4 +67,7 @@ ext.deps = [
         junit                       : "org.apache.ant:ant-junit:$versions.junit",
         kotlintestjunit             : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
         truth                       : "com.google.truth:truth:$versions.truth",
+
+        // Samples
+        constraint_layout           : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
 ]

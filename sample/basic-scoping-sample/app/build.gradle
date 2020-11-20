@@ -37,11 +37,16 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs += [
-                '-Xopt-in=kotlin.Experimental',
+            '-Xopt-in=kotlin.Experimental',
         ]
     }
 }
 
 dependencies {
-    
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+
+    implementation project(":scoping")
+    implementation project(":sample:basic-scoping-sample:helloworldfeature")
 }
