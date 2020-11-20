@@ -37,7 +37,9 @@ ext.versions = [
         truth                       : '1.0',
 
         // Samples
-        constraintLayout            : '2.0.4'
+        constraintLayout            : '2.0.4',
+        javaxInject                 : '1',
+        dagger2Version              : '2.27',
 ]
 
 ext.deps = [
@@ -69,5 +71,8 @@ ext.deps = [
         truth                       : "com.google.truth:truth:$versions.truth",
 
         // Samples
-        constraint_layout           : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+        constraint_layout           : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",
+        javax_inject                : "javax.inject:javax.inject:$versions.javaxInject",
+        dagger2                     : "com.google.dagger:dagger:$versions.dagger2Version",
+        dagger2_compiler            : "com.google.dagger:dagger-compiler:$versions.dagger2Version",
 ]

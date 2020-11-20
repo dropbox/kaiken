@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.basicscoping.helloworldfeatue
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import android.content.Context
 import android.os.Bundle
@@ -7,15 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.dropbox.kaiken.basic_scoping_sample.helloworldfeature.R
+import com.dropbox.kaiken.annotation.Injectable
+import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.runtime.InjectorHolder
+import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
+import javax.inject.Inject
 
-class HelloWorldFragment : Fragment(), AuthOptionalFragment {
+@Injectable
+class HelloWorldFragment : Fragment(), AuthOptionalFragment, InjectorHolder<HelloWorldInternalComponent> {
 
-    private lateinit var helloWorldMessageProvider: HelloWorldMessageProvider
-    private lateinit var timeMessageProvider: TimeMessageProvider
+    @Inject
+    lateinit var helloWorldMessageProvider: HelloWorldMessageProvider
+
+    @Inject
+    lateinit var timeMessageProvider: TimeMessageProvider
+
+    override fun getInjectorFactory(): InjectorFactory<HelloWorldInternalComponent> = daggerInjector()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,10 +34,7 @@ class HelloWorldFragment : Fragment(), AuthOptionalFragment {
             return
         }
 
-        val dependencies: HelloWorldDependencies = resolveDependencyProvider()
-
-        helloWorldMessageProvider = dependencies.helloWorldMessageProvider
-        timeMessageProvider = dependencies.timeMessageProvider
+        inject()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +46,7 @@ class HelloWorldFragment : Fragment(), AuthOptionalFragment {
         helloWorldTextView.text = helloWorldMessageProvider.sayHello()
         timeTextView.text = timeMessageProvider.tellTheTime()
 
-        return view;
+        return view
     }
 
     companion object {

@@ -8,3 +8,5 @@ include ':testing'
 // Samples
 include ':sample:basic-scoping-sample:app'
 include ':sample:basic-scoping-sample:helloworldfeature'
+include ':sample:sample-with-di:app'
+include ':sample:sample-with-di:helloworldfeature'

@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.basicscoping.helloworldfeatue
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 interface HelloWorldDependencies {
     val helloWorldMessageProvider: HelloWorldMessageProvider

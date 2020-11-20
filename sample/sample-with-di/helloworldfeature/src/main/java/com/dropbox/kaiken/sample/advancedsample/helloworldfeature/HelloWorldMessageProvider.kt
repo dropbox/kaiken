@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.basicscoping.helloworldfeatue
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 interface HelloWorldMessageProvider {
     fun sayHello(): String
