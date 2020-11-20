@@ -19,10 +19,10 @@ abstract class HelloWorldInternalComponent : HelloWorldFragmentInjector {
 fun DependencyProviderResolver.daggerInjector() =
     object : InjectorFactory<HelloWorldInternalComponent> {
         override fun createInjector() =
-            buildQuickShareInternalComponent(resolveDependencyProvider())
+            helloWorldInternalComponent(resolveDependencyProvider())
     }
 
-private fun buildQuickShareInternalComponent(
+private fun helloWorldInternalComponent(
     dependencies: HelloWorldDependencies
 ): HelloWorldInternalComponent = DaggerHelloWorldInternalComponent.factory().create(
     dependencies
