@@ -1,6 +1,6 @@
 # Kaiken
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/scoping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/scoping/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/kaiken-scoping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/kaiken-scoping/)
 [![Build Status](https://travis-ci.org/dropbox/kaiken.svg?branch=master)](https://travis-ci.org/dropbox/kaiken)
 [![codecov](https://codecov.io/gh/dropbox/kaiken/branch/master/graph/badge.svg)](https://codecov.io/gh/dropbox/kaiken)
 
