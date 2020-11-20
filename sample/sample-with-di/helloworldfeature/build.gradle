@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+    implementation deps.javax_inject
+
+    implementation project(":scoping")
+    implementation project(":annotations")
+
+    api project(":runtime")
+    kapt project(":processor")
+
+    implementation deps.dagger2
+    kapt deps.dagger2_compiler
+}
+
+kapt {
+    correctErrorTypes = true
+}
