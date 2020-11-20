@@ -39,7 +39,7 @@ class HelloWorldFragment : Fragment(), AuthOptionalFragment {
         helloWorldTextView.text = helloWorldMessageProvider.sayHello()
         timeTextView.text = timeMessageProvider.tellTheTime()
 
-        return view;
+        return view
     }
 
     companion object {

@@ -11,11 +11,11 @@ import com.dropbox.kaiken.scoping.UserServices
 
 class BasicKaikenSampleAppServices : AppServices, HelloWorldDependencies {
 
-    override val helloWorldMessageProvider: HelloWorldMessageProvider
-        = RealWorldMessageProvider("Hello world!")
+    override val helloWorldMessageProvider: HelloWorldMessageProvider =
+        RealWorldMessageProvider("Hello world!")
 
-    override val timeMessageProvider: TimeMessageProvider
-        = RealTimeMessageProvider()
+    override val timeMessageProvider: TimeMessageProvider =
+        RealTimeMessageProvider()
 
     override fun getTeardownHelper(): TeardownHelper = NOOP_TEARDOWNHELPER
 }
@@ -25,18 +25,17 @@ class BasicKaikenSampleUserServices(
     appServices: BasicKaikenSampleAppServices
 ) : UserServices, HelloWorldDependencies {
 
-    override val helloWorldMessageProvider: HelloWorldMessageProvider
-        = RealWorldMessageProvider("Hello ${userProfile.name}!")
+    override val helloWorldMessageProvider: HelloWorldMessageProvider =
+        RealWorldMessageProvider("Hello ${userProfile.name}!")
 
-    override val timeMessageProvider: TimeMessageProvider
-        = appServices.timeMessageProvider
+    override val timeMessageProvider: TimeMessageProvider =
+        appServices.timeMessageProvider
 
     override fun getTeardownHelper(): TeardownHelper = NOOP_TEARDOWNHELPER
 }
 
-
 // You can implement your own teardown logic here.
-private val NOOP_TEARDOWNHELPER = object: TeardownHelper {
+private val NOOP_TEARDOWNHELPER = object : TeardownHelper {
     override fun teardown() {
         // No op
     }

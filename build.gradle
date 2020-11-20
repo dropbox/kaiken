@@ -26,7 +26,10 @@ apply from: 'dependencies.gradle'
 apply plugin: 'binary-compatibility-validator'
 
 apiValidation {
-    ignoredProjects += ["sample", "integration-tests", "processor"]
+    ignoredProjects += [
+        "integration-tests", "processor",
+        "sample", "basic-scoping-sample", "sample-with-di", "app", "helloworldfeature"
+    ]
 }
 
 allprojects {

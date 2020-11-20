@@ -39,12 +39,12 @@ interface CoreAppServices {
 object UserServicesModule {
     @Provides
     @UserScope
-    fun provideHelloWorldMessageProvider(userProfile: UserProfile): HelloWorldMessageProvider
-        = RealWorldMessageProvider("Hello ${userProfile.name}!")
+    fun provideHelloWorldMessageProvider(userProfile: UserProfile): HelloWorldMessageProvider =
+        RealWorldMessageProvider("Hello ${userProfile.name}!")
 }
 
 // You can implement your own teardown logic here.
-private val NOOP_TEARDOWNHELPER = object: TeardownHelper {
+private val NOOP_TEARDOWNHELPER = object : TeardownHelper {
     override fun teardown() {
         // No op
     }

@@ -7,14 +7,14 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldFrag
 import com.dropbox.kaiken.sample_with_di.app.R
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 
-
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mainactivity);
+        setContentView(R.layout.mainactivity)
 
         val fragment = HelloWorldFragment.newInstance(
-            ViewingUserSelector.fromUserId("awesome_user"))
+            ViewingUserSelector.fromUserId("awesome_user")
+        )
 
         val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
         trans.add(R.id.frag_container, fragment)

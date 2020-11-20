@@ -21,8 +21,7 @@ abstract class AdvancedKaikenSampleAppServices : AppServices, HelloWorldDependen
 
     @Component.Factory
     interface Factory {
-        fun create(
-        ): AdvancedKaikenSampleAppServices
+        fun create(): AdvancedKaikenSampleAppServices
     }
 
     override fun getTeardownHelper(): TeardownHelper = NOOP_TEARDOWNHELPER
@@ -32,8 +31,8 @@ abstract class AdvancedKaikenSampleAppServices : AppServices, HelloWorldDependen
 object AppServicesModule {
     @Provides
     @AppScope
-    fun provideHelloWorldMessageProvider(): HelloWorldMessageProvider
-        = RealWorldMessageProvider("Hello world!")
+    fun provideHelloWorldMessageProvider(): HelloWorldMessageProvider =
+        RealWorldMessageProvider("Hello world!")
 
     @Provides
     @AppScope
@@ -41,7 +40,7 @@ object AppServicesModule {
 }
 
 // You can implement your own teardown logic here.
-private val NOOP_TEARDOWNHELPER = object: TeardownHelper {
+private val NOOP_TEARDOWNHELPER = object : TeardownHelper {
     override fun teardown() {
         // No op
     }
