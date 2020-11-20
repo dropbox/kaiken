@@ -115,9 +115,9 @@ import com.dropbox.kaiken.annotations.Injectable
 @Injectable
 class MyActivity : AppCompatActivity, AuthRequiredActivity, InjectorHolder<MyActivityInjector> {
 
-    @Injectable lateinit var appServiceFoo: AppServiceFoo
-    @Injectable lateinit var userServiceBar: UserServiceBar
-    @Injectable lateinit var featureServiceBaz: featuerServiceBaz
+    @Inject lateinit var appServiceFoo: AppServiceFoo
+    @Inject lateinit var userServiceBar: UserServiceBar
+    @Inject lateinit var featureServiceBaz: featuerServiceBaz
 
     @Override
     fun onCreate() {
