@@ -17,8 +17,7 @@ class TestKaikenTestRule {
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
 
     @get:Rule
-    var kaikenTestRule: KaikenTestRule = KaikenTestRule(TestInjectorHolderActivity::class,
-        OverriddenInjectorFactory())
+    var kaikenTestRule: KaikenTestRule = KaikenTestRule(TestInjectorHolderActivity::class, OverriddenInjectorFactory())
 
     @Before
     fun setup() {

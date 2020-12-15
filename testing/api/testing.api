@@ -9,6 +9,7 @@ public final class com/dropbox/kaiken/testing/BuildConfig {
 
 public final class com/dropbox/kaiken/testing/KaikenTestRule : org/junit/rules/ExternalResource {
 	public fun <init> ()V
+	public fun <init> (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
 	public final fun setInjectorFactoryHolderOverrideFor (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
 }
 
