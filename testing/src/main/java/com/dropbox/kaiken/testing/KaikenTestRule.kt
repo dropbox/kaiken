@@ -7,7 +7,15 @@ import com.dropbox.kaiken.runtime.Kaiken
 import org.junit.rules.ExternalResource
 import kotlin.reflect.KClass
 
-class KaikenTestRule : ExternalResource() {
+class KaikenTestRule() : ExternalResource() {
+    constructor(injectorHolderKClass: KClass<out InjectorHolder<*>>, injectorFactory: InjectorFactory<*>) : this() {
+        this.injectorHolderKClass = injectorHolderKClass
+        this.injectorFactory = injectorFactory
+    }
+
+    private lateinit var injectorHolderKClass: KClass<out InjectorHolder<*>>
+    private lateinit var injectorFactory: InjectorFactory<*>
+
     @OptIn(InternalKaikenApi::class)
     fun setInjectorFactoryHolderOverrideFor(
         injectorHolderKClass: KClass<out InjectorHolder<*>>,
@@ -18,13 +26,14 @@ class KaikenTestRule : ExternalResource() {
 
     @OptIn(InternalKaikenApi::class)
     override fun before() {
-        super.after()
         Kaiken.clearAllInjectorFactoryOverrides()
+        if (::injectorHolderKClass.isInitialized && ::injectorFactory.isInitialized) {
+            Kaiken.addInjectorFactoryOverride(injectorHolderKClass, injectorFactory)
+        }
     }
 
     @OptIn(InternalKaikenApi::class)
     override fun after() {
-        super.after()
         Kaiken.clearAllInjectorFactoryOverrides()
     }
 }
