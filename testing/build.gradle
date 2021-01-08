@@ -4,6 +4,9 @@ apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
     implementation project(':runtime')
+    implementation project(':scoping')
+    implementation deps.androidx_fragment
     implementation deps.androidx_test_rules
+    implementation deps.appcompat
     implementation deps.kotlinStdLib
 }

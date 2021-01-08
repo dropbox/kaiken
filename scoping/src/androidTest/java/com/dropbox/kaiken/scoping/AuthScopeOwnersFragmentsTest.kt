@@ -7,9 +7,9 @@ import androidx.test.core.app.ActivityScenario
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
-import test.com.dropbox.kaiken.scoping.TestAuthAwareFragment
-import test.com.dropbox.kaiken.scoping.TestAuthAwareScopedFragment
-import test.com.dropbox.kaiken.scoping.TestSimpleActivity
+import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
+import test.com.dropbox.kaiken.testing.TestAuthAwareScopedFragment
+import test.com.dropbox.kaiken.testing.TestSimpleActivity
 import kotlin.test.Ignore
 
 class AuthScopeOwnersFragmentsTest {

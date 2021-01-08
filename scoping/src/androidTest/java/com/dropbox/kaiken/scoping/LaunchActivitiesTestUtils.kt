@@ -3,10 +3,10 @@ package com.dropbox.kaiken.scoping
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import test.com.dropbox.kaiken.scoping.TestAuthAwareScopedActivity
-import test.com.dropbox.kaiken.scoping.TestAuthOptionalActivity
-import test.com.dropbox.kaiken.scoping.TestAuthRequiredActivity
-import test.com.dropbox.kaiken.scoping.TestSimpleActivity
+import test.com.dropbox.kaiken.testing.TestAuthAwareScopedActivity
+import test.com.dropbox.kaiken.testing.TestAuthOptionalActivity
+import test.com.dropbox.kaiken.testing.TestAuthRequiredActivity
+import test.com.dropbox.kaiken.testing.TestSimpleActivity
 
 internal fun launchAuthRequiredActivity(
     callFinishIfInvalidAuth: Boolean = true,
