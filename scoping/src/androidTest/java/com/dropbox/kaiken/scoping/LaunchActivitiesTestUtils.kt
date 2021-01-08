@@ -4,9 +4,9 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import test.com.dropbox.kaiken.testing.TestAuthAwareScopedActivity
+import test.com.dropbox.kaiken.testing.TestAuthOptionalActivity
 import test.com.dropbox.kaiken.testing.TestAuthRequiredActivity
 import test.com.dropbox.kaiken.testing.TestSimpleActivity
-import test.com.dropbox.kaiken.testing.TestAuthOptionalActivity
 
 internal fun launchAuthRequiredActivity(
     callFinishIfInvalidAuth: Boolean = true,
