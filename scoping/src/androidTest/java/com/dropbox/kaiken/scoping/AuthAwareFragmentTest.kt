@@ -5,8 +5,8 @@ import androidx.test.core.app.ActivityScenario
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Test
-import test.com.dropbox.kaiken.scoping.TestAuthAwareFragment
-import test.com.dropbox.kaiken.scoping.TestAuthAwareScopedActivity
+import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
+import test.com.dropbox.kaiken.testing.TestAuthAwareScopedActivity
 
 class AuthAwareFragmentTest {
     lateinit var scenario: ActivityScenario<out TestAuthAwareScopedActivity>

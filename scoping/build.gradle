@@ -18,6 +18,8 @@ dependencies {
     androidTestImplementation deps.androidx_test_rules
     androidTestImplementation deps.espresso_core
     androidTestImplementation deps.truth
+    androidTestImplementation project(':testing')
+
 }
 
 apply plugin: 'kotlin-android-extensions'

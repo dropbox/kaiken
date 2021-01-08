@@ -3,15 +3,15 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <activity android:name="test.com.dropbox.kaiken.scoping.TestAuthRequiredActivity"
+        <activity android:name="test.com.dropbox.kaiken.testing.TestAuthRequiredActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false">
         </activity>
-        <activity android:name="test.com.dropbox.kaiken.scoping.TestAuthOptionalActivity"
+        <activity android:name="test.com.dropbox.kaiken.testing.TestAuthOptionalActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false">
         </activity>
-        <activity android:name="test.com.dropbox.kaiken.scoping.TestSimpleActivity"
+        <activity android:name="test.com.dropbox.kaiken.testing.TestSimpleActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false">
         </activity>

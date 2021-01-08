@@ -3,11 +3,11 @@ package com.dropbox.kaiken.scoping
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
-import test.com.dropbox.kaiken.scoping.TestActivity
-import test.com.dropbox.kaiken.scoping.TestAuthAwareFragment
-import test.com.dropbox.kaiken.scoping.TestAuthAwareScopedFragment
-import test.com.dropbox.kaiken.scoping.TestAuthOptionalFragment
-import test.com.dropbox.kaiken.scoping.TestAuthRequiredFragment
+import test.com.dropbox.kaiken.testing.TestActivity
+import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
+import test.com.dropbox.kaiken.testing.TestAuthAwareScopedFragment
+import test.com.dropbox.kaiken.testing.TestAuthOptionalFragment
+import test.com.dropbox.kaiken.testing.TestAuthRequiredFragment
 
 internal const val FRAGMENT_TAG = "AUTH_AWARE_FRAGMENT"
 internal const val CHILD_FRAGMENT_TAG = "CHILD_AUTH_AWARE_FRAGMENT"

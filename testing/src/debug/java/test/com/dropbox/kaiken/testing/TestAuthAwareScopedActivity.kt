@@ -1,4 +1,4 @@
-package test.com.dropbox.kaiken.scoping
+package test.com.dropbox.kaiken.testing
 
 import android.os.Bundle
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity

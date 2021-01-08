@@ -1,4 +1,4 @@
-package test.com.dropbox.kaiken.scoping
+package test.com.dropbox.kaiken.testing
 
 import com.dropbox.kaiken.scoping.AuthOptionalActivity
 

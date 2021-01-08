@@ -6,10 +6,10 @@ import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import test.com.dropbox.kaiken.scoping.MyDependencies
-import test.com.dropbox.kaiken.scoping.TestApplicationContext
-import test.com.dropbox.kaiken.scoping.TestAuthOptionalBroadcastReceiver
-import test.com.dropbox.kaiken.scoping.TestAuthRequiredBroadcastReceiver
+import test.com.dropbox.kaiken.testing.MyDependencies
+import test.com.dropbox.kaiken.testing.TestAuthOptionalBroadcastReceiver
+import test.com.dropbox.kaiken.testing.TestAuthRequiredBroadcastReceiver
+import test.com.dropbox.kaiken.testing.TestApplicationContext
 
 class AuthAwareBroadcastReceiverTest {
     @Test
