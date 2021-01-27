@@ -10,6 +10,7 @@ import org.junit.Test
 import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
 import test.com.dropbox.kaiken.testing.TestAuthAwareScopedFragment
 import test.com.dropbox.kaiken.testing.TestSimpleActivity
+import test.com.dropbox.kaiken.testing.launchSimpleActivity
 import kotlin.test.Ignore
 
 class AuthScopeOwnersFragmentsTest {

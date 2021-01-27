@@ -9,4 +9,5 @@ dependencies {
     implementation deps.androidx_test_rules
     implementation deps.appcompat
     implementation deps.kotlinStdLib
+    debugImplementation deps.androidx_test_core
 }

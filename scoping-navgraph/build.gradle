@@ -11,12 +11,13 @@ dependencies {
 
     debugImplementation deps.appcompat
 
-    androidTestImplementation deps.androidx_test_core
-    androidTestImplementation deps.androidx_test_ext_junit
-    androidTestImplementation deps.androidx_test_rules
     androidTestImplementation deps.androidx_test_runner
+    androidTestImplementation deps.kotlintestjunit
+    androidTestImplementation deps.androidx_test_core
+    androidTestImplementation deps.androidx_test_rules
     androidTestImplementation deps.espresso_core
     androidTestImplementation deps.truth
+    androidTestImplementation project(':testing')
 
     androidTestImplementation project(':testing')
 
