@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.vanniktech.maven.publish'
+
+dependencies {
+    implementation project(":scoping")
+
+    implementation deps.androidx_fragment
+    implementation deps.kotlinStdLib
+    implementation deps.navgraph
+
+    debugImplementation deps.appcompat
+
+    androidTestImplementation deps.androidx_test_core
+    androidTestImplementation deps.androidx_test_ext_junit
+    androidTestImplementation deps.androidx_test_rules
+    androidTestImplementation deps.androidx_test_runner
+    androidTestImplementation deps.espresso_core
+    androidTestImplementation deps.truth
+
+    androidTestImplementation project(':testing')
+
+}
+
+apply plugin: 'kotlin-android-extensions'
+
+// To use the @Parcelize annotation
+// https://blog.jetbrains.com/kotlin/2017/08/kotlin-1-1-4-is-out/
+androidExtensions {
+    experimental = true
+}

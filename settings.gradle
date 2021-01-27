@@ -3,6 +3,7 @@ include ':integration-tests'
 include ':processor'
 include ':runtime'
 include ':scoping'
+include ':scoping-navgraph'
 include ':testing'
 
 // Samples
