@@ -21,6 +21,7 @@ ext.versions = [
         // UI libraries
         androidxFragment            : '1.2.5',
         androidxAppCompat           : '1.1.0',
+        navGraph                    : '2.3.2',
         androidLifecycle            : '2.2.0',
 
         // Annotation Processing
@@ -50,6 +51,7 @@ ext.deps = [
         // UI Libraries
         androidx_fragment           : "androidx.fragment:fragment:$versions.androidxFragment",
         appcompat                   : "androidx.appcompat:appcompat:$versions.androidxAppCompat",
+        navgraph                    : "androidx.navigation:navigation-fragment-ktx:$versions.navGraph",
         lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
 
         // Annotation Processing

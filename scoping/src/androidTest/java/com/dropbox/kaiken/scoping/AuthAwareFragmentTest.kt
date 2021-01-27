@@ -7,6 +7,8 @@ import org.junit.After
 import org.junit.Test
 import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
 import test.com.dropbox.kaiken.testing.TestAuthAwareScopedActivity
+import test.com.dropbox.kaiken.testing.launchAuthOptionalActivity
+import test.com.dropbox.kaiken.testing.launchAuthRequiredActivity
 
 class AuthAwareFragmentTest {
     lateinit var scenario: ActivityScenario<out TestAuthAwareScopedActivity>
