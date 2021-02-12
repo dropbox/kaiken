@@ -2,6 +2,7 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
@@ -37,6 +38,10 @@ private fun generateInjectorInterface(
     return interfaceBuilder
         .addSuperinterface(injectorTypeName)
         .addModifiers(Modifier.PUBLIC)
+        .addAnnotation(
+            AnnotationSpec.builder(ClassName.get("com.squareup.anvil.annotations","ContributesTo"))
+                .addMember("scope", "\$T.class", ClassName.get("com.example.kaikeninjecterror","AActivityScope"))
+                .build())
         .addMethod(
             MethodSpec.methodBuilder("inject")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)

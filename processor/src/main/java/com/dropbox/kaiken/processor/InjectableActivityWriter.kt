@@ -1,8 +1,13 @@
 package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import javax.annotation.processing.Filer
 import javax.lang.model.type.TypeMirror
@@ -86,12 +91,42 @@ internal class InjectableActivityWriter(
         )
 
         val fileBuilder = FileSpec.builder(pack, interfaceName)
+        val activityTypeName = activityType.asTypeName() as ClassName
+
+        val injectorClass = activityTypeName.peerClass("${activityTypeName.simpleName}Injector")
+        val injectorFactory =
+            Class.forName("com.dropbox.kaiken.runtime.InjectorFactory").asClassName()
+                .parameterizedBy(
+                    injectorClass
+                )
+
+        val anonymousClass = TypeSpec
+            .anonymousClassBuilder()
+            .addSuperinterface(injectorFactory)
+            .addFunction(
+                FunSpec.builder("createInjector")
+                    .addModifiers(KModifier.OVERRIDE)
+                    .addStatement("return DaggerActivityComponent.factory().create(resolveDependencyProvider()) as %T", injectorClass)
+                    .build()
+            )
+            .build()
+
 
         return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
             .addFunction(extensionFunctionSpec)
+            .addFunction(
+                FunSpec.builder("injector")
+                    .receiver(Class.forName("com.dropbox.kaiken.scoping.DependencyProviderResolver"))
+                    .returns(injectorFactory)
+                    .addStatement("return %L", anonymousClass).build()
+            )
             .build()
     }
 }
+// internal fun DependencyProviderResolver.injector() =
+//     object : InjectorFactory<LaunchActivityInjector> {
+//         override fun createInjector() = ...
+//     }
 
 internal fun resolveInterfaceName(
     annotatedActivity: InjectableAnnotatedActivity
