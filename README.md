@@ -193,7 +193,7 @@ implementation "com.dropbox.kaiken:scoping:${store_version}"
 If you also want to use the `@Injectable` annotation:
 
 ```groovy
-implementation "com.dropbox.kaiken:annotation:${store_version}"
-kapt "com.dropbox.kaiken:processor:${store_version}"
-implementation "com.dropbox.kaiken:runtime:${store_version}"
+implementation "com.dropbox.kaiken:annotation:${kaiken_version}"
+kapt "com.dropbox.kaiken:processor:${kaiken_version}"
+implementation "com.dropbox.kaiken:runtime:${kaiken_version}"
 ```
