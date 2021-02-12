@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.processor
 
+import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
@@ -10,8 +11,11 @@ import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import javax.annotation.processing.Filer
+import javax.lang.model.element.Element
+import javax.lang.model.type.MirroredTypeException
 import javax.lang.model.type.TypeMirror
 import javax.lang.model.util.Elements
+import kotlin.reflect.KClass
 
 /**
  * Generates a `Injector` interface definition and an `inject` function for the given annotated
@@ -53,9 +57,18 @@ internal class InjectableActivityWriter(
         val canInjectActivityInterfaceName = resolveInterfaceName(annotatedActivity)
         val pack = elementUtils.getPackageOf(annotatedActivityTypeElement).toString()
         val annotatedActivityType = annotatedActivityTypeElement.asType()
+        val annotationClassValue =
+            annotatedActivityTypeElement.getAnnotationClassValue<Injectable> { COMPONENT }.asTypeName() as ClassName
 
         writeInterfaceFile(pack, canInjectActivityInterfaceName, annotatedActivityType)
-        writeExtensionFunctionFile(pack, canInjectActivityInterfaceName, annotatedActivityType)
+        writeExtensionFunctionFile(pack, canInjectActivityInterfaceName, annotatedActivityType,annotationClassValue)
+    }
+
+    inline fun <reified T : Annotation> Element.getAnnotationClassValue(f: T.() -> KClass<*>) = try {
+        getAnnotation(T::class.java).f()
+        throw Exception("Expected to get a MirroredTypeException")
+    } catch (e: MirroredTypeException) {
+        e.typeMirror
     }
 
     private fun writeInterfaceFile(
@@ -72,10 +85,11 @@ internal class InjectableActivityWriter(
     private fun writeExtensionFunctionFile(
         pack: String,
         interfaceName: String,
-        activityType: TypeMirror
+        activityType: TypeMirror,
+        componentClass: ClassName
     ) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-            pack, interfaceName, activityType
+            pack, interfaceName, activityType,componentClass
         )
 
         extensionFunctionFileSpec.writeTo(filer)
@@ -84,7 +98,8 @@ internal class InjectableActivityWriter(
     private fun generateExtensionFunctionFileSpec(
         pack: String,
         interfaceName: String,
-        activityType: TypeMirror
+        activityType: TypeMirror,
+        componentClass: ClassName
     ): FileSpec {
         val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
             interfaceName, activityType
@@ -106,7 +121,10 @@ internal class InjectableActivityWriter(
             .addFunction(
                 FunSpec.builder("createInjector")
                     .addModifiers(KModifier.OVERRIDE)
-                    .addStatement("return DaggerActivityComponent.factory().create(resolveDependencyProvider()) as %T", injectorClass)
+                    .addStatement(
+                        "return Dagger${componentClass.simpleName}.factory().create(resolveDependencyProvider()) as %T",
+                        injectorClass
+                    )
                     .build()
             )
             .build()
