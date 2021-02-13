@@ -146,7 +146,7 @@ class InjectableProcessor : AbstractProcessor() {
         annotatedFragmentWriter.write(annotatedFragment)
     }
 
-    override fun getSupportedAnnotationTypes() = setOf(DaggerInjectable::class.java.canonicalName)
+    override fun getSupportedAnnotationTypes() = setOf(DaggerInjectable::class.java.canonicalName, Injectable::class.java.canonicalName)
 
     override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latestSupported()
 }
