@@ -17,9 +17,10 @@ internal fun generateInjectorInterfaceFileSpec(
     pack: String,
     interfaceName: String,
     paramName: String,
-    targetType: TypeMirror
+    targetType: TypeMirror,
+    className: com.squareup.kotlinpoet.ClassName
 ): JavaFile {
-    val interfaceSpec = generateInjectorInterface(interfaceName, paramName, targetType)
+    val interfaceSpec = generateInjectorInterface(interfaceName, paramName, targetType, className)
 
     return JavaFile.builder(pack, interfaceSpec)
         .addFileComment(GENERATED_BY_TOP_COMMENT)
@@ -29,7 +30,8 @@ internal fun generateInjectorInterfaceFileSpec(
 private fun generateInjectorInterface(
     interfaceName: String,
     paramName: String,
-    targetType: TypeMirror
+    targetType: TypeMirror,
+    className: com.squareup.kotlinpoet.ClassName
 ): TypeSpec {
     val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
 
@@ -40,7 +42,7 @@ private fun generateInjectorInterface(
         .addModifiers(Modifier.PUBLIC)
         .addAnnotation(
             AnnotationSpec.builder(ClassName.get("com.squareup.anvil.annotations","ContributesTo"))
-                .addMember("scope", "\$T.class", ClassName.get("com.example.kaikeninjecterror","AActivityScope"))
+                .addMember("scope", "\$T.class", ClassName.get(className.packageName, className.simpleName))
                 .build())
         .addMethod(
             MethodSpec.methodBuilder("inject")

@@ -76,17 +76,20 @@ class InjectableProcessor : AbstractProcessor() {
             // We validated it is a class
             val typeElement = element as TypeElement
 
-            safeProcessInjectableElement(typeElement)
+            safeProcessInjectableElement(typeElement, elements)
         }
 
         return true
     }
 
-    private fun safeProcessInjectableElement(typeElement: TypeElement) {
+    private fun safeProcessInjectableElement(
+        typeElement: TypeElement,
+        elements: Elements
+    ) {
         try {
             when {
                 typeElement.isAndroidActivity() -> {
-                    processInjectableActivity(typeElement)
+                    processInjectableActivity(typeElement,elements)
                 }
                 typeElement.isAndroidFragment() -> {
                     processInjectableFragment(typeElement)
@@ -104,14 +107,17 @@ class InjectableProcessor : AbstractProcessor() {
         }
     }
 
-    private fun processInjectableActivity(typeElement: TypeElement) {
+    private fun processInjectableActivity(
+        typeElement: TypeElement,
+        elements: Elements
+    ) {
         val annotatedActivity = InjectableAnnotatedActivity(typeElement)
 
         if (!annotatedActivityValidator.isValid(annotatedActivity)) {
             return
         }
 
-        annotatedActivityWriter.write(annotatedActivity)
+        annotatedActivityWriter.write(annotatedActivity, elements)
     }
 
     private fun processInjectableFragment(typeElement: TypeElement) {

@@ -2,6 +2,7 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.anvil.annotations.MergeComponent
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
@@ -52,15 +53,26 @@ internal class InjectableActivityWriter(
     private val elementUtils: Elements
 ) {
 
-    fun write(annotatedActivity: InjectableAnnotatedActivity) {
+    fun write(
+        annotatedActivity: InjectableAnnotatedActivity,
+        elements: Elements
+    ) {
         val annotatedActivityTypeElement = annotatedActivity.annotatedActivityElement
         val canInjectActivityInterfaceName = resolveInterfaceName(annotatedActivity)
         val pack = elementUtils.getPackageOf(annotatedActivityTypeElement).toString()
         val annotatedActivityType = annotatedActivityTypeElement.asType()
-        val annotationClassValue =
-            annotatedActivityTypeElement.getAnnotationClassValue<Injectable> { COMPONENT }.asTypeName() as ClassName
+        val annotationClassValue = annotatedActivityTypeElement
+                .getAnnotationClassValue<Injectable> { COMPONENT }
+                .asTypeName() as ClassName
 
-        writeInterfaceFile(pack, canInjectActivityInterfaceName, annotatedActivityType)
+        // elements.
+         val scope =
+            elements
+                .getTypeElement(annotationClassValue.canonicalName)
+                .getAnnotationClassValue<MergeComponent> {scope  }
+         val scopeClassName=scope.asTypeName() as ClassName
+
+        writeInterfaceFile(pack, canInjectActivityInterfaceName, annotatedActivityType, scopeClassName)
         writeExtensionFunctionFile(pack, canInjectActivityInterfaceName, annotatedActivityType,annotationClassValue)
     }
 
@@ -74,10 +86,11 @@ internal class InjectableActivityWriter(
     private fun writeInterfaceFile(
         pack: String,
         interfaceName: String,
-        activityType: TypeMirror
+        activityType: TypeMirror,
+        className: ClassName
     ) {
         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-            pack, interfaceName, "activity", activityType
+            pack, interfaceName, "activity", activityType, className
         )
         interfaceFileSpec.writeTo(filer)
     }
