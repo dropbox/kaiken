@@ -18,9 +18,10 @@ internal fun generateInjectorInterfaceFileSpec(
     interfaceName: String,
     paramName: String,
     targetType: TypeMirror,
-    className: com.squareup.kotlinpoet.ClassName
+    className: com.squareup.kotlinpoet.ClassName?
 ): JavaFile {
-    val interfaceSpec = generateInjectorInterface(interfaceName, paramName, targetType, className)
+    val interfaceSpec =
+        generateInjectorInterface(interfaceName, paramName, targetType, className)
 
     return JavaFile.builder(pack, interfaceSpec)
         .addFileComment(GENERATED_BY_TOP_COMMENT)
@@ -31,19 +32,15 @@ private fun generateInjectorInterface(
     interfaceName: String,
     paramName: String,
     targetType: TypeMirror,
-    className: com.squareup.kotlinpoet.ClassName
+    className: com.squareup.kotlinpoet.ClassName?
 ): TypeSpec {
     val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
 
     val injectorTypeName = ClassName.get(Injector::class.java)
 
-    return interfaceBuilder
+    val injectorInterface = interfaceBuilder
         .addSuperinterface(injectorTypeName)
         .addModifiers(Modifier.PUBLIC)
-        .addAnnotation(
-            AnnotationSpec.builder(ClassName.get("com.squareup.anvil.annotations","ContributesTo"))
-                .addMember("scope", "\$T.class", ClassName.get(className.packageName, className.simpleName))
-                .build())
         .addMethod(
             MethodSpec.methodBuilder("inject")
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
@@ -54,7 +51,19 @@ private fun generateInjectorInterface(
                     ).build()
                 )
                 .build()
-        ).build()
+        )
+
+    if (anvilOnPath())
+        injectorInterface.addAnnotation(
+            AnnotationSpec.builder(ClassName.get("com.squareup.anvil.annotations", "ContributesTo"))
+                .addMember(
+                    "scope",
+                    "\$T.class",
+                    ClassName.get(className!!.packageName, className.simpleName)
+                )
+                .build()
+        )
+    return injectorInterface.build()
 }
 
 internal fun resolveInjectorInterfaceName(

@@ -1,18 +1,20 @@
 package com.dropbox.kaiken.processor
 
+import com.dropbox.kaiken.annotation.DaggerInjectable
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
 import com.squareup.anvil.annotations.MergeComponent
+import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
-import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.asTypeName
 import javax.annotation.processing.Filer
 import javax.lang.model.element.Element
+import javax.lang.model.element.TypeElement
 import javax.lang.model.type.MirroredTypeException
 import javax.lang.model.type.TypeMirror
 import javax.lang.model.util.Elements
@@ -52,7 +54,6 @@ internal class InjectableActivityWriter(
     private val filer: Filer,
     private val elementUtils: Elements
 ) {
-
     fun write(
         annotatedActivity: InjectableAnnotatedActivity,
         elements: Elements
@@ -61,26 +62,84 @@ internal class InjectableActivityWriter(
         val canInjectActivityInterfaceName = resolveInterfaceName(annotatedActivity)
         val pack = elementUtils.getPackageOf(annotatedActivityTypeElement).toString()
         val annotatedActivityType = annotatedActivityTypeElement.asType()
-        val annotationClassValue = annotatedActivityTypeElement
-                .getAnnotationClassValue<Injectable> { COMPONENT }
-                .asTypeName() as ClassName
+
+        var injectableAnnotationComponent = injectableAnnotation(annotatedActivityTypeElement)
+        val scope: TypeMirror?
+        var anvilScope: ClassName? = null
+        val dependencyClassname = daggerInjectableAnnotation(annotatedActivityTypeElement)
+        if (dependencyClassname != null) {
+            generateComponent(pack, annotatedActivityType, dependencyClassname)
+            val className = annotatedActivityType.asTypeName() as ClassName
+            //we made a component and want to pass that to other generators
+            injectableAnnotationComponent =
+                className.peerClass(className.simpleName + "Component")
+        }
+        //if user component is an anvil component we should grab the scope
+        if (injectableAnnotationComponent != null && anvilOnPath()) {
+            scope = componentAnvilScope(elements, injectableAnnotationComponent)
+            anvilScope = scope?.asTypeName() as ClassName
+        }
+        if (anvilScope == null) {
+            val activityTypeName = annotatedActivityType.asTypeName() as ClassName
+            anvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
+        }
 
         // elements.
-         val scope =
-            elements
-                .getTypeElement(annotationClassValue.canonicalName)
-                .getAnnotationClassValue<MergeComponent> {scope  }
-         val scopeClassName=scope.asTypeName() as ClassName
+        writeInterfaceFile(
+            pack,
+            canInjectActivityInterfaceName,
+            annotatedActivityType,
+            anvilScope
+        )
 
-        writeInterfaceFile(pack, canInjectActivityInterfaceName, annotatedActivityType, scopeClassName)
-        writeExtensionFunctionFile(pack, canInjectActivityInterfaceName, annotatedActivityType,annotationClassValue)
+
+
+        writeExtensionFunctionFile(
+            pack,
+            canInjectActivityInterfaceName,
+            annotatedActivityType,
+            injectableAnnotationComponent!! //Either user had a component or we made one
+        )
     }
 
-    inline fun <reified T : Annotation> Element.getAnnotationClassValue(f: T.() -> KClass<*>) = try {
-        getAnnotation(T::class.java).f()
-        throw Exception("Expected to get a MirroredTypeException")
-    } catch (e: MirroredTypeException) {
-        e.typeMirror
+    private fun componentAnvilScope(
+        elements: Elements,
+        injectableAnnotation: ClassName
+    ): TypeMirror? {
+        return elements
+            .getTypeElement(injectableAnnotation.canonicalName)
+            .getAnnotationClassValue<MergeComponent> { scope }
+    }
+
+    private fun injectableAnnotation(annotatedActivityTypeElement: TypeElement): ClassName? {
+        return if (annotatedActivityTypeElement.getAnnotation(Injectable::class.java) != null)
+            annotatedActivityTypeElement
+                .getAnnotationClassValue<Injectable> { COMPONENT }
+                .asTypeName() as ClassName?
+        else null
+    }
+
+    private fun daggerInjectableAnnotation(annotatedActivityTypeElement: TypeElement): ClassName? {
+        return if (annotatedActivityTypeElement.getAnnotation(DaggerInjectable::class.java) != null)
+            annotatedActivityTypeElement
+                .getAnnotationClassValue<DaggerInjectable> { dependency }
+                .asTypeName() as ClassName?
+        else null
+    }
+
+    private fun generateComponent(
+        pack: String,
+        annotatedActivityType: TypeMirror,
+        dependencyClassname: ClassName
+    ): String {
+        val activityTypeName = annotatedActivityType.asTypeName() as ClassName
+        val anvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
+        FileSpec.builder(pack, activityTypeName.simpleName + "GeneratedComponent")
+            .addType(daggerScope(activityTypeName))
+            .addType(TypeSpec.classBuilder(anvilScope).build())
+            .addType(featureComponent(activityTypeName, dependencyClassname))
+            .build().writeTo(filer)
+        return activityTypeName.canonicalName + "GeneratedComponent"
     }
 
     private fun writeInterfaceFile(
@@ -102,7 +161,7 @@ internal class InjectableActivityWriter(
         componentClass: ClassName
     ) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-            pack, interfaceName, activityType,componentClass
+            pack, interfaceName, activityType, componentClass
         )
 
         extensionFunctionFileSpec.writeTo(filer)
@@ -112,7 +171,7 @@ internal class InjectableActivityWriter(
         pack: String,
         interfaceName: String,
         activityType: TypeMirror,
-        componentClass: ClassName
+        componentClass: ClassName,
     ): FileSpec {
         val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
             interfaceName, activityType
@@ -123,7 +182,7 @@ internal class InjectableActivityWriter(
 
         val injectorClass = activityTypeName.peerClass("${activityTypeName.simpleName}Injector")
         val injectorFactory =
-            Class.forName("com.dropbox.kaiken.runtime.InjectorFactory").asClassName()
+            ClassName("com.dropbox.kaiken.runtime", "InjectorFactory")
                 .parameterizedBy(
                     injectorClass
                 )
@@ -142,7 +201,6 @@ internal class InjectableActivityWriter(
             )
             .build()
 
-
         return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
             .addFunction(extensionFunctionSpec)
             .addFunction(
@@ -151,13 +209,60 @@ internal class InjectableActivityWriter(
                     .returns(injectorFactory)
                     .addStatement("return %L", anonymousClass).build()
             )
+
+            .build()
+    }
+
+    private fun daggerScope(activityTypeName: ClassName): TypeSpec {
+        val daggerScope = activityTypeName.peerClass("${activityTypeName.simpleName}Scope")
+        return TypeSpec.annotationBuilder(daggerScope)
+            .addAnnotation(ClassName("javax.inject", "Scope"))
+            .build()
+    }
+
+    private fun featureComponent(
+        activityTypeName: ClassName,
+        dependencyClassname: ClassName
+    ): TypeSpec {
+        val daggerComponent: ClassName =
+            activityTypeName.peerClass("${activityTypeName.simpleName}Component")
+        val aAnvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
+        val componentType =
+            if (anvilOnPath()) ClassName("com.squareup.anvil.annotations", "MergeComponent")
+            else ClassName("dagger", "Component")
+
+        val factory =
+            TypeSpec.interfaceBuilder(daggerComponent.peerClass(daggerComponent.simpleName + "Factory"))
+                .addAnnotation(
+                    AnnotationSpec.builder(ClassName("dagger", "Component", "Factory")).build()
+                )
+                .addFunction(
+                    FunSpec.builder("create")
+                        .addModifiers(KModifier.ABSTRACT)
+                        .addParameter(dependencyClassname.simpleName, dependencyClassname)
+                        .returns(daggerComponent)
+                        .build()
+                ).build()
+        return TypeSpec.interfaceBuilder(daggerComponent)
+            .addType(factory)
+            .addAnnotation(activityTypeName.peerClass("${activityTypeName.simpleName}Scope"))
+            .addAnnotation(
+                AnnotationSpec.builder(componentType)
+                    .addMember("scope = %T::class", aAnvilScope)
+                    .addMember("dependencies = [%T::class]", dependencyClassname)
+                    .build()
+            )
             .build()
     }
 }
-// internal fun DependencyProviderResolver.injector() =
-//     object : InjectorFactory<LaunchActivityInjector> {
-//         override fun createInjector() = ...
+// @MergeComponent(scope = ALaunchScope::class, dependencies = [LaunchDependencies::class])
+// @LaunchScope
+// interface LaunchComponent  {
+//     @Component.Factory
+//     interface Factory {
+//         fun create(dependencies: LaunchDependencies): LaunchComponent
 //     }
+// }
 
 internal fun resolveInterfaceName(
     annotatedActivity: InjectableAnnotatedActivity
@@ -173,3 +278,20 @@ internal fun generateInjectExtensionFunctionForActivity(
         .addStatement("activityInjector.inject(this)")
         .build()
 }
+
+fun anvilOnPath(): Boolean {
+    try {
+        Class.forName("com.squareup.anvil.annotations.ContributesTo")
+    } catch (e: ClassNotFoundException) {
+        return false
+    }
+    return true
+}
+
+inline fun <reified T : Annotation> Element.getAnnotationClassValue(f: T.() -> KClass<*>) =
+    try {
+        getAnnotation(T::class.java).f()
+        throw Exception("Expected to get a MirroredTypeException")
+    } catch (e: MirroredTypeException) {
+        e.typeMirror
+    }
