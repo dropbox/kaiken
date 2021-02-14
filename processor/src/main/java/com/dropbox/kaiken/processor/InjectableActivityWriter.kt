@@ -67,21 +67,23 @@ internal class InjectableActivityWriter(
         val scope: TypeMirror?
         var anvilScope: ClassName? = null
         val dependencyClassname = daggerInjectableAnnotation(annotatedActivityTypeElement)
+
+        //if user component is an anvil component we should grab the scope
+        if (injectableAnnotationComponent != null && anvilOnPath()) {
+            scope = componentAnvilScope(elements, injectableAnnotationComponent)
+            anvilScope = scope?.asTypeName() as ClassName
+        }
+        if (anvilOnPath() && anvilScope == null) {
+            val activityTypeName = annotatedActivityType.asTypeName() as ClassName
+            anvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
+        }
+
         if (dependencyClassname != null) {
             generateComponent(pack, annotatedActivityType, dependencyClassname)
             val className = annotatedActivityType.asTypeName() as ClassName
             //we made a component and want to pass that to other generators
             injectableAnnotationComponent =
                 className.peerClass(className.simpleName + "Component")
-        }
-        //if user component is an anvil component we should grab the scope
-        if (injectableAnnotationComponent != null && anvilOnPath()) {
-            scope = componentAnvilScope(elements, injectableAnnotationComponent)
-            anvilScope = scope?.asTypeName() as ClassName
-        }
-        if (anvilScope == null) {
-            val activityTypeName = annotatedActivityType.asTypeName() as ClassName
-            anvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
         }
 
         // elements.
@@ -146,7 +148,7 @@ internal class InjectableActivityWriter(
         pack: String,
         interfaceName: String,
         activityType: TypeMirror,
-        className: ClassName
+        className: ClassName?
     ) {
         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
             pack, interfaceName, "activity", activityType, className
@@ -232,7 +234,7 @@ internal class InjectableActivityWriter(
             else ClassName("dagger", "Component")
 
         val factory =
-            TypeSpec.interfaceBuilder(daggerComponent.peerClass(daggerComponent.simpleName + "Factory"))
+            TypeSpec.interfaceBuilder(daggerComponent.peerClass( "Factory"))
                 .addAnnotation(
                     AnnotationSpec.builder(ClassName("dagger", "Component", "Factory")).build()
                 )

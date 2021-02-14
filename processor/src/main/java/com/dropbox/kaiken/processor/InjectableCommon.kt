@@ -2,14 +2,13 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
-import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.ParameterSpec
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
-import javax.lang.model.element.Modifier
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.asTypeName
 import javax.lang.model.element.TypeElement
 import javax.lang.model.type.TypeMirror
 
@@ -19,12 +18,13 @@ internal fun generateInjectorInterfaceFileSpec(
     paramName: String,
     targetType: TypeMirror,
     className: com.squareup.kotlinpoet.ClassName?
-): JavaFile {
+): FileSpec {
     val interfaceSpec =
         generateInjectorInterface(interfaceName, paramName, targetType, className)
 
-    return JavaFile.builder(pack, interfaceSpec)
-        .addFileComment(GENERATED_BY_TOP_COMMENT)
+    return FileSpec.builder(pack, "real$interfaceName")
+        .addComment(GENERATED_BY_TOP_COMMENT)
+        .addType(interfaceSpec)
         .build()
 }
 
@@ -33,33 +33,35 @@ private fun generateInjectorInterface(
     paramName: String,
     targetType: TypeMirror,
     className: com.squareup.kotlinpoet.ClassName?
-): TypeSpec {
-    val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
-
-    val injectorTypeName = ClassName.get(Injector::class.java)
+): com.squareup.kotlinpoet.TypeSpec {
+    val interfaceBuilder = com.squareup.kotlinpoet.TypeSpec.interfaceBuilder(interfaceName)
 
     val injectorInterface = interfaceBuilder
-        .addSuperinterface(injectorTypeName)
-        .addModifiers(Modifier.PUBLIC)
-        .addMethod(
-            MethodSpec.methodBuilder("inject")
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        .addSuperinterface(Injector::class.java)
+        .addFunction(
+            FunSpec.builder("inject")
+                .addModifiers(KModifier.ABSTRACT)
                 .addParameter(
-                    ParameterSpec.builder(
-                        TypeName.get(targetType),
-                        paramName
-                    ).build()
+                    com.squareup.kotlinpoet.ParameterSpec.builder(
+                        "activity",
+                        targetType.asTypeName()
+                    )
+                        .build()
                 )
                 .build()
         )
 
     if (anvilOnPath())
         injectorInterface.addAnnotation(
-            AnnotationSpec.builder(ClassName.get("com.squareup.anvil.annotations", "ContributesTo"))
+            com.squareup.kotlinpoet.AnnotationSpec.builder(
+                com.squareup.kotlinpoet.ClassName(
+                    "com.squareup.anvil.annotations",
+                    "ContributesTo"
+                )
+            )
                 .addMember(
-                    "scope",
-                    "\$T.class",
-                    ClassName.get(className!!.packageName, className.simpleName)
+                    "scope = %T::class",
+                    className!!
                 )
                 .build()
         )

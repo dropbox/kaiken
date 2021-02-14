@@ -63,21 +63,21 @@ class InjectableProcessor : AbstractProcessor() {
     private fun processInternal(
         roundEnvironment: RoundEnvironment
     ): Boolean {
-        roundEnvironment.getElementsAnnotatedWith(Injectable::class.java).forEach { element ->
-
-            val isClass = element.validateIsClass(messager) {
-                "Only classes can be annotated with ${Injectable::class.java.simpleName}"
-            }
-
-            if (!isClass) {
-                return true
-            }
-
-            // We validated it is a class
-            val typeElement = element as TypeElement
-
-            safeProcessInjectableElement(typeElement, elements)
-        }
+        // roundEnvironment.getElementsAnnotatedWith(Injectable::class.java).forEach { element ->
+        //
+        //     val isClass = element.validateIsClass(messager) {
+        //         "Only classes can be annotated with ${Injectable::class.java.simpleName}"
+        //     }
+        //
+        //     if (!isClass) {
+        //         return true
+        //     }
+        //
+        //     // We validated it is a class
+        //     val typeElement = element as TypeElement
+        //
+        //     safeProcessInjectableElement(typeElement, elements)
+        // }
 
         roundEnvironment.getElementsAnnotatedWith(DaggerInjectable::class.java).forEach { element ->
 
