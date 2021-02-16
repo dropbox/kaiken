@@ -1,6 +1,6 @@
 package com.dropbox.kaiken.processor
 
-import com.dropbox.kaiken.annotation.DaggerInjectable
+import com.dropbox.kaiken.annotation.AutoInjectable
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.error
 import com.dropbox.kaiken.processor.internal.isAndroidActivity
@@ -9,6 +9,7 @@ import com.dropbox.kaiken.processor.internal.validateIsClass
 import com.google.auto.service.AutoService
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
+import java.lang.IllegalStateException
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.Filer
 import javax.annotation.processing.Messager
@@ -16,6 +17,7 @@ import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.Processor
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
+import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
@@ -44,7 +46,7 @@ class InjectableProcessor : AbstractProcessor() {
     }
 
     private fun initWriter() {
-        annotatedActivityWriter = InjectableActivityWriter(filer, elements)
+        annotatedActivityWriter = InjectableActivityWriter(filer, elements, messager)
         annotatedFragmentWriter = InjectableFragmentWriter(filer, elements)
     }
 
@@ -63,38 +65,24 @@ class InjectableProcessor : AbstractProcessor() {
     private fun processInternal(
         roundEnvironment: RoundEnvironment
     ): Boolean {
-        // roundEnvironment.getElementsAnnotatedWith(Injectable::class.java).forEach { element ->
-        //
-        //     val isClass = element.validateIsClass(messager) {
-        //         "Only classes can be annotated with ${Injectable::class.java.simpleName}"
-        //     }
-        //
-        //     if (!isClass) {
-        //         return true
-        //     }
-        //
-        //     // We validated it is a class
-        //     val typeElement = element as TypeElement
-        //
-        //     safeProcessInjectableElement(typeElement, elements)
-        // }
+        val injectableElements: MutableSet<out Element> = roundEnvironment.getElementsAnnotatedWith(Injectable::class.java)
+        val daggerInjectableElements: MutableSet<out Element> = roundEnvironment.getElementsAnnotatedWith(AutoInjectable::class.java)
 
-        roundEnvironment.getElementsAnnotatedWith(DaggerInjectable::class.java).forEach { element ->
+        (injectableElements + daggerInjectableElements).forEach { element ->
 
-            // val isClass = element.validateIsClass(messager) {
-            //     "Only classes can be annotated with ${DaggerInjectable::class.java.simpleName}"
-            // }
-            //
-            // if (!isClass) {
-            //     return true
-            // }
-            //
-            // // We validated it is a class
-            val typeElement = element as TypeElement
+             val isClass = element.validateIsClass(messager) {
+                 "Only classes can be annotated with ${Injectable::class.java.simpleName}"
+             }
 
-            safeProcessInjectableElement(typeElement, elements)
-        }
+            if (!isClass) {
+                 return true
+             }
 
+             // We validated it is a class
+             val typeElement = element as TypeElement
+
+             safeProcessInjectableElement(typeElement, elements)
+         }
 
         return true
     }
@@ -108,12 +96,11 @@ class InjectableProcessor : AbstractProcessor() {
                 typeElement.isAndroidActivity() -> {
                     processInjectableActivity(typeElement,elements)
                 }
-                // typeElement.isAndroidFragment() -> {
-                //     processInjectableFragment(typeElement)
-                // }
+                 typeElement.isAndroidFragment() -> {
+                     processInjectableFragment(typeElement,elements)
+                 }
                 else -> {
-                    messager.error(
-                        typeElement,
+                    messager.error(typeElement,
                         "Only Android Activities or Fragments can be annotated with" +
                             " ${Injectable::class.java.simpleName}"
                     )
@@ -129,24 +116,24 @@ class InjectableProcessor : AbstractProcessor() {
         elements: Elements) {
         val annotatedActivity = InjectableAnnotatedActivity(typeElement)
 
-        // if (!annotatedActivityValidator.isValid(annotatedActivity)) {
-        //     return
-        // }
+         if (!annotatedActivityValidator.isValid(annotatedActivity)) {
+             return
+         }
 
         annotatedActivityWriter.write(annotatedActivity, elements)
     }
 
-    private fun processInjectableFragment(typeElement: TypeElement) {
+    private fun processInjectableFragment(typeElement: TypeElement, elements: Elements) {
         val annotatedFragment = InjectableAnnotatedFragment(typeElement)
 
         if (!annotatedFragmentValidator.isValid(annotatedFragment)) {
             return
         }
 
-        annotatedFragmentWriter.write(annotatedFragment)
+        annotatedFragmentWriter.write(annotatedFragment, elements)
     }
 
-    override fun getSupportedAnnotationTypes() = setOf(DaggerInjectable::class.java.canonicalName, Injectable::class.java.canonicalName)
+    override fun getSupportedAnnotationTypes() = setOf(AutoInjectable::class.java.canonicalName, Injectable::class.java.canonicalName)
 
     override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latestSupported()
 }

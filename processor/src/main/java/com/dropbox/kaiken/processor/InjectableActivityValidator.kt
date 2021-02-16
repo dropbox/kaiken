@@ -1,6 +1,6 @@
 package com.dropbox.kaiken.processor
 
-import com.dropbox.kaiken.annotation.DaggerInjectable
+import com.dropbox.kaiken.annotation.AutoInjectable
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.error
 import com.dropbox.kaiken.processor.internal.implementsInjectionHolder
@@ -20,16 +20,15 @@ internal class InjectableActivityValidator(
 
         val typeElement = annotatedActivity.annotatedActivityElement
 
-        if (typeElement.getAnnotation(Injectable::class.java) == null ||
-            typeElement.getAnnotation(DaggerInjectable::class.java) == null
-        ) return false
-
         if (componentAnnotation(typeElement) != null &&
-            daggerInjectableAnnotation(typeElement) != null)
+            daggerInjectableAnnotation(typeElement) != null){
             messager.error(
-                typeElement,
-                "DaggerInjectable generates its own component, please remove @Injectable annotation"
+                    typeElement,
+                    "DaggerInjectable generates its own component, please remove @Injectable annotation"
             )
+            return false
+        }
+
         return when {
             !typeElement.isPublic() -> {
                 messager.error(
@@ -75,16 +74,16 @@ internal class InjectableActivityValidator(
     }
 
     private fun daggerInjectableAnnotation(typeElement: TypeElement): ClassName? {
-        if (typeElement.getAnnotation(DaggerInjectable::class.java) == null) return null
+        if (typeElement.getAnnotation(AutoInjectable::class.java) == null) return null
         return typeElement
-            .getAnnotationClassValue<DaggerInjectable> { dependency }
+            .getAnnotationClassValue<AutoInjectable> { dependency }
             .asTypeName() as ClassName?
     }
 
     private fun componentAnnotation(typeElement: TypeElement): ClassName? {
         if (typeElement.getAnnotation(Injectable::class.java) == null) return null
         return typeElement
-            .getAnnotationClassValue<Injectable> { COMPONENT }
-            .asTypeName() as ClassName?
+                .getAnnotationClassValue<Injectable> { COMPONENT }
+                .asTypeName() as ClassName?
     }
 }

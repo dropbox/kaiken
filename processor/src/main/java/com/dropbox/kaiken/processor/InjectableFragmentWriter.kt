@@ -43,7 +43,7 @@ internal class InjectableFragmentWriter(
     private val elementUtils: Elements
 ) {
 
-    fun write(annotatedFragment: InjectableAnnotatedFragment) {
+    fun write(annotatedFragment: InjectableAnnotatedFragment, elements: Elements) {
         val annotatedFragmentTypeElement = annotatedFragment.annotatedFragmentElement
         val fragmentInjectorInterfaceName = resolveInterfaceName(annotatedFragment)
         val pack = elementUtils.getPackageOf(annotatedFragmentTypeElement).toString()
@@ -58,10 +58,10 @@ internal class InjectableFragmentWriter(
         interfaceName: String,
         fragmentType: TypeMirror
     ) {
-        // val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-        //     pack, interfaceName, "fragment", fragmentType, className
-        // )
-        // interfaceFileSpec.writeTo(filer)
+//         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
+//             pack, interfaceName, "fragment", fragmentType, className
+//         )
+//         interfaceFileSpec.writeTo(filer)
     }
 
     private fun writeExtensionFunctionFile(

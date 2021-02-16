@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
-public @interface DaggerInjectable {
+public @interface AutoInjectable {
     Class<?> dependency() ;
 }

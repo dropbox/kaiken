@@ -12,6 +12,7 @@ dependencies {
     debugImplementation project(":runtime")
 
     kaptDebug project(":processor")
+    kaptAndroidTestDebug project(":processor")
 
     androidTestImplementation deps.androidx_test_core
     androidTestImplementation deps.androidx_test_ext_junit
