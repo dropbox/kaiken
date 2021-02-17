@@ -45,8 +45,7 @@ import javax.lang.model.util.Elements
  */
 internal class InjectableActivityWriter(
         private val filer: Filer,
-        private val elementUtils: Elements,
-        messager: Messager
+        private val elementUtils: Elements
 ) {
     fun write(
             annotatedActivity: InjectableAnnotatedActivity,
@@ -58,15 +57,13 @@ internal class InjectableActivityWriter(
         val pack = elementUtils.getPackageOf(annotatedActivityTypeElement).toString()
         val annotatedActivityType = annotatedActivityTypeElement.asType()
 
-        val dependendecies = dependenciesValue(annotatedActivityTypeElement)
 
-        val (injectableAnnotationComponent, anvilScope: ClassName?) = generateAnvilParts(annotatedActivityTypeElement, elements, annotatedActivityType, pack, filer, dependendecies)
+        val  anvilScope: ClassName? = generateAnvilParts(annotatedActivityTypeElement, elements, annotatedActivityType, pack, filer)
 
         writeExtensionFunctionFile(
                 pack,
                 canInjectActivityInterfaceName,
-                annotatedActivityType,
-                injectableAnnotationComponent!! //Either user had a component or we made one
+                annotatedActivityType
         )
 
         // elements.
@@ -76,10 +73,7 @@ internal class InjectableActivityWriter(
                 annotatedActivityType,
                 anvilScope
         )
-
-
     }
-
 
     private fun writeInterfaceFile(
             pack: String,
@@ -96,11 +90,9 @@ internal class InjectableActivityWriter(
     private fun writeExtensionFunctionFile(
             pack: String,
             interfaceName: String,
-            activityType: TypeMirror,
-            componentClass: ClassName
-    ) {
+            activityType: TypeMirror) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-                pack, interfaceName, activityType, componentClass
+                pack, interfaceName, activityType
         )
 
         extensionFunctionFileSpec.writeTo(filer)
@@ -110,14 +102,12 @@ internal class InjectableActivityWriter(
             pack: String,
             interfaceName: String,
             activityType: TypeMirror,
-            componentClass: ClassName,
     ): FileSpec {
         val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
                 interfaceName, activityType
         )
 
         val fileBuilder = FileSpec.builder(pack, interfaceName)
-        val activityTypeName = activityType.asTypeName() as ClassName
 
 
         val extensionFunctions = fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)

@@ -18,6 +18,3 @@ dependencies {
     implementation deps.kotlinpoet
     implementation 'com.squareup.anvil:annotations:2.1.0'
 }
-kapt {
-    correctErrorTypes = true
-}

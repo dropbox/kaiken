@@ -82,10 +82,12 @@ internal fun resolveInjectorInterfaceName(
 ): String = "${typeElement.simpleName}Injector"
 
 
-fun generateAnvilParts(annotatedActivityTypeElement: TypeElement, elements: Elements, annotatedActivityType: TypeMirror, pack: String, filer: Filer, dependendecies: ClassName?): Pair<com.squareup.kotlinpoet.ClassName?, com.squareup.kotlinpoet.ClassName?> {
+fun generateAnvilParts(annotatedActivityTypeElement: TypeElement, elements: Elements, annotatedActivityType: TypeMirror, pack: String, filer: Filer): ClassName? {
     var injectableAnnotationComponent = injectableAnnotation(annotatedActivityTypeElement)
     val scope: TypeMirror?
     var anvilScope: com.squareup.kotlinpoet.ClassName? = null
+    val dependencies = dependenciesValue(annotatedActivityTypeElement)
+
 
     //if provided component is an anvil component we should grab the scope
     if (injectableAnnotationComponent != null && anvilOnPath()) {
@@ -98,15 +100,12 @@ fun generateAnvilParts(annotatedActivityTypeElement: TypeElement, elements: Elem
         anvilScope = activityTypeName.peerClass("A${activityTypeName.simpleName}Scope")
     }
     //no component provided, we need to make one
-    if (dependendecies != null) {
+    if (dependencies != null) {
         //make sure to set a component dependency with annotated dependency value
-        generateComponent(pack, annotatedActivityType, dependendecies, filer)
+        generateComponent(pack, annotatedActivityType, dependencies, filer)
         val className = annotatedActivityType.asTypeName() as com.squareup.kotlinpoet.ClassName
-        //we made a component and want to pass that to other generators
-        injectableAnnotationComponent =
-                className.peerClass(className.simpleName + "Component")
     }
-    return Pair(injectableAnnotationComponent, anvilScope)
+    return anvilScope
 }
 
 private fun createInjectExtension(activityTypeName: ClassName, componentClass: ClassName, fileSpecBuilder: FileSpec.Builder) {
@@ -131,11 +130,12 @@ private fun createInjectExtension(activityTypeName: ClassName, componentClass: C
             )
             .build()
     fileSpecBuilder.addFunction(
-            FunSpec.builder("injector")
+            FunSpec.builder("${componentClass.simpleName.decapitalize()}injector")
                     .receiver(Class.forName("com.dropbox.kaiken.scoping.DependencyProviderResolver"))
                     .returns(injectorFactory)
                     .addStatement("return %L", anonymousClass).build()
     )
+    return
 }
 
 private fun componentAnvilScope(
@@ -182,8 +182,8 @@ private fun generateComponent(
     val fileBuilder = FileSpec.builder(pack, activityTypeName.simpleName + "GeneratedComponent")
             .addType(daggerScope(activityTypeName))
             .addType(com.squareup.kotlinpoet.TypeSpec.classBuilder(anvilScope).build())
-            .addType(featureComponent(activityTypeName, dependencyClassname))
-    createInjectExtension(activityTypeName, activityTypeName.peerClass("${activityTypeName.simpleName}Component"), fileBuilder)
+
+            fileBuilder.addType(featureComponent(activityTypeName, dependencyClassname,fileBuilder))
     fileBuilder
             .build().writeTo(filer)
     return activityTypeName.canonicalName + "GeneratedComponent"
@@ -198,8 +198,9 @@ private fun daggerScope(activityTypeName: com.squareup.kotlinpoet.ClassName): co
 }
 
 private fun featureComponent(
-        activityTypeName: com.squareup.kotlinpoet.ClassName,
-        dependencyClassname: com.squareup.kotlinpoet.ClassName
+        activityTypeName: ClassName,
+        dependencyClassname: ClassName,
+        fileBuilder: FileSpec.Builder
 ): com.squareup.kotlinpoet.TypeSpec {
     val daggerComponent: com.squareup.kotlinpoet.ClassName =
             activityTypeName.peerClass("${activityTypeName.simpleName}Component")
@@ -222,14 +223,24 @@ private fun featureComponent(
                     ).build()
     val annotationMembers = AnnotationSpec.builder(componentType)
             .addMember("dependencies = [%T::class]", dependencyClassname)
-    if (anvilOnPath()) annotationMembers.addMember("scope = %T::class", aAnvilScope)
-    return com.squareup.kotlinpoet.TypeSpec.interfaceBuilder(daggerComponent)
+    createInjectExtension(activityTypeName, activityTypeName.peerClass("${activityTypeName.simpleName}Component"), fileBuilder)
+
+    if (anvilOnPath()) {
+        annotationMembers.addMember("scope = %T::class", aAnvilScope)
+
+    }
+
+    val generatedComponent = com.squareup.kotlinpoet.TypeSpec.interfaceBuilder(daggerComponent)
             .addType(factory)
             .addAnnotation(activityTypeName.peerClass("${activityTypeName.simpleName}Scope"))
             .addAnnotation(
                     annotationMembers
                             .build()
             )
+    //We won't be able to contributeTo generated Component, must add interface manually
+    if(!anvilOnPath())
+        generatedComponent.addSuperinterface(activityTypeName.peerClass("${activityTypeName.simpleName}Injector"))
+    return generatedComponent
             .build()
 }
 

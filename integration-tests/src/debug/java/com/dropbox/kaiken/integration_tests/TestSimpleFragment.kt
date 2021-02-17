@@ -9,7 +9,9 @@ import dagger.Component
 import javax.inject.Inject
 
 
-interface Deps
+interface Deps{
+   fun getString()="String"
+}
 //@AutoInjectable(dependency = Deps::class)
 class TestSimpleFragment : Fragment(){
         //, InjectorHolder<TestSimpeFragmentInjector> {

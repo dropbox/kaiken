@@ -46,7 +46,7 @@ class InjectableProcessor : AbstractProcessor() {
     }
 
     private fun initWriter() {
-        annotatedActivityWriter = InjectableActivityWriter(filer, elements, messager)
+        annotatedActivityWriter = InjectableActivityWriter(filer, elements)
         annotatedFragmentWriter = InjectableFragmentWriter(filer, elements)
     }
 

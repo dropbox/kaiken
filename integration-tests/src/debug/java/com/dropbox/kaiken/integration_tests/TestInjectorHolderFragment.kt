@@ -5,26 +5,28 @@ import com.dropbox.kaiken.annotation.AutoInjectable
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
+import com.dropbox.kaiken.runtime.findInjector
+import com.dropbox.kaiken.scoping.AuthAwareFragment
 import javax.inject.Inject
 
-//@AutoInjectable(dependency = Deps::class)
-class TestInjectorHolderFragment : Fragment(){//}, InjectorHolder<TestInjectorHolderFragmentInjector> {
+@Injectable(COMPONENT = FakeInjector2::class)
+class TestInjectorHolderFragment : Fragment(), InjectorHolder<TestInjectorHolderFragmentInjector> {
     @Inject
     lateinit var message: String
 
-//    override fun getInjectorFactory() = fakeInjectorFactory()
+    override fun getInjectorFactory() = fakeInjectorFactory()
 
     fun testInject() {
-//        inject()
+        inject()
     }
 }
-//
-// fun fakeInjectorFactory() = object : InjectorFactory<TestInjectorHolderFragmentInject> {
-//    override fun createInjector() = FakeInjector2()
-//}
-//
-//class FakeInjector2 : TestInjectorHolderFragmentInject {
-////    override fun inject(fragment: TestInjectorHolderFragment) {
-//////        fragment!!.message = "Hello Fragment!"
-////    }
 
+ fun fakeInjectorFactory() = object : InjectorFactory<TestInjectorHolderFragmentInjector> {
+    override fun createInjector() = FakeInjector2()
+}
+
+class FakeInjector2 : TestInjectorHolderFragmentInjector {
+    override fun inject(fragment: TestInjectorHolderFragment) {
+        fragment.message = "Hello Fragment!"
+    }
+}

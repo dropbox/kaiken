@@ -1,6 +1,7 @@
 package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.asTypeName
@@ -49,26 +50,29 @@ internal class InjectableFragmentWriter(
         val pack = elementUtils.getPackageOf(annotatedFragmentTypeElement).toString()
         val annotatedFragmentType = annotatedFragmentTypeElement.asType()
 
-        writeInterfaceFile(pack, fragmentInjectorInterfaceName, annotatedFragmentType)
+        val anvilScope: ClassName? = generateAnvilParts(annotatedFragmentTypeElement, elements, annotatedFragmentType, pack, filer)
+
         writeExtensionFunctionFile(pack, fragmentInjectorInterfaceName, annotatedFragmentType)
+
+        writeInterfaceFile(pack, fragmentInjectorInterfaceName, annotatedFragmentType, anvilScope)
     }
 
     private fun writeInterfaceFile(
-        pack: String,
-        interfaceName: String,
-        fragmentType: TypeMirror
+            pack: String,
+            interfaceName: String,
+            fragmentType: TypeMirror,
+            anvilScope: ClassName?
     ) {
-//         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-//             pack, interfaceName, "fragment", fragmentType, className
-//         )
-//         interfaceFileSpec.writeTo(filer)
+         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
+             pack, interfaceName, "fragment", fragmentType, anvilScope
+         )
+         interfaceFileSpec.writeTo(filer)
     }
 
     private fun writeExtensionFunctionFile(
-        pack: String,
-        interfaceName: String,
-        fragmentType: TypeMirror
-    ) {
+            pack: String,
+            interfaceName: String,
+            fragmentType: TypeMirror) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
             pack, interfaceName, fragmentType
         )
@@ -78,10 +82,9 @@ internal class InjectableFragmentWriter(
 }
 
 private fun generateExtensionFunctionFileSpec(
-    pack: String,
-    interfaceName: String,
-    fragmentType: TypeMirror
-): FileSpec {
+        pack: String,
+        interfaceName: String,
+        fragmentType: TypeMirror): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
 
     val fileBuilder = FileSpec.builder(pack, interfaceName)
