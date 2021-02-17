@@ -9,9 +9,10 @@ dependencies {
     implementation deps.javaxInject
 
     debugImplementation project(":annotations")
+    debugImplementation project(":scoping")
     debugImplementation project(":runtime")
 
-    kaptDebug project(":processor")
+    kapt project(":processor")
     kaptAndroidTestDebug project(":processor")
 
     androidTestImplementation deps.androidx_test_core
@@ -22,4 +23,9 @@ dependencies {
     androidTestImplementation deps.truth
 
     androidTestImplementation project(':testing')
+    //needed for testing
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.32'
+    kapt 'com.google.dagger:dagger-compiler:2.32'
+    implementation 'com.google.dagger:dagger:2.32'
+
 }

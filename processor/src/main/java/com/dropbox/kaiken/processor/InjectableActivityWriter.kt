@@ -8,7 +8,6 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
-import java.lang.IllegalStateException
 import javax.annotation.processing.Filer
 import javax.annotation.processing.Messager
 import javax.lang.model.type.TypeMirror
@@ -59,7 +58,9 @@ internal class InjectableActivityWriter(
         val pack = elementUtils.getPackageOf(annotatedActivityTypeElement).toString()
         val annotatedActivityType = annotatedActivityTypeElement.asType()
 
-        val (injectableAnnotationComponent, anvilScope: ClassName?) = generateAnvilParts(annotatedActivityTypeElement, elements, annotatedActivityType, pack, filer)
+        val dependendecies = dependenciesValue(annotatedActivityTypeElement)
+
+        val (injectableAnnotationComponent, anvilScope: ClassName?) = generateAnvilParts(annotatedActivityTypeElement, elements, annotatedActivityType, pack, filer, dependendecies)
 
         writeExtensionFunctionFile(
                 pack,
@@ -118,38 +119,16 @@ internal class InjectableActivityWriter(
         val fileBuilder = FileSpec.builder(pack, interfaceName)
         val activityTypeName = activityType.asTypeName() as ClassName
 
-        val injectorClass = activityTypeName.peerClass("${activityTypeName.simpleName}Injector")
-        val injectorFactory =
-                ClassName("com.dropbox.kaiken.runtime", "InjectorFactory")
-                        .parameterizedBy(
-                                injectorClass
-                        )
 
-        val anonymousClass = TypeSpec
-                .anonymousClassBuilder()
-                .addSuperinterface(injectorFactory)
-                .addFunction(
-                        FunSpec.builder("createInjector")
-                                .addModifiers(KModifier.OVERRIDE)
-                                .addStatement(
-                                        "return Dagger${componentClass.simpleName}.factory().create(resolveDependencyProvider()) as %T",
-                                        injectorClass
-                                )
-                                .build()
-                )
-                .build()
-
-        return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
+        val extensionFunctions = fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
                 .addFunction(extensionFunctionSpec)
-                .addFunction(
-                        FunSpec.builder("injector")
-                                .receiver(Class.forName("com.dropbox.kaiken.scoping.DependencyProviderResolver"))
-                                .returns(injectorFactory)
-                                .addStatement("return %L", anonymousClass).build()
-                )
+        return extensionFunctions
+
 
                 .build()
     }
+
+
 
     private fun resolveInterfaceName(
             annotatedActivity: InjectableAnnotatedActivity

@@ -17,7 +17,3 @@ dependencies {
     implementation deps.dagger2
     kapt deps.dagger2_compiler
 }
-
-kapt {
-    correctErrorTypes = true
-}

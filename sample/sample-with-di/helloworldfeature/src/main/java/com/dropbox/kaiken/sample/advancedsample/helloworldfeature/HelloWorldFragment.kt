@@ -16,7 +16,7 @@ import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import javax.inject.Inject
 
-@Injectable
+@Injectable(COMPONENT = HelloWorldInternalComponent::class)
 class HelloWorldFragment : Fragment(), AuthOptionalFragment, InjectorHolder<HelloWorldInternalComponent> {
 
     @Inject

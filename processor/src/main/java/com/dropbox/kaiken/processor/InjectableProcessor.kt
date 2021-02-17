@@ -57,7 +57,7 @@ class InjectableProcessor : AbstractProcessor() {
         return try {
             processInternal(roundEnvironment)
         } catch (t: Throwable) {
-            messager.error(t.message ?: "error while processing")
+            messager.error(t.stackTraceToString()?: "error while processing")
             true
         }
     }

@@ -15,15 +15,3 @@ abstract class HelloWorldInternalComponent : HelloWorldFragmentInjector {
         ): HelloWorldInternalComponent
     }
 }
-
-fun DependencyProviderResolver.daggerInjector() =
-    object : InjectorFactory<HelloWorldInternalComponent> {
-        override fun createInjector() =
-            helloWorldInternalComponent(resolveDependencyProvider())
-    }
-
-private fun helloWorldInternalComponent(
-    dependencies: HelloWorldDependencies
-): HelloWorldInternalComponent = DaggerHelloWorldInternalComponent.factory().create(
-    dependencies
-)
