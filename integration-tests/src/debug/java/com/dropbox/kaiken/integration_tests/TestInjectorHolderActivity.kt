@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dropbox.kaiken.annotation.AutoInjectable
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.scoping.AuthRequiredActivity
+import dagger.Provides
+import java.lang.annotation.Documented
 import javax.inject.Inject
+import javax.inject.Scope
+import javax.inject.Singleton
 
 @AutoInjectable(dependency = LaunchDependencies::class)
 class TestInjectorHolderActivity : AppCompatActivity(), AuthRequiredActivity,
@@ -19,16 +23,15 @@ class TestInjectorHolderActivity : AppCompatActivity(), AuthRequiredActivity,
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         }
         super.onCreate(savedInstanceState)
+
     }
 
     override fun getInjectorFactory() = testInjectorHolderActivityComponentinjector()
-
-    fun testInject() {
-        inject()
-    }
 }
 
 interface LaunchDependencies {
     fun getLifecycleLogger(): String
 }
+
+
 

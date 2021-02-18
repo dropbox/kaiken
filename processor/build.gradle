@@ -1,6 +1,5 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
@@ -17,4 +16,17 @@ dependencies {
     implementation deps.javapoet
     implementation deps.kotlinpoet
     implementation 'com.squareup.anvil:annotations:2.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-compiler-embeddable:1.3.72"
+
+    implementation project(':annotations')
+    implementation depsA.dagger2.dagger
+    implementation depsA.jsr250
+    implementation depsA.kotlin.stdlib
+    implementation depsA.kotlinpoet
+
+    compileOnly depsA.auto.service.annotations
+    compileOnly depsA.kotlin.compiler
+
+    kapt depsA.auto.service.processor
+
 }

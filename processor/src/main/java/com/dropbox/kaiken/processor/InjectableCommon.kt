@@ -250,7 +250,7 @@ fun anvilOnPath(): Boolean {
     } catch (e: ClassNotFoundException) {
         return false
     }
-    return false
+    return true
 }
 
 inline fun <reified T : Annotation> Element.getAnnotationClassValue(f: T.() -> KClass<*>) =

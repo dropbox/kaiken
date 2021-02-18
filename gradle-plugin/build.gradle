@@ -1,0 +1,70 @@
+buildscript {
+  apply from: file("/Users/miken/src/kaiken/dependencies.gradle")
+
+  repositories {
+    google()
+    gradlePluginPortal()
+    mavenCentral()
+    jcenter()
+    maven {
+      url "https://dl.bintray.com/kotlin/kotlin-eap"
+    }
+    maven {
+      url "http://dl.bintray.com/kotlin/kotlin-dev"
+    }
+  }
+
+  dependencies {
+    classpath depsA.kotlin.gradle_plugin
+    classpath depsA.maven_publishing_plugin
+    classpath depsA.gradle_publishing_plugin
+//    classpath depsA.ktlint_plugin
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  jcenter()
+  maven {
+    url "https://dl.bintray.com/kotlin/kotlin-eap"
+  }
+  maven {
+    url "http://dl.bintray.com/kotlin/kotlin-dev"
+  }
+}
+
+
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.kapt'
+apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'com.gradle.plugin-publish'
+
+
+
+tasks.withType(JavaCompile).configureEach {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+//noinspection UnnecessaryQualifiedReference
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8
+    freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+  }
+}
+
+dependencies {
+  implementation depsA.kotlin.gradle_plugin
+  implementation depsA.kotlin.gradle_plugin_api
+  implementation depsA.kotlin.stdlib
+
+  // Compile only so that Java / Kotlin modules don't download it unnecessarily.
+  compileOnly depsA.android_gradle_plugin
+
+  compileOnly depsA.auto.service.annotations
+
+  kapt depsA.auto.service.processor
+}

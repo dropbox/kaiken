@@ -1,6 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
+apply plugin: 'com.dropbox.kaiken'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.dropbox.kaiken:gradle-plugin:1.0.9-SNAPSHOT"
+    }
+}
+//rootproject
 
 dependencies {
     implementation deps.androidx_fragment
@@ -29,3 +42,4 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.32'
 
 }
+

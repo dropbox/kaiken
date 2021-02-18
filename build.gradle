@@ -1,11 +1,16 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        google()
-        jcenter()
-    }
 
+
+buildscript {
+    ext.kotlin_version = "1.3.72"
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
     apply from: 'dependencies.gradle'
 
     dependencies {
@@ -19,30 +24,47 @@ buildscript {
         classpath "org.jetbrains.kotlinx:atomicfu-gradle-plugin:${versions.atomicFuPlugin}"
         classpath "com.vanniktech:gradle-maven-publish-plugin:0.13.0"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.10.1"
+        classpath "com.squareup.anvil:gradle-plugin:2.1.1-SNAPSHOT"
+        classpath: "com.dropbox.kaiken:gradle-plugin:1.0.9-SNAPSHOT"
+        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ['-Xjvm-default=enable']
+    }
+}
+
 
 apply from: 'dependencies.gradle'
 apply plugin: 'binary-compatibility-validator'
 
 apiValidation {
     ignoredProjects += [
-        "integration-tests", "processor",
-        "sample", "basic-scoping-sample", "sample-with-di", "app", "helloworldfeature"
+            "integration-tests", "processor",
+            "sample", "basic-scoping-sample", "sample-with-di", "app", "helloworldfeature"
     ]
 }
+
 
 allprojects {
     repositories {
         mavenCentral()
+        mavenLocal()
         google()
         jcenter()
     }
 
-    apply plugin: 'org.jlleitschuh.gradle.ktlint'
-    ktlint {
-        version = versions.ktlint
-    }
+//    apply plugin: 'org.jlleitschuh.gradle.ktlint'
+//    ktlint {
+//        version = versions.ktlint
+//    }
 
 
     // Workaround to prevent Gradle from stealing focus from other apps during tests run/etc.

@@ -7,7 +7,7 @@ import dagger.Component
 @Component(
     dependencies = [HelloWorldDependencies::class]
 )
-abstract class HelloWorldInternalComponent : HelloWorldFragmentInjector {
+abstract class HelloWorldInternalComponent  {
     @Component.Factory
     interface Factory {
         fun create(
