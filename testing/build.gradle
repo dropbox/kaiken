@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
+    implementation project(':annotations')
     implementation project(':runtime')
     implementation project(':scoping')
     implementation deps.androidx_fragment

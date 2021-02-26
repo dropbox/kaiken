@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.dropbox.kaiken.scoping.AuthAwareBroadcastReceiver
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerFragment
+import com.dropbox.kaiken.scoping.BuildConfig
 import com.dropbox.kaiken.scoping.ScopedServicesProvider
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.getViewingUserSelector
@@ -30,17 +31,30 @@ fun AuthAwareBroadcastReceiver.locateScopedServicesProvider(
 }
 
 private fun FragmentActivity.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
-    val appServicesProvider = locateScopedServicesProvider()
     val viewingUserSelector = intent.getViewingUserSelector()
+
+    if (BuildConfig.DEBUG) {
+        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)?.let { override ->
+            return override
+        }
+    }
+
+    val appServicesProvider = locateScopedServicesProvider()
 
     return locateAuthHelperStore(appServicesProvider, viewingUserSelector, authRequired)
 }
 
 private fun Fragment.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
-    val context = requireActivity()
-
-    val scopedServicesProvider = context.locateScopedServicesProvider()
     val viewingUserSelector = arguments?.getViewingUserSelector()
+
+    if (BuildConfig.DEBUG) {
+        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)?.let { override ->
+            return override
+        }
+    }
+
+    val context = requireActivity()
+    val scopedServicesProvider = context.locateScopedServicesProvider()
 
     return locateAuthHelperStore(scopedServicesProvider, viewingUserSelector, authRequired)
 }
@@ -67,7 +81,7 @@ internal class AuthViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return AuthViewModel(
-            AuthHelper(
+            RealAuthHelper(
                 scopedServicesProvider, viewingUserSelector, authRequired
             )
         ) as T

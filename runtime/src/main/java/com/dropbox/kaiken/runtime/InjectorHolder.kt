@@ -15,7 +15,11 @@ interface InjectorHolder<InjectorType : Injector> :
 
     private fun locateInjectorInternal(): InjectorType {
         val kclass: KClass<out InjectorHolder<*>> = this::class
-        var injectorFactory: InjectorFactory<InjectorType>? = Kaiken.injectorFactoryOverrideFor(kclass)
+        var injectorFactory: InjectorFactory<InjectorType>? = null
+
+        if (BuildConfig.DEBUG) {
+            injectorFactory = KaikenRuntimeTestUtils.injectorFactoryOverrideFor(kclass)
+        }
 
         if (injectorFactory == null) {
             injectorFactory = this.getInjectorFactory()

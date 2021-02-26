@@ -195,3 +195,9 @@ public final class com/dropbox/kaiken/scoping/internal/AuthHelperStoreKt {
 	public static final fun locateScopedServicesProvider (Lcom/dropbox/kaiken/scoping/AuthAwareBroadcastReceiver;Landroid/content/Context;)Lcom/dropbox/kaiken/scoping/ScopedServicesProvider;
 }
 
+public final class com/dropbox/kaiken/scoping/internal/KaikenScopingTestUtils {
+	public static final field INSTANCE Lcom/dropbox/kaiken/scoping/internal/KaikenScopingTestUtils;
+	public final fun clearOverrides ()V
+	public final fun disableAuthValidation (Ljava/lang/Object;)V
+}
+

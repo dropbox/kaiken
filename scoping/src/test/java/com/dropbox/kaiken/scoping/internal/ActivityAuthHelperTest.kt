@@ -17,7 +17,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector: ViewingUserSelector? = null
         val authRequired = false
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired
@@ -36,7 +36,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector: ViewingUserSelector? = null
         val authRequired = true
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired
@@ -58,7 +58,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector: ViewingUserSelector? = null
         val authRequired = false
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired
@@ -79,7 +79,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector: ViewingUserSelector? = null
         val authRequired = true
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired
@@ -98,7 +98,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector = ViewingUserSelector.fromUserId("notExistingUserId")
         val authRequired = false
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired
@@ -117,7 +117,7 @@ class ActivityAuthHelperTest {
         val viewingUserSelector = ViewingUserSelector.fromUserId("validUserId")
         val authRequired = false
 
-        val testObject = AuthHelper(
+        val testObject = RealAuthHelper(
             fakeScopedServicesProvider,
             viewingUserSelector,
             authRequired

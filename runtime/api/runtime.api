@@ -37,12 +37,12 @@ public final class com/dropbox/kaiken/runtime/InjectorViewModel : androidx/lifec
 	public final fun getInjector ()Ljava/lang/Object;
 }
 
-public abstract interface annotation class com/dropbox/kaiken/runtime/InternalKaikenApi : java/lang/annotation/Annotation {
-}
-
-public final class com/dropbox/kaiken/runtime/Kaiken {
-	public static final field INSTANCE Lcom/dropbox/kaiken/runtime/Kaiken;
+public final class com/dropbox/kaiken/runtime/KaikenRuntimeTestUtils {
+	public static final field INSTANCE Lcom/dropbox/kaiken/runtime/KaikenRuntimeTestUtils;
 	public final fun addInjectorFactoryOverride (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
-	public final fun clearAllInjectorFactoryOverrides ()V
+	public final fun addInjectorOverride (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/Injector;)V
+	public final fun clearOverrides ()V
+	public final fun getTestMode ()Z
+	public final fun setTestMode (Z)V
 }
 
