@@ -1,5 +1,6 @@
 # Change Log
-
+## Version 1.0.6 *(2021-03-01)*
+- Improved testeability by allowing override of InjectorHolderFactory.
 ## Version 1.0.5 *(2021-02-16)*
 - Added concrete classes for users with Android Navigation components
 
