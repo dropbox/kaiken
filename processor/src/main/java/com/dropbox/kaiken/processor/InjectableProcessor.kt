@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.processor
 
+import com.dropbox.kaiken.annotation.DaggerInjectable
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.error
 import com.dropbox.kaiken.processor.internal.isAndroidActivity
@@ -22,7 +23,6 @@ import javax.lang.model.util.Types
 @AutoService(Processor::class)
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.ISOLATING)
 class InjectableProcessor : AbstractProcessor() {
-
     private lateinit var filer: Filer
     private lateinit var messager: Messager
     private lateinit var elements: Elements
@@ -63,34 +63,54 @@ class InjectableProcessor : AbstractProcessor() {
     private fun processInternal(
         roundEnvironment: RoundEnvironment
     ): Boolean {
-        roundEnvironment.getElementsAnnotatedWith(Injectable::class.java).forEach { element ->
+        // roundEnvironment.getElementsAnnotatedWith(Injectable::class.java).forEach { element ->
+        //
+        //     val isClass = element.validateIsClass(messager) {
+        //         "Only classes can be annotated with ${Injectable::class.java.simpleName}"
+        //     }
+        //
+        //     if (!isClass) {
+        //         return true
+        //     }
+        //
+        //     // We validated it is a class
+        //     val typeElement = element as TypeElement
+        //
+        //     safeProcessInjectableElement(typeElement, elements)
+        // }
 
-            val isClass = element.validateIsClass(messager) {
-                "Only classes can be annotated with ${Injectable::class.java.simpleName}"
-            }
+        roundEnvironment.getElementsAnnotatedWith(DaggerInjectable::class.java).forEach { element ->
 
-            if (!isClass) {
-                return true
-            }
-
-            // We validated it is a class
+            // val isClass = element.validateIsClass(messager) {
+            //     "Only classes can be annotated with ${DaggerInjectable::class.java.simpleName}"
+            // }
+            //
+            // if (!isClass) {
+            //     return true
+            // }
+            //
+            // // We validated it is a class
             val typeElement = element as TypeElement
 
-            safeProcessInjectableElement(typeElement)
+            safeProcessInjectableElement(typeElement, elements)
         }
+
 
         return true
     }
 
-    private fun safeProcessInjectableElement(typeElement: TypeElement) {
+    private fun safeProcessInjectableElement(
+        typeElement: TypeElement,
+        elements: Elements
+    ) {
         try {
             when {
                 typeElement.isAndroidActivity() -> {
-                    processInjectableActivity(typeElement)
+                    processInjectableActivity(typeElement,elements)
                 }
-                typeElement.isAndroidFragment() -> {
-                    processInjectableFragment(typeElement)
-                }
+                // typeElement.isAndroidFragment() -> {
+                //     processInjectableFragment(typeElement)
+                // }
                 else -> {
                     messager.error(
                         typeElement,
@@ -104,14 +124,16 @@ class InjectableProcessor : AbstractProcessor() {
         }
     }
 
-    private fun processInjectableActivity(typeElement: TypeElement) {
+    private fun processInjectableActivity(
+        typeElement: TypeElement,
+        elements: Elements) {
         val annotatedActivity = InjectableAnnotatedActivity(typeElement)
 
-        if (!annotatedActivityValidator.isValid(annotatedActivity)) {
-            return
-        }
+        // if (!annotatedActivityValidator.isValid(annotatedActivity)) {
+        //     return
+        // }
 
-        annotatedActivityWriter.write(annotatedActivity)
+        annotatedActivityWriter.write(annotatedActivity, elements)
     }
 
     private fun processInjectableFragment(typeElement: TypeElement) {
@@ -124,7 +146,7 @@ class InjectableProcessor : AbstractProcessor() {
         annotatedFragmentWriter.write(annotatedFragment)
     }
 
-    override fun getSupportedAnnotationTypes() = setOf(Injectable::class.java.canonicalName)
+    override fun getSupportedAnnotationTypes() = setOf(DaggerInjectable::class.java.canonicalName, Injectable::class.java.canonicalName)
 
     override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latestSupported()
 }

@@ -58,10 +58,10 @@ internal class InjectableFragmentWriter(
         interfaceName: String,
         fragmentType: TypeMirror
     ) {
-        val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-            pack, interfaceName, "fragment", fragmentType
-        )
-        interfaceFileSpec.writeTo(filer)
+        // val interfaceFileSpec = generateInjectorInterfaceFileSpec(
+        //     pack, interfaceName, "fragment", fragmentType, className
+        // )
+        // interfaceFileSpec.writeTo(filer)
     }
 
     private fun writeExtensionFunctionFile(

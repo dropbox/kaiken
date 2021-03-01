@@ -16,4 +16,5 @@ dependencies {
 
     implementation deps.javapoet
     implementation deps.kotlinpoet
+    implementation 'com.squareup.anvil:annotations:2.1.0'
 }
