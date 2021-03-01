@@ -47,7 +47,7 @@ apply plugin: 'binary-compatibility-validator'
 
 apiValidation {
     ignoredProjects += [
-            "integration-tests", "processor",
+            "integration", "processor",
             "sample", "basic-scoping-sample", "sample-with-di", "app", "helloworldfeature"
     ]
 }

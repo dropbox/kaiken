@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <activity android:name="com.dropbox.kaiken.integration_tests.TestSimpleActivity"
+        <activity android:name="com.dropbox.kaiken.integration.TestSimpleActivity"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"
             android:exported="false">
         </activity>
-        <activity android:name="com.dropbox.kaiken.integration_tests.TestInjectorHolderActivity"
+        <activity android:name="com.dropbox.kaiken.integration.TestInjectorHolderActivity"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"
             android:exported="false">
         </activity>

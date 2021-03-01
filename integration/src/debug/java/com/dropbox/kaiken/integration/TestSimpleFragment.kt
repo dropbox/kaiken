@@ -1,18 +1,14 @@
-package com.dropbox.kaiken.integration_tests
+package com.dropbox.kaiken.integration
 
 import androidx.fragment.app.Fragment
-import com.dropbox.kaiken.annotation.AutoInjectable
-import com.dropbox.kaiken.annotation.Injectable
-import com.dropbox.kaiken.runtime.InjectorFactory
-import com.dropbox.kaiken.runtime.InjectorHolder
 import dagger.Component
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 interface Deps{
    fun getString()="String"
 }
-//@AutoInjectable(dependency = Deps::class)
 class TestSimpleFragment : Fragment(){
         //, InjectorHolder<TestSimpeFragmentInjector> {
     @Inject

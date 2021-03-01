@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.squareup.anvil'
+//apply plugin: 'com.squareup.anvil'
 apply plugin: 'com.dropbox.kaiken'
 
 buildscript {
@@ -43,3 +43,7 @@ dependencies {
 
 }
 
+android{
+    sourceSets.main.java.srcDirs = ['build/kaiken/']
+
+}

@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.processor.anvil.ClassScanner
-import com.dropbox.kaiken.processor.anvil.MyOwnGenerator
+import com.dropbox.kaiken.processor.anvil.InterfaceGenerator
 import com.google.auto.service.AutoService
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.com.intellij.mock.MockProject
@@ -26,7 +26,7 @@ class AnvilComponentRegistrar : ComponentRegistrar {
     val scanner = ClassScanner()
 
     val codeGenerators = mutableListOf(
-        MyOwnGenerator()
+        InterfaceGenerator()
     )
 
 

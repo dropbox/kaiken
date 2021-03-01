@@ -1,5 +1,5 @@
 include ':annotations'
-include ':integration-tests'
+include ':integration'
 include ':processor'
 include ':runtime'
 include ':scoping'

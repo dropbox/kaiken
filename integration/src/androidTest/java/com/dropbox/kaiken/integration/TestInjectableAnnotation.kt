@@ -1,32 +1,21 @@
-package com.dropbox.kaiken.integration_tests
-
-import androidx.test.core.app.ActivityScenario
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.dropbox.kaiken.runtime.InjectorFactory
-import com.dropbox.kaiken.testing.KaikenTestRule
-import com.google.common.truth.Truth.assertThat
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-
-@RunWith(AndroidJUnit4::class)
-class TestKaikenTestRule {
+//package com.dropbox.kaiken.integrationtests
+//
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.fragment.app.Fragment
+//import androidx.test.core.app.ActivityScenario
+//import androidx.test.ext.junit.runners.AndroidJUnit4
+//import com.dropbox.kaiken.runtime.InjectorNotFoundException
+//import com.google.common.truth.Truth.assertThat
+//import org.junit.After
+//import org.junit.Test
+//import org.junit.runner.RunWith
+//import java.lang.RuntimeException
+//
+//@RunWith(AndroidJUnit4::class)
+//class TestInjectableAnnotation {
 //    private var injectorHolderScenario: ActivityScenario<TestInjectorHolderActivity>? = null
 //    private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
 //
-//    @get:Rule
-//    var kaikenTestRule: KaikenTestRule = KaikenTestRule(TestInjectorHolderActivity::class, OverriddenInjectorFactory())
-//
-//    @Before
-//    fun setup() {
-//        kaikenTestRule.setInjectorFactoryHolderOverrideFor(
-//            TestInjectorHolderFragment::class,
-//            OverriddenInjectorFactory()
-//        )
-//    }
-
 //    @After
 //    fun teardown() {
 //        injectorHolderScenario?.close()
@@ -34,7 +23,7 @@ class TestKaikenTestRule {
 //    }
 //
 //    @Test
-//    fun givenInjectorHolderActivityWHENInjectItTHENItUsesTheTestsRuleOverride() {
+//    fun givenInjectorHolderActivityWHENInjectItTHENItWorks() {
 //        injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 //
 //        injectorHolderScenario!!.onActivity { activity ->
@@ -44,14 +33,12 @@ class TestKaikenTestRule {
 //            activity.testInject()
 //
 //            // THEN
-//            assertThat(activity.message).isEqualTo(
-//                "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-//            )
+//            assertThat(activity.message).isEqualTo("Hello Activity!")
 //        }
 //    }
 //
 //    @Test
-//    fun givenSimpleFragmentChildOfInjectorHolderActivityWHENInjectTHENItReachesUpForAndUsesInjectorOverride() {
+//    fun givenSimpleFragmentChildOfInjectorHolderActivityWHENInjectTHENItReachesUpForInjection() {
 //        injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 //
 //        injectorHolderScenario!!.onActivity { activity ->
@@ -66,9 +53,33 @@ class TestKaikenTestRule {
 //            fragment.testInject()
 //
 //            // THEN
-//            assertThat(fragment.message).isEqualTo(
-//                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-//            )
+//            assertThat(fragment.message).isEqualTo("Hello Fragment from Activity!")
+//        }
+//    }
+//
+//    @Test(expected = InjectorNotFoundException::class)
+//    fun givenSimpleFragmentChildOfSimpleActivityWHENInjectTHENItCrashes() {
+//        simplerScenario = ActivityScenario.launch(TestSimpleActivity::class.java)
+//
+//        try {
+//            simplerScenario!!.onActivity { activity ->
+//
+//                // GIVEN
+//                val fragment = TestSimpleFragment()
+//                activity.addFragment(fragment)
+//
+//                assertThat(fragment.message).isNull()
+//
+//                // WHEN
+//                fragment.testInject()
+//
+//                // THEN
+//                // Crash
+//            }
+//        } catch (exception: RuntimeException) {
+//            // The lambda wraps the InjectorNotFoundException in a RuntimeException so we need to
+//            // unwrap it and rethrow it
+//            throw exception.cause!!
 //        }
 //    }
 //
@@ -87,9 +98,7 @@ class TestKaikenTestRule {
 //            fragment.testInject()
 //
 //            // THEN
-//            assertThat(fragment.message).isEqualTo(
-//                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-//            )
+//            assertThat(fragment.message).isEqualTo("Hello Fragment!")
 //        }
 //    }
 //
@@ -108,19 +117,11 @@ class TestKaikenTestRule {
 //            fragment.testInject()
 //
 //            // THEN
-//            assertThat(fragment.message).isNotEqualTo(
-//                "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-//            )
-//            assertThat(fragment.message).isEqualTo(
-//                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-//            )
+//            assertThat(fragment.message).isNotEqualTo("Hello Fragment from Activity!")
+//            assertThat(fragment.message).isEqualTo("Hello Fragment!")
 //        }
 //    }
 //
-//    /**
-//     * This is important. Even when overriding the injector for test purposes, we preserve the retention on
-//     * configuration change functionality.
-//     */
 //    @Test
 //    fun givenInjectorHolderActivityWHENRotatedTHENSameInjectorIsReturned() {
 //        injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
@@ -155,25 +156,10 @@ class TestKaikenTestRule {
 //    }
 //}
 //
-//class OverriddenInjectorFactory : InjectorFactory<TestInjectorHolderActivityInjector> {
-//    override fun createInjector(): TestInjectorHolderActivityInjector {
-//        return OverriddenTestInjectorHolder()
-//    }
+//internal fun AppCompatActivity.addFragment(fragment: Fragment) {
+//    supportFragmentManager.beginTransaction()
+//        .add(fragment, "tag")
+//        .commit()
+//
+//    supportFragmentManager.executePendingTransactions()
 //}
-//
-//class OverriddenTestInjectorHolder :
-//    TestInjectorHolderActivityInjector,
-//    TestInjectorHolderFragmentInjector,
-//    TestSimpleFragmentInjector {
-//    override fun inject(activity: TestInjectorHolderActivity) {
-//        activity.message = "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-//    }
-//
-//    override fun inject(fragment: TestInjectorHolderFragment) {
-//        fragment.message = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-//    }
-//
-//    override fun inject(fragment: TestSimpleFragment) {
-//        fragment.message = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-//    }
-}
