@@ -7,10 +7,13 @@ dependencies {
     implementation deps.kotlinStdLib
     implementation deps.lifecycle_viewmodel
 
+    implementation project(":annotations")
+
     debugImplementation deps.appcompat
 
     testImplementation deps.kotlintestjunit
     testImplementation deps.truth
+    testImplementation project(':testing')
 
     androidTestImplementation deps.androidx_test_runner
     androidTestImplementation deps.kotlintestjunit

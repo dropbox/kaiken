@@ -10,6 +10,7 @@ dependencies {
 
     debugImplementation project(":annotations")
     debugImplementation project(":runtime")
+    debugImplementation project(":scoping")
 
     kaptDebug project(":processor")
 

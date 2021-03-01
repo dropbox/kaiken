@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.runtime
+package com.dropbox.kaiken.annotation
 
 @RequiresOptIn(
     level = RequiresOptIn.Level.ERROR,

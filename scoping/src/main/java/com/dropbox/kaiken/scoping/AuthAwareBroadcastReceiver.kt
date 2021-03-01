@@ -2,7 +2,7 @@ package com.dropbox.kaiken.scoping
 
 import android.content.Context
 import android.content.Intent
-import com.dropbox.kaiken.scoping.internal.AuthHelper
+import com.dropbox.kaiken.scoping.internal.RealAuthHelper
 import com.dropbox.kaiken.scoping.internal.locateScopedServicesProvider
 
 interface AuthAwareBroadcastReceiver {
@@ -21,7 +21,7 @@ interface AuthAwareBroadcastReceiver {
         val scopedServicesProvider = this.locateScopedServicesProvider(context)
         val viewingUserSelector = intent.getViewingUserSelector()
 
-        val authHelper = AuthHelper(scopedServicesProvider, viewingUserSelector, authRequired)
+        val authHelper = RealAuthHelper(scopedServicesProvider, viewingUserSelector, authRequired)
 
         return if (authHelper.validateAuth()) {
             authHelper.resolveDependencyProvider()
