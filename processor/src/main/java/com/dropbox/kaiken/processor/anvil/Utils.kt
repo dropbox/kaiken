@@ -42,7 +42,7 @@ import org.jetbrains.kotlin.util.getExceptionMessage
 import org.jetbrains.org.objectweb.asm.Type
 import javax.inject.Singleton
 
-internal val autoInjectableFqname = FqName(Singleton::class.java.canonicalName)
+internal val singletonAnnotation = FqName(Singleton::class.java.canonicalName)
 
 internal val contributesToFqName = FqName(ContributesTo::class.java.canonicalName)
 internal val contributesBindingFqName = FqName(ContributesBinding::class.java.canonicalName)

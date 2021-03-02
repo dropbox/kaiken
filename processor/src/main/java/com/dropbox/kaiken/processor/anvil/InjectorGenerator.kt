@@ -6,7 +6,6 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
-import org.jetbrains.kotlin.com.intellij.psi.PsiClass
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtFile
@@ -20,7 +19,7 @@ internal class InjectorGenerator : CodeGenerator {
     ): Collection<CodeGenerator.GeneratedFile> {
         return projectFiles.asSequence()
                 .flatMap { it.classesAndInnerClasses() }
-                .filter { it.hasAnnotation(autoInjectableFqname) }
+                .filter { it.hasAnnotation(singletonAnnotation) }
                 .map { clazz: KtClassOrObject ->
                     val packageName = clazz.containingKtFile.packageFqName.asString()
                     val className = clazz.requireFqName()
