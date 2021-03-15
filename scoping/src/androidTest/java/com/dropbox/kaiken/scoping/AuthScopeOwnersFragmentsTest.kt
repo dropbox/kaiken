@@ -148,7 +148,7 @@ class AuthScopeOwnersFragmentsTest {
     .assertFragmentCanResolveAppScopedDependency() {
         onActivity { activity ->
             val testObject = activity.findTestAuthAwareScopedFragment()
-            assertThat(testObject.onAttachExceptionThrown).isNull()
+            assertThat(testObject.onAttachExceptionThrown).isEmpty()
 
             val resolvedDependencies = testObject.resolvedDependencies
             assertThat(resolvedDependencies).isNotNull()
@@ -162,7 +162,7 @@ class AuthScopeOwnersFragmentsTest {
     .assertFragmentCanResolveUserScopedDependency() {
         onActivity { activity ->
             val testObject = activity.findTestAuthAwareScopedFragment()
-            assertThat(testObject.onAttachExceptionThrown).isNull()
+            assertThat(testObject.onAttachExceptionThrown).isEmpty()
 
             val resolvedDependencies = testObject.resolvedDependencies
             assertThat(resolvedDependencies).isNotNull()

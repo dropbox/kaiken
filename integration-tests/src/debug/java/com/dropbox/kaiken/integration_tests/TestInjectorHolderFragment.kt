@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.integration_tests
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.runtime.InjectorFactory
@@ -9,9 +10,14 @@ import javax.inject.Inject
 @Injectable
 class TestInjectorHolderFragment : Fragment(), InjectorHolder<TestInjectorHolderFragmentInjector> {
     @Inject
-    var message: String? = null
+    lateinit var message: String
 
     override fun getInjectorFactory() = fakeInjectorFactory()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        message = ""
+    }
 
     fun testInject() {
         inject()

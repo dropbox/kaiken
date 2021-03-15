@@ -11,19 +11,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-private const val messageActivity = "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-private const val messageFragment = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-
 @RunWith(AndroidJUnit4::class)
-class TestKaikenTestRule {
+class TestKaikenTestRuleComponentAsInjectorHolder {
     private var injectorHolderScenario: ActivityScenario<TestInjectorHolderActivity>? = null
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
 
     @get:Rule
     var kaikenTestRule: KaikenTestRule = KaikenTestRule(
         injectorFactoryOverrides = mapOf(
-            TestInjectorHolderActivity::class to OverriddenInjectorFactory(),
-            TestInjectorHolderFragment::class to OverriddenInjectorFactory()
+            TestInjectorHolderActivity::class to OverriddenInjectorFactoryWithDaggerActivity(),
+                TestInjectorHolderFragmentWithDagger::class to OverriddenInjectorFactoryWithDagger()
         )
     )
 
@@ -45,7 +42,7 @@ class TestKaikenTestRule {
 
             // THEN
             assertThat(activity.message).isEqualTo(
-                    messageActivity
+                "activity"
             )
         }
     }
@@ -67,7 +64,7 @@ class TestKaikenTestRule {
 
             // THEN
             assertThat(fragment.message).isEqualTo(
-                messageFragment
+                "activity"
             )
         }
     }
@@ -78,7 +75,7 @@ class TestKaikenTestRule {
 
         simplerScenario!!.onActivity { activity ->
             // GIVEN
-            val fragment = TestInjectorHolderFragment()
+            val fragment = TestInjectorHolderFragmentWithDagger()
             activity.addFragment(fragment)
 
             assertThat(fragment.message).isEmpty()
@@ -87,7 +84,9 @@ class TestKaikenTestRule {
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isEqualTo(messageFragment)
+            assertThat(fragment.message).isEqualTo(
+                "test"
+            )
         }
     }
 
@@ -97,7 +96,7 @@ class TestKaikenTestRule {
 
         injectorHolderScenario!!.onActivity { activity ->
             // GIVEN
-            val fragment = TestInjectorHolderFragment()
+            val fragment = TestInjectorHolderFragmentWithDagger()
             activity.addFragment(fragment)
 
             assertThat(fragment.message).isEmpty()
@@ -107,10 +106,10 @@ class TestKaikenTestRule {
 
             // THEN
             assertThat(fragment.message).isNotEqualTo(
-                    messageActivity
+                "activity"
             )
             assertThat(fragment.message).isEqualTo(
-                messageFragment
+                "test"
             )
         }
     }
@@ -133,7 +132,7 @@ class TestKaikenTestRule {
             injectorBeforeRotation = activity.locateInjector()
 
             activity.testInject()
-            assertThat(activity.message).isEqualTo(messageActivity)
+            assertThat(activity.message).isNotNull()
         }
 
         // WHEN
@@ -146,32 +145,24 @@ class TestKaikenTestRule {
             injectorAfterRotation = activity.locateInjector()
 
             activity.testInject()
-            assertThat(activity.message).isEqualTo(messageActivity)
+            assertThat(activity.message).isNotNull()
 
             assertThat(injectorAfterRotation).isSameInstanceAs(injectorBeforeRotation)
         }
     }
 }
 
-class OverriddenInjectorFactory : InjectorFactory<TestInjectorHolderActivityInjector> {
-    override fun createInjector(): TestInjectorHolderActivityInjector {
-        return OverriddenTestInjectorHolder()
+class OverriddenInjectorFactoryWithDagger : InjectorFactory<TestComponent> {
+    override fun createInjector(): TestComponent {
+        return DaggerTestComponent.builder().dependencies(object: Dependencies {}).build()
     }
 }
 
-class OverriddenTestInjectorHolder :
-    TestInjectorHolderActivityInjector,
-    TestInjectorHolderFragmentInjector,
-    TestSimpleFragmentInjector {
-    override fun inject(activity: TestInjectorHolderActivity) {
-        activity.message = messageActivity
-    }
-
-    override fun inject(fragment: TestInjectorHolderFragment) {
-        fragment.message = messageFragment
-    }
-
-    override fun inject(fragment: TestSimpleFragment) {
-        fragment.message = messageFragment
+class OverriddenInjectorFactoryWithDaggerActivity : InjectorFactory<TestComponent> {
+    override fun createInjector(): TestComponent {
+        return DaggerTestComponent.builder().dependencies(object: Dependencies {
+            override val messages: String
+                get() = "activity"
+        }).build()
     }
 }

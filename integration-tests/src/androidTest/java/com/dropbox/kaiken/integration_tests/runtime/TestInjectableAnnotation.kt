@@ -33,7 +33,7 @@ class TestInjectableAnnotation {
         injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             // WHEN
             activity.testInject()
@@ -53,7 +53,7 @@ class TestInjectableAnnotation {
             val fragment = TestSimpleFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
@@ -74,7 +74,7 @@ class TestInjectableAnnotation {
                 val fragment = TestSimpleFragment()
                 activity.addFragment(fragment)
 
-                assertThat(fragment.message).isNull()
+                assertThat(fragment.message).isEmpty()
 
                 // WHEN
                 fragment.testInject()
@@ -98,7 +98,7 @@ class TestInjectableAnnotation {
             val fragment = TestInjectorHolderFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
@@ -117,7 +117,7 @@ class TestInjectableAnnotation {
             val fragment = TestInjectorHolderFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
@@ -137,7 +137,7 @@ class TestInjectableAnnotation {
 
         // GIVEN
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             injectorBeforeRotation = activity.locateInjector()
 
@@ -150,7 +150,7 @@ class TestInjectableAnnotation {
 
         // THEN
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             injectorAfterRotation = activity.locateInjector()
 

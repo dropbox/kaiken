@@ -11,9 +11,10 @@ import javax.inject.Inject
 @Injectable
 class TestInjectorHolderActivity : AppCompatActivity(), InjectorHolder<TestInjectorHolderActivityInjector> {
     @Inject
-    var message: String? = null
+    lateinit var message: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        message = ""
         if (android.os.Build.VERSION.SDK_INT != 26) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         }
