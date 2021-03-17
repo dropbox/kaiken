@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
+    implementation deps.dagger2
+    kaptDebug deps.dagger2_compiler
     implementation deps.androidx_fragment
     implementation deps.appcompat
     implementation deps.kotlinStdLib
@@ -22,4 +24,7 @@ dependencies {
     androidTestImplementation deps.truth
 
     androidTestImplementation project(':testing')
+}
+kapt {
+    correctErrorTypes = true
 }

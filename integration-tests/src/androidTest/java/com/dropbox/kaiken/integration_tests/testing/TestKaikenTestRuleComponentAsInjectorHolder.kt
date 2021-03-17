@@ -1,26 +1,28 @@
-package com.dropbox.kaiken.integration_tests.runtime
+package com.dropbox.kaiken.integration_tests
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.dropbox.kaiken.integration_tests.TestInjectorHolderActivity
-import com.dropbox.kaiken.integration_tests.TestInjectorHolderActivityInjector
-import com.dropbox.kaiken.integration_tests.TestInjectorHolderFragment
-import com.dropbox.kaiken.integration_tests.TestSimpleActivity
-import com.dropbox.kaiken.integration_tests.TestSimpleFragment
-import com.dropbox.kaiken.integration_tests.UiTestUtils
-import com.dropbox.kaiken.runtime.InjectorNotFoundException
+import com.dropbox.kaiken.integration_tests.runtime.addFragment
+import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.testing.KaikenTestRule
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.RuntimeException
 
 @RunWith(AndroidJUnit4::class)
-class TestInjectableAnnotation {
+class TestKaikenTestRuleComponentAsInjectorHolder {
     private var injectorHolderScenario: ActivityScenario<TestInjectorHolderActivity>? = null
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
+
+    @get:Rule
+    var kaikenTestRule: KaikenTestRule = KaikenTestRule(
+        injectorFactoryOverrides = mapOf(
+            TestInjectorHolderActivity::class to OverriddenInjectorFactoryWithDaggerActivity(),
+            TestInjectorHolderFragmentWithDagger::class to OverriddenInjectorFactoryWithDagger()
+        )
+    )
 
     @After
     fun teardown() {
@@ -29,7 +31,7 @@ class TestInjectableAnnotation {
     }
 
     @Test
-    fun givenInjectorHolderActivityWHENInjectItTHENItWorks() {
+    fun givenInjectorHolderActivityWHENInjectItTHENItUsesTheTestsRuleOverride() {
         injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 
         injectorHolderScenario!!.onActivity { activity ->
@@ -39,12 +41,14 @@ class TestInjectableAnnotation {
             activity.testInject()
 
             // THEN
-            assertThat(activity.message).isEqualTo("Hello Activity!")
+            assertThat(activity.message).isEqualTo(
+                "activity"
+            )
         }
     }
 
     @Test
-    fun givenSimpleFragmentChildOfInjectorHolderActivityWHENInjectTHENItReachesUpForInjection() {
+    fun givenSimpleFragmentChildOfInjectorHolderActivityWHENInjectTHENItReachesUpForAndUsesInjectorOverride() {
         injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 
         injectorHolderScenario!!.onActivity { activity ->
@@ -59,33 +63,9 @@ class TestInjectableAnnotation {
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isEqualTo("Hello Fragment from Activity!")
-        }
-    }
-
-    @Test(expected = InjectorNotFoundException::class)
-    fun givenSimpleFragmentChildOfSimpleActivityWHENInjectTHENItCrashes() {
-        simplerScenario = ActivityScenario.launch(TestSimpleActivity::class.java)
-
-        try {
-            simplerScenario!!.onActivity { activity ->
-
-                // GIVEN
-                val fragment = TestSimpleFragment()
-                activity.addFragment(fragment)
-
-                assertThat(fragment.message).isEmpty()
-
-                // WHEN
-                fragment.testInject()
-
-                // THEN
-                // Crash
-            }
-        } catch (exception: RuntimeException) {
-            // The lambda wraps the InjectorNotFoundException in a RuntimeException so we need to
-            // unwrap it and rethrow it
-            throw exception.cause!!
+            assertThat(fragment.message).isEqualTo(
+                "activity"
+            )
         }
     }
 
@@ -95,7 +75,7 @@ class TestInjectableAnnotation {
 
         simplerScenario!!.onActivity { activity ->
             // GIVEN
-            val fragment = TestInjectorHolderFragment()
+            val fragment = TestInjectorHolderFragmentWithDagger()
             activity.addFragment(fragment)
 
             assertThat(fragment.message).isEmpty()
@@ -104,7 +84,9 @@ class TestInjectableAnnotation {
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isEqualTo("Hello Fragment!")
+            assertThat(fragment.message).isEqualTo(
+                "test"
+            )
         }
     }
 
@@ -114,7 +96,7 @@ class TestInjectableAnnotation {
 
         injectorHolderScenario!!.onActivity { activity ->
             // GIVEN
-            val fragment = TestInjectorHolderFragment()
+            val fragment = TestInjectorHolderFragmentWithDagger()
             activity.addFragment(fragment)
 
             assertThat(fragment.message).isEmpty()
@@ -123,11 +105,19 @@ class TestInjectableAnnotation {
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isNotEqualTo("Hello Fragment from Activity!")
-            assertThat(fragment.message).isEqualTo("Hello Fragment!")
+            assertThat(fragment.message).isNotEqualTo(
+                "activity"
+            )
+            assertThat(fragment.message).isEqualTo(
+                "test"
+            )
         }
     }
 
+    /**
+     * This is important. Even when overriding the injector for test purposes, we preserve the retention on
+     * configuration change functionality.
+     */
     @Test
     fun givenInjectorHolderActivityWHENRotatedTHENSameInjectorIsReturned() {
         injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
@@ -162,10 +152,17 @@ class TestInjectableAnnotation {
     }
 }
 
-internal fun AppCompatActivity.addFragment(fragment: Fragment) {
-    supportFragmentManager.beginTransaction()
-        .add(fragment, "tag")
-        .commit()
+class OverriddenInjectorFactoryWithDagger : InjectorFactory<TestComponent> {
+    override fun createInjector(): TestComponent {
+        return DaggerTestComponent.builder().dependencies(object : Dependencies {}).build()
+    }
+}
 
-    supportFragmentManager.executePendingTransactions()
+class OverriddenInjectorFactoryWithDaggerActivity : InjectorFactory<TestComponent> {
+    override fun createInjector(): TestComponent {
+        return DaggerTestComponent.builder().dependencies(object : Dependencies {
+            override val messages: String
+                get() = "activity"
+        }).build()
+    }
 }

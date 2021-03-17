@@ -48,7 +48,7 @@ class AuthAwareBroadcastReceiverTest {
             context, intent
         )
 
-        assertThat(resolvedDependencies).isNull()
+        assertThat(resolvedDependencies).isEmpty()
     }
 
     @Test

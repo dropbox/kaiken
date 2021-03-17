@@ -11,18 +11,22 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+private const val messageActivity = "Hello Activity! I've overridden the default injector! Muaha Muaha!"
+private const val messageFragment = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
+
 @RunWith(AndroidJUnit4::class)
 class TestKaikenTestRule {
     private var injectorHolderScenario: ActivityScenario<TestInjectorHolderActivity>? = null
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
 
     @get:Rule
-    var kaikenTestRule: KaikenTestRule = KaikenTestRule(
-        injectorFactoryOverrides = mapOf(
-            TestInjectorHolderActivity::class to OverriddenInjectorFactory(),
-            TestInjectorHolderFragment::class to OverriddenInjectorFactory()
+    var kaikenTestRule: KaikenTestRule =
+        KaikenTestRule(
+            injectorFactoryOverrides = mapOf(
+                TestInjectorHolderActivity::class to OverriddenInjectorFactory(),
+                TestInjectorHolderFragment::class to OverriddenInjectorFactory()
+            )
         )
-    )
 
     @After
     fun teardown() {
@@ -35,15 +39,13 @@ class TestKaikenTestRule {
         injectorHolderScenario = ActivityScenario.launch(TestInjectorHolderActivity::class.java)
 
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             // WHEN
             activity.testInject()
 
             // THEN
-            assertThat(activity.message).isEqualTo(
-                "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-            )
+            assertThat(activity.message).isEqualTo(messageActivity)
         }
     }
 
@@ -57,15 +59,13 @@ class TestKaikenTestRule {
             val fragment = TestSimpleFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isEqualTo(
-                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-            )
+            assertThat(fragment.message).isEqualTo(messageFragment)
         }
     }
 
@@ -78,15 +78,13 @@ class TestKaikenTestRule {
             val fragment = TestInjectorHolderFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
 
             // THEN
-            assertThat(fragment.message).isEqualTo(
-                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
-            )
+            assertThat(fragment.message).isEqualTo(messageFragment)
         }
     }
 
@@ -99,17 +97,17 @@ class TestKaikenTestRule {
             val fragment = TestInjectorHolderFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
 
             // THEN
             assertThat(fragment.message).isNotEqualTo(
-                "Hello Activity! I've overridden the default injector! Muaha Muaha!"
+                messageActivity
             )
             assertThat(fragment.message).isEqualTo(
-                "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
+                messageFragment
             )
         }
     }
@@ -127,12 +125,12 @@ class TestKaikenTestRule {
 
         // GIVEN
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             injectorBeforeRotation = activity.locateInjector()
 
             activity.testInject()
-            assertThat(activity.message).isNotNull()
+            assertThat(activity.message).isEqualTo(messageActivity)
         }
 
         // WHEN
@@ -140,12 +138,12 @@ class TestKaikenTestRule {
 
         // THEN
         injectorHolderScenario!!.onActivity { activity ->
-            assertThat(activity.message).isNull()
+            assertThat(activity.message).isEmpty()
 
             injectorAfterRotation = activity.locateInjector()
 
             activity.testInject()
-            assertThat(activity.message).isNotNull()
+            assertThat(activity.message).isEqualTo(messageActivity)
 
             assertThat(injectorAfterRotation).isSameInstanceAs(injectorBeforeRotation)
         }
@@ -163,14 +161,14 @@ class OverriddenTestInjectorHolder :
     TestInjectorHolderFragmentInjector,
     TestSimpleFragmentInjector {
     override fun inject(activity: TestInjectorHolderActivity) {
-        activity.message = "Hello Activity! I've overridden the default injector! Muaha Muaha!"
+        activity.message = messageActivity
     }
 
     override fun inject(fragment: TestInjectorHolderFragment) {
-        fragment.message = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
+        fragment.message = messageFragment
     }
 
     override fun inject(fragment: TestSimpleFragment) {
-        fragment.message = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
+        fragment.message = messageFragment
     }
 }

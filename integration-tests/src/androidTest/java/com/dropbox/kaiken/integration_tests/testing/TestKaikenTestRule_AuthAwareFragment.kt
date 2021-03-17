@@ -36,7 +36,7 @@ class TestKaikenTestRule {
             val fragment = TestAuthAwareFragment()
             activity.addFragment(fragment)
 
-            assertThat(fragment.message).isNull()
+            assertThat(fragment.message).isEmpty()
 
             // WHEN
             fragment.testInject()
