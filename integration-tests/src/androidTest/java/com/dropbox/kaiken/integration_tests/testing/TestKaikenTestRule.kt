@@ -20,12 +20,13 @@ class TestKaikenTestRule {
     private var simplerScenario: ActivityScenario<TestSimpleActivity>? = null
 
     @get:Rule
-    var kaikenTestRule: KaikenTestRule = KaikenTestRule(
+    var kaikenTestRule: KaikenTestRule =
+        KaikenTestRule(
             injectorFactoryOverrides = mapOf(
-                    TestInjectorHolderActivity::class to OverriddenInjectorFactory(),
-                    TestInjectorHolderFragment::class to OverriddenInjectorFactory()
+                TestInjectorHolderActivity::class to OverriddenInjectorFactory(),
+                TestInjectorHolderFragment::class to OverriddenInjectorFactory()
             )
-    )
+        )
 
     @After
     fun teardown() {
@@ -103,10 +104,10 @@ class TestKaikenTestRule {
 
             // THEN
             assertThat(fragment.message).isNotEqualTo(
-                    messageActivity
+                messageActivity
             )
             assertThat(fragment.message).isEqualTo(
-                    messageFragment
+                messageFragment
             )
         }
     }
@@ -156,9 +157,9 @@ class OverriddenInjectorFactory : InjectorFactory<TestInjectorHolderActivityInje
 }
 
 class OverriddenTestInjectorHolder :
-        TestInjectorHolderActivityInjector,
-        TestInjectorHolderFragmentInjector,
-        TestSimpleFragmentInjector {
+    TestInjectorHolderActivityInjector,
+    TestInjectorHolderFragmentInjector,
+    TestSimpleFragmentInjector {
     override fun inject(activity: TestInjectorHolderActivity) {
         activity.message = messageActivity
     }

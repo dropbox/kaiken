@@ -28,7 +28,7 @@ class UserServicesProviderTest {
         val userServices = testObject.provideUserServicesOf(viewingUserSelector)
 
         // THEN
-        assertThat(userServices).isEmpty()
+        assertThat(userServices).isNull()
     }
 }
 

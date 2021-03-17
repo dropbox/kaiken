@@ -20,7 +20,7 @@ class TestKaikenTestRuleComponentAsInjectorHolder {
     var kaikenTestRule: KaikenTestRule = KaikenTestRule(
         injectorFactoryOverrides = mapOf(
             TestInjectorHolderActivity::class to OverriddenInjectorFactoryWithDaggerActivity(),
-                TestInjectorHolderFragmentWithDagger::class to OverriddenInjectorFactoryWithDagger()
+            TestInjectorHolderFragmentWithDagger::class to OverriddenInjectorFactoryWithDagger()
         )
     )
 
@@ -154,13 +154,13 @@ class TestKaikenTestRuleComponentAsInjectorHolder {
 
 class OverriddenInjectorFactoryWithDagger : InjectorFactory<TestComponent> {
     override fun createInjector(): TestComponent {
-        return DaggerTestComponent.builder().dependencies(object: Dependencies {}).build()
+        return DaggerTestComponent.builder().dependencies(object : Dependencies {}).build()
     }
 }
 
 class OverriddenInjectorFactoryWithDaggerActivity : InjectorFactory<TestComponent> {
     override fun createInjector(): TestComponent {
-        return DaggerTestComponent.builder().dependencies(object: Dependencies {
+        return DaggerTestComponent.builder().dependencies(object : Dependencies {
             override val messages: String
                 get() = "activity"
         }).build()

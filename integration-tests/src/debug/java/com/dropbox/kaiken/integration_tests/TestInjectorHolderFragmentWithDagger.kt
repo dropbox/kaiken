@@ -24,9 +24,7 @@ class TestInjectorHolderFragmentWithDagger : AuthAwareFragment, Fragment(), Inje
     fun testInject() {
         inject()
     }
-
     override fun getInjectorFactory(): InjectorFactory<TestComponent> = daggerInjector()
-
 }
 
 @Component(dependencies = [Dependencies::class])
@@ -38,15 +36,14 @@ interface Dependencies {
 }
 
 fun DependencyProviderResolver.daggerInjector() =
-        object : InjectorFactory<TestComponent> {
-            override fun createInjector() =
-                    buildPhotosInternalComponent(resolveDependencyProvider())
-        }
+    object : InjectorFactory<TestComponent> {
+        override fun createInjector() =
+            buildPhotosInternalComponent(resolveDependencyProvider())
+    }
 
 private fun buildPhotosInternalComponent(
-        dependencies: TestComponent
-): TestComponent = DaggerTestComponent.builder().build()
-
+    dependencies: TestComponent
+): TestComponent = DaggerTestComponent.builder().dependencies(dependencies).build()
 
 internal fun Fragment.providePhotosPresenterDependencies():
-        Dependencies = findInjector<TestComponent>()
+    Dependencies = findInjector<TestComponent>()
