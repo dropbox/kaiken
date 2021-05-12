@@ -197,3 +197,5 @@ implementation "com.dropbox.kaiken:annotation:${kaiken_version}"
 kapt "com.dropbox.kaiken:processor:${kaiken_version}"
 implementation "com.dropbox.kaiken:runtime:${kaiken_version}"
 ```
+
+Please make sure to sign CLA when making a pull request
