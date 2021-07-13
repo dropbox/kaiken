@@ -1,6 +1,6 @@
 package com.dropbox.kaiken.scoping
 
-import androidx.fragment.app.FragmentActivity
+import android.app.Activity
 import androidx.lifecycle.ViewModelStoreOwner
 import com.dropbox.kaiken.scoping.internal.AuthHelper
 import com.dropbox.kaiken.scoping.internal.locateAuthHelperStore
@@ -41,7 +41,7 @@ interface AuthAwareScopeOwnerActivity : DependencyProviderResolver, ViewModelSto
      */
     @JvmDefault
     override fun finishIfInvalidAuth(): Boolean {
-        val activity = (this as FragmentActivity)
+        val activity = (this as Activity)
         val authHelper = locateAuthHelper()
 
         if (!authHelper.validateAuth()) {
