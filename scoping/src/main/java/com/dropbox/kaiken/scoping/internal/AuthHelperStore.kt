@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.scoping.internal
 
 import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -15,7 +15,7 @@ import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.getViewingUserSelector
 
 internal fun AuthAwareScopeOwnerActivity.locateAuthHelperStore(): AuthHelperStore {
-    val activity = (this as FragmentActivity)
+    val activity = (this as ComponentActivity)
     return activity.locateAuthHelperStore(authRequired)
 }
 
@@ -30,7 +30,7 @@ fun AuthAwareBroadcastReceiver.locateScopedServicesProvider(
     return context.locateScopedServicesProvider()
 }
 
-private fun FragmentActivity.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
+private fun ComponentActivity.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
     val viewingUserSelector = intent.getViewingUserSelector()
 
     if (BuildConfig.DEBUG) {
