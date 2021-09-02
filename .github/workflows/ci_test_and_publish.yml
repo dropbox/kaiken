@@ -36,6 +36,20 @@ jobs:
       - name: Clean up Artifacts
         if: always()
         run: tools/release/deploy_cleanup.sh
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up our JDK environment
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: 1.8
+    - name: Build
+      run: ./gradlew assemble --stacktrace
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
