@@ -15,8 +15,9 @@ else
   echo "Deploying Kaiken..."
   openssl aes-256-cbc -md sha256 -d -in tools/release/secring.gpg.aes -out tools/release/secring.gpg -k "${ENCRYPT_KEY}"
   # https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials
-
-      # uploadArchives requires the SONATYPE_NEXUS_USERNAME and SONATYPE_NEXUS_PASSWORD environmental variables
+  
+  ./gradlew assemble
+  # uploadArchives requires the SONATYPE_NEXUS_USERNAME and SONATYPE_NEXUS_PASSWORD environmental variables
   ./gradlew uploadArchives -PSONATYPE_NEXUS_USERNAME="${SONATYPE_USERNAME}" -PSONATYPE_NEXUS_PASSWORD="${SONATYPE_PASSWORD}" -Psigning.keyId="${SIGNING_ID}" -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=${PWD}/tools/release/secring.gpg
   echo "Kaiken deployed!"
 fi
