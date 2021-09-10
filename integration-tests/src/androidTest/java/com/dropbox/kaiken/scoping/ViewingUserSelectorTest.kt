@@ -21,7 +21,7 @@ class ViewingUserSelectorTest {
 
         // THEN
         assertThat(hasResult).isFalse()
-        assertThat(getResult).isEmpty()
+        assertThat(getResult).isNull()
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -64,7 +64,7 @@ class ViewingUserSelectorTest {
 
         // THEN
         assertThat(hasResult).isFalse()
-        assertThat(getResult).isEmpty()
+        assertThat(getResult).isNull()
     }
 
     @Test(expected = IllegalArgumentException::class)

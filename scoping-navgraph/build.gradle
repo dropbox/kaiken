@@ -19,8 +19,6 @@ dependencies {
     androidTestImplementation deps.truth
     androidTestImplementation project(':testing')
 
-    androidTestImplementation project(':testing')
-
 }
 
 apply plugin: 'kotlin-android-extensions'
