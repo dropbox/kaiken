@@ -58,20 +58,8 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
             api-level: 29
-            script: ./gradlew clean cleanBuildCache check --stacktrace --rerun-tasks
+            script: ./gradlew clean cleanBuildCache check connectedCheck --stacktrace --rerun-tasks
       env:
         API_LEVEL: ${{ matrix.api-level }}
     - name: Upload code coverage
       run: bash <(curl -s https://codecov.io/bash)
-
-  test:
-    runs-on: macos-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew connectedCheck
