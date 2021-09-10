@@ -21,7 +21,9 @@ dependencies {
     androidTestImplementation deps.androidx_test_rules
     androidTestImplementation deps.espresso_core
     androidTestImplementation deps.truth
-    androidTestImplementation project(':testing')
+    androidTestImplementation (project(':testing')) {
+        exclude module: "scoping"
+    }
 
 }
 
