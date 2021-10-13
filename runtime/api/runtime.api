@@ -32,9 +32,18 @@ public final class com/dropbox/kaiken/runtime/InjectorNotFoundException : java/l
 	public fun <init> (Ljava/lang/String;)V
 }
 
+public final class com/dropbox/kaiken/runtime/InjectorStoreKt {
+	public static final fun locateInjector (Landroidx/lifecycle/ViewModelStoreOwner;Lcom/dropbox/kaiken/runtime/InjectorFactory;)Lcom/dropbox/kaiken/Injector;
+}
+
 public final class com/dropbox/kaiken/runtime/InjectorViewModel : androidx/lifecycle/ViewModel {
 	public fun <init> (Ljava/lang/Object;)V
 	public final fun getInjector ()Ljava/lang/Object;
+}
+
+public final class com/dropbox/kaiken/runtime/InjectorViewModelFactory : androidx/lifecycle/ViewModelProvider$Factory {
+	public fun <init> (Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
+	public fun create (Ljava/lang/Class;)Landroidx/lifecycle/ViewModel;
 }
 
 public final class com/dropbox/kaiken/runtime/KaikenRuntimeTestUtils {
@@ -43,6 +52,8 @@ public final class com/dropbox/kaiken/runtime/KaikenRuntimeTestUtils {
 	public final fun addInjectorOverride (Lkotlin/reflect/KClass;Lcom/dropbox/kaiken/Injector;)V
 	public final fun clearOverrides ()V
 	public final fun getTestMode ()Z
+	public final synthetic fun injectorFactoryOverrideFor$runtime_release (Lkotlin/reflect/KClass;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
+	public final synthetic fun injectorHolderOverrideFor$runtime_release (Lkotlin/reflect/KClass;)Lcom/dropbox/kaiken/runtime/InjectorHolder;
 	public final fun setTestMode (Z)V
 }
 

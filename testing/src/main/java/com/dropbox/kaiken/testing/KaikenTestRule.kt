@@ -67,8 +67,8 @@ class KaikenTestRule(
             KaikenScopingTestUtils.disableAuthValidation(resolveDependencyProviderOverride)
         }
 
-        injectorFactoryOverrides.forEach { override ->
-            KaikenRuntimeTestUtils.addInjectorFactoryOverride(override.key, override.value)
+        injectorFactoryOverrides.iterator().forEach { (key, value) ->
+            KaikenRuntimeTestUtils.addInjectorFactoryOverride(key, value)
         }
 
         if (injectorOverride != null) {
