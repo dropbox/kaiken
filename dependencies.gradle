@@ -3,7 +3,7 @@ ext.versions = [
         targetSdk         : 30,
         compileSdk        : 30,
         buildTools        : '29.0.3',
-        kotlin            : '1.4.10',
+        kotlin            : '1.5.30',
         ktlint            : '0.39.0',
 
         // Plugins
@@ -40,7 +40,7 @@ ext.versions = [
         // Samples
         constraintLayout            : '2.0.4',
         javaxInject                 : '1',
-        dagger2Version              : '2.27',
+        dagger2Version              : '2.39.1',
 ]
 
 ext.deps = [
