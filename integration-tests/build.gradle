@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
 
 dependencies {
     implementation deps.dagger2
@@ -13,6 +14,7 @@ dependencies {
     debugImplementation project(":annotations")
     debugImplementation project(":runtime")
     debugImplementation project(":scoping")
+    anvil project(":processor")
 
     kaptDebug project(":processor")
 

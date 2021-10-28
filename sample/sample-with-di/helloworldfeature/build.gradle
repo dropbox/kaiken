@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
 
 dependencies {
     implementation deps.androidx_fragment
@@ -16,6 +17,8 @@ dependencies {
 
     implementation deps.dagger2
     kapt deps.dagger2_compiler
+
+    anvil project(":processor")
 }
 
 kapt {

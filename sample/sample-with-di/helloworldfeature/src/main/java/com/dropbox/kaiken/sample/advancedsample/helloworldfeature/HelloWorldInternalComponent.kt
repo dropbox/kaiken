@@ -2,12 +2,13 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Component
 
 @Component(
     dependencies = [HelloWorldDependencies::class]
 )
-abstract class HelloWorldInternalComponent : HelloWorldFragmentInjector {
+interface HelloWorldInternalComponent : HelloWorldFragmentInjector {
     @Component.Factory
     interface Factory {
         fun create(
@@ -27,3 +28,5 @@ private fun helloWorldInternalComponent(
 ): HelloWorldInternalComponent = DaggerHelloWorldInternalComponent.factory().create(
     dependencies
 )
+
+abstract class AppScope private constructor()

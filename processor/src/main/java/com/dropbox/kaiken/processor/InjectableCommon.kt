@@ -10,15 +10,14 @@ import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import javax.lang.model.element.Modifier
 import javax.lang.model.element.TypeElement
-import javax.lang.model.type.TypeMirror
 
 internal fun generateInjectorInterfaceFileSpec(
     pack: String,
     interfaceName: String,
     paramName: String,
-    targetType: TypeMirror
+    typeName: TypeName
 ): JavaFile {
-    val interfaceSpec = generateInjectorInterface(interfaceName, paramName, targetType)
+    val interfaceSpec = generateInjectorInterface(interfaceName, paramName, typeName)
 
     return JavaFile.builder(pack, interfaceSpec)
         .addFileComment(GENERATED_BY_TOP_COMMENT)
@@ -28,12 +27,11 @@ internal fun generateInjectorInterfaceFileSpec(
 private fun generateInjectorInterface(
     interfaceName: String,
     paramName: String,
-    targetType: TypeMirror
+    typeName: TypeName
 ): TypeSpec {
     val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
 
     val injectorTypeName = ClassName.get(Injector::class.java)
-
     return interfaceBuilder
         .addSuperinterface(injectorTypeName)
         .addModifiers(Modifier.PUBLIC)
@@ -42,7 +40,7 @@ private fun generateInjectorInterface(
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addParameter(
                     ParameterSpec.builder(
-                        TypeName.get(targetType),
+                        typeName,
                         paramName
                     ).build()
                 )

@@ -29,6 +29,7 @@ ext.versions = [
         incap                       : '0.3',
         javapoet                    : '1.11.1',
         kotlinpooet                 : '1.5.0',
+        kotlinpoet_interop         : '1.10.2',
 
         // Testing
         androidxTestCore            : '1.2.0',
@@ -61,6 +62,7 @@ ext.deps = [
         incap_processor             : "net.ltgt.gradle.incap:incap-processor:$versions.incap",
         javapoet                    : "com.squareup:javapoet:$versions.javapoet",
         kotlinpoet                  : "com.squareup:kotlinpoet:$versions.kotlinpooet",
+        kotlinpoet_interop          : "com.squareup:kotlinpoet-javapoet:$versions.kotlinpoet_interop",
 
         // Testing
         androidx_test_core          : "androidx.test:core:$versions.androidxTestCore",

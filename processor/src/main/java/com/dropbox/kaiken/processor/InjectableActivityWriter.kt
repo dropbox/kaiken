@@ -1,6 +1,7 @@
 package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.javapoet.TypeName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.asTypeName
@@ -59,7 +60,7 @@ internal class InjectableActivityWriter(
         activityType: TypeMirror
     ) {
         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-            pack, interfaceName, "activity", activityType
+            pack, interfaceName, "activity", TypeName.get(activityType)
         )
         interfaceFileSpec.writeTo(filer)
     }
