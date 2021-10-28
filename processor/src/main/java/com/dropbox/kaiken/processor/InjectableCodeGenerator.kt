@@ -8,8 +8,12 @@ import com.squareup.anvil.compiler.api.CodeGenerator
 import com.squareup.anvil.compiler.api.GeneratedFile
 import com.squareup.anvil.compiler.api.createGeneratedFile
 import com.squareup.anvil.compiler.internal.asClassName
+import com.squareup.anvil.compiler.internal.buildFile
 import com.squareup.anvil.compiler.internal.classesAndInnerClass
 import com.squareup.anvil.compiler.internal.hasAnnotation
+import com.squareup.anvil.compiler.internal.requireFqName
+import com.squareup.anvil.compiler.internal.safePackageString
+import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.asClassName
@@ -62,19 +66,19 @@ class InjectableCodeGenerator : CodeGenerator {
                     " ${Furiex::class.java.simpleName}"
             }
             val className = clazz.asClassName()
-            val packageName: FqName = (clazz as KtClass).fqName!!.parent()
+            val classFqName = clazz.requireFqName().toString()
+            val propertyName = classFqName.replace('.', '_')
+            val packageName = (clazz as KtClass).fqName!!.parent().safePackageString(dotPrefix = true)
 
-            val interfaceFileSpec = generateInjectorInterfaceFileSpec(packageName.asString(), "${className.simpleName}Injector", "activity", className.toJTypeName())
+            val interfaceFileSpec = generateInjectorInterfaceFileSpec(packageName, "${className.simpleName}Injector", "activity", className.toJTypeName())
+            val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(packageName, "${className.simpleName}Injector", className)
+
 
             createGeneratedFile(
                 codeGenDir = codeGenDir,
-                packageName = packageName.asString(),
-                fileName = "TestFile",
-                content = """
-                    package ${packageName.asString()}
-                    
-                    interface TestFile
-                    """
+                packageName = packageName,
+                fileName = "${className.simpleName}Injector",
+                content = extensionFunctionFileSpec.toString()
             )
         }.toList()
     }

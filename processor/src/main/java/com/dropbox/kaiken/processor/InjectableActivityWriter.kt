@@ -71,40 +71,40 @@ internal class InjectableActivityWriter(
         activityType: TypeMirror
     ) {
         val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-            pack, interfaceName, activityType
+            pack, interfaceName, activityType.asTypeName()
         )
 
         extensionFunctionFileSpec.writeTo(filer)
     }
 
-    private fun generateExtensionFunctionFileSpec(
-        pack: String,
-        interfaceName: String,
-        activityType: TypeMirror
-    ): FileSpec {
-        val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
-            interfaceName, activityType
-        )
-
-        val fileBuilder = FileSpec.builder(pack, interfaceName)
-
-        return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
-            .addFunction(extensionFunctionSpec)
-            .build()
-    }
+    private fun resolveInterfaceName(
+            annotatedActivity: InjectableAnnotatedActivity
+    ): String = resolveInjectorInterfaceName(annotatedActivity.annotatedActivityElement)
 }
 
-internal fun resolveInterfaceName(
-    annotatedActivity: InjectableAnnotatedActivity
-): String = resolveInjectorInterfaceName(annotatedActivity.annotatedActivityElement)
-
-internal fun generateInjectExtensionFunctionForActivity(
-    interfaceName: String,
-    activityType: TypeMirror
+private fun generateInjectExtensionFunctionForActivity(
+        interfaceName: String,
+        typeName: com.squareup.kotlinpoet.TypeName
 ): FunSpec {
     return FunSpec.builder("inject")
-        .receiver(activityType.asTypeName())
-        .addStatement("val activityInjector: $interfaceName = this.locateInjector()")
-        .addStatement("activityInjector.inject(this)")
-        .build()
+            .receiver(typeName)
+            .addStatement("val activityInjector: $interfaceName = this.locateInjector()")
+            .addStatement("activityInjector.inject(this)")
+            .build()
+}
+
+internal fun generateExtensionFunctionFileSpec(
+        pack: String,
+        interfaceName: String,
+        typeName: com.squareup.kotlinpoet.TypeName
+): FileSpec {
+    val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
+            interfaceName, typeName
+    )
+
+    val fileBuilder = FileSpec.builder(pack, interfaceName)
+
+    return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
+            .addFunction(extensionFunctionSpec)
+            .build()
 }
