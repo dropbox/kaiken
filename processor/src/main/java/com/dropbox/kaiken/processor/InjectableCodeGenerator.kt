@@ -80,6 +80,9 @@ class InjectableCodeGenerator : CodeGenerator {
                 fileName = "${className.simpleName}Injector",
                 content = extensionFunctionFileSpec.toString()
             )
+
+
+
         }.toList()
     }
 

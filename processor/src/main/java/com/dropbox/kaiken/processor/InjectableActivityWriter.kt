@@ -1,11 +1,18 @@
 package com.dropbox.kaiken.processor
 
+import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.squareup.javapoet.ClassName
+import com.squareup.javapoet.MethodSpec
+import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.TypeName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
 import javax.annotation.processing.Filer
+import javax.lang.model.element.Modifier
 import javax.lang.model.type.TypeMirror
 import javax.lang.model.util.Elements
 
@@ -93,6 +100,28 @@ private fun generateInjectExtensionFunctionForActivity(
             .build()
 }
 
+private fun generateInjectInterfaceForActivity(
+        interfaceName: String,
+        typeName: com.squareup.kotlinpoet.TypeName
+): TypeSpec {
+    val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
+    return interfaceBuilder
+            .addSuperinterface(typeName)
+            .addModifiers(KModifier.PUBLIC)
+            .addFunction(
+                    FunSpec.builder("inject")
+                            .addModifiers(
+                                KModifier.PUBLIC)
+                            .addParameter(
+                                    com.squareup.kotlinpoet.ParameterSpec(
+                                            "activity",
+                                            typeName
+                                    )
+                            )
+                            .build()
+                    ).build()
+}
+
 internal fun generateExtensionFunctionFileSpec(
         pack: String,
         interfaceName: String,
@@ -101,10 +130,14 @@ internal fun generateExtensionFunctionFileSpec(
     val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
             interfaceName, typeName
     )
+    val interfaceTypeSpec = generateInjectInterfaceForActivity(
+            interfaceName, typeName
+    )
 
     val fileBuilder = FileSpec.builder(pack, interfaceName)
 
     return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
             .addFunction(extensionFunctionSpec)
+            .addType(interfaceTypeSpec)
             .build()
 }
