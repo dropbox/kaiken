@@ -33,11 +33,11 @@ private fun fakeInjectorFactory() = object : InjectorFactory<TestInjectorHolderA
 }
 
 class FakeInjector : TestInjectorHolderActivityInjector, TestSimpleFragmentInjector {
-    override fun inject(activity: TestInjectorHolderActivity?) {
-        activity!!.message = "Hello Activity!"
+    override fun inject(activity: TestInjectorHolderActivity) {
+        activity.message = "Hello Activity!"
     }
 
-    override fun inject(fragment: TestSimpleFragment?) {
-        fragment!!.message = "Hello Fragment from Activity!"
+    override fun inject(fragment: TestSimpleFragment) {
+        fragment.message = "Hello Fragment from Activity!"
     }
 }

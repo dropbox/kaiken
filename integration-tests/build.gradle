@@ -27,6 +27,15 @@ dependencies {
 
     androidTestImplementation project(':testing')
 }
-kapt {
-    correctErrorTypes = true
+
+pluginManager.withPlugin('kotlin-kapt') {
+    kapt {
+        correctErrorTypes = true
+    }
+}
+
+if (System.getProperty("idea.sync.active") != null) {
+    android.libraryVariants.all { variant ->
+        android.sourceSets.getByName("main").java.srcDirs += new File(project.buildDir, "anvil/src-gen-${variant.name}")
+    }
 }

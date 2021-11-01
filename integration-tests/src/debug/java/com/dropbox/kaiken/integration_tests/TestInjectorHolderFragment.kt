@@ -29,7 +29,7 @@ private fun fakeInjectorFactory() = object : InjectorFactory<TestInjectorHolderF
 }
 
 class FakeInjector2 : TestInjectorHolderFragmentInjector {
-    override fun inject(fragment: TestInjectorHolderFragment?) {
-        fragment!!.message = "Hello Fragment!"
+    override fun inject(fragment: TestInjectorHolderFragment) {
+        fragment.message = "Hello Fragment!"
     }
 }

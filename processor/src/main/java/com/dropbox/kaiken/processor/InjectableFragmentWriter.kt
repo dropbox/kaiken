@@ -1,10 +1,14 @@
 package com.dropbox.kaiken.processor
 
+import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
-import com.squareup.javapoet.TypeName
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
+import com.squareup.kotlinpoet.typeNameOf
 import javax.annotation.processing.Filer
 import javax.lang.model.type.TypeMirror
 import javax.lang.model.util.Elements
@@ -60,7 +64,7 @@ internal class InjectableFragmentWriter(
         fragmentType: TypeMirror
     ) {
         val interfaceFileSpec = generateInjectorInterfaceFileSpec(
-            pack, interfaceName, "fragment", TypeName.get(fragmentType)
+            pack, interfaceName, "fragment", com.squareup.javapoet.TypeName.get(fragmentType)
         )
         interfaceFileSpec.writeTo(filer)
     }
@@ -70,18 +74,18 @@ internal class InjectableFragmentWriter(
         interfaceName: String,
         fragmentType: TypeMirror
     ) {
-        val extensionFunctionFileSpec = generateExtensionFunctionFileSpec(
-            pack, interfaceName, fragmentType
+        val extensionFunctionFileSpec = generateFragmentExtensionFunctionFileSpec(
+            pack, interfaceName, fragmentType.asTypeName()
         )
 
         extensionFunctionFileSpec.writeTo(filer)
     }
 }
 
-private fun generateExtensionFunctionFileSpec(
+private fun generateFragmentExtensionFunctionFileSpec(
     pack: String,
     interfaceName: String,
-    fragmentType: TypeMirror
+    fragmentType: TypeName
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
 
@@ -99,11 +103,53 @@ private fun resolveInterfaceName(
 
 private fun generateInjectExtensionFunction(
     interfaceName: String,
-    fragmentType: TypeMirror
+    fragmentType: TypeName
 ): FunSpec {
     return FunSpec.builder("inject")
-        .receiver(fragmentType.asTypeName())
+        .receiver(fragmentType)
         .addStatement("val injector: $interfaceName = findInjector()")
         .addStatement("injector.inject(this)")
+        .build()
+}
+
+@ExperimentalStdlibApi
+private fun generateInjectInterfaceSpec(
+    interfaceName: String,
+    fragmentType: TypeName
+): TypeSpec {
+    val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
+    return interfaceBuilder
+        .addSuperinterface(typeNameOf<Injector>())
+        .addModifiers(KModifier.PUBLIC)
+        .addFunction(
+            FunSpec.builder("inject")
+                .addModifiers(KModifier.ABSTRACT)
+                .addModifiers(
+                    KModifier.PUBLIC
+                )
+                .addParameter(
+                    com.squareup.kotlinpoet.ParameterSpec(
+                        "fragment",
+                        fragmentType
+                    )
+                )
+                .build()
+        ).build()}
+
+@ExperimentalStdlibApi
+internal fun generateFragmentFileSpec(
+    pack: String,
+    interfaceName: String,
+    fragmentType: TypeName
+): FileSpec {
+    val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
+    val interfaceSpec = generateInjectInterfaceSpec(interfaceName, fragmentType)
+
+    val fileBuilder = FileSpec.builder(pack, interfaceName)
+
+    return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
+        .addImport("com.dropbox.kaiken.runtime", "findInjector")
+        .addFunction(extensionFunctionSpec)
+        .addType(interfaceSpec)
         .build()
 }

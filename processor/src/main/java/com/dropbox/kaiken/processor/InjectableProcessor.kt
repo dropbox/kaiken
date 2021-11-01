@@ -52,12 +52,13 @@ class InjectableProcessor : AbstractProcessor() {
         set: MutableSet<out TypeElement>,
         roundEnvironment: RoundEnvironment
     ): Boolean {
-        return try {
-            processInternal(roundEnvironment)
-        } catch (t: Throwable) {
-            messager.error(t.message ?: "error while processing")
-            true
-        }
+        return true
+        // return try {
+        //     processInternal(roundEnvironment)
+        // } catch (t: Throwable) {
+        //     messager.error(t.message ?: "error while processing")
+        //     true
+        // }
     }
 
     private fun processInternal(
