@@ -39,7 +39,6 @@ class InjectableCodeGenerator : CodeGenerator {
         projectFiles: Collection<KtFile>
     ): Collection<GeneratedFile> {
         return projectFiles.classesAndInnerClass(module).filter { clazz ->
-            // TODO(changd): replace with Injectable
             clazz.hasAnnotation(FqName("com.dropbox.kaiken.annotation.Injectable"), module)
         }.map { clazz: KtClassOrObject ->
             var classType = ClassType.INVALID
