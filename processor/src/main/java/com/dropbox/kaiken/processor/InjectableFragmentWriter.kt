@@ -16,7 +16,7 @@ import com.squareup.kotlinpoet.typeNameOf
  * Example:
  *
  * ```
- * @InjectableFragment
+ * @Injectable
  * public class MyFragment : Fragment {
  *     ...
  * }

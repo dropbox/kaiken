@@ -15,7 +15,7 @@ import com.squareup.kotlinpoet.typeNameOf
  * Example:
  *
  * ```
- * @InjectableActivity
+ * @Injectable
  * public class MyActivity : AppCompatActivity() {
  *     ...
  * }
