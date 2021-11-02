@@ -2,10 +2,10 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
-import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asTypeName
 import com.squareup.kotlinpoet.typeNameOf
@@ -134,7 +134,8 @@ private fun generateInjectInterfaceSpec(
                     )
                 )
                 .build()
-        ).build()}
+        ).build()
+}
 
 @ExperimentalStdlibApi
 internal fun generateFragmentFileSpec(

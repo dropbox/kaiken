@@ -120,7 +120,7 @@ class InjectableCodeGenerator : CodeGenerator {
 
         check(this.isFragment()) {
             "The class ${clazz.fqName!!.shortName()} is not an Android activity. Found: ${
-                this.getAllSuperClassifiers().toList().map { it.name }
+            this.getAllSuperClassifiers().toList().map { it.name }
             }"
         }
     }
@@ -136,7 +136,7 @@ class InjectableCodeGenerator : CodeGenerator {
 
         check(this.isActivity()) {
             "The class ${clazz.fqName!!.shortName()} is not an Android activity. Found: ${
-                this.getAllSuperClassifiers().toList().map { it.name }
+            this.getAllSuperClassifiers().toList().map { it.name }
             }"
         }
 

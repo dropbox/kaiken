@@ -39,3 +39,10 @@ if (System.getProperty("idea.sync.active") != null) {
         android.sourceSets.getByName("main").java.srcDirs += new File(project.buildDir, "anvil/src-gen-${variant.name}")
     }
 }
+
+android {
+    packagingOptions {
+        exclude 'META-INF/integration-tests_debug.kotlin_module'
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}
