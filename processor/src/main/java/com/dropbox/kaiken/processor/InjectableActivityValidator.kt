@@ -14,10 +14,6 @@ internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObje
         "The ClassDescriptor for ${clazz.name} is null"
     }
 
-    check(clazz.fqName != null) {
-        "The ClassDescriptor for ${clazz.name} is null"
-    }
-
     val fqName: FqName = requireNotNull(clazz.fqName) {
         "The fully qualified name for ${clazz.name} is null"
     }
@@ -30,7 +26,7 @@ internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObje
         "The class ${fqName.shortName()} is abstract"
     }
 
-    check(descriptor.isActivity()) {
+    check(descriptor.isAndroidActivity()) {
         "The class ${fqName.shortName()} is not an Android activity. Found: ${
         descriptor.getAllSuperClassifiers().toList().map { it.name }
         }"
@@ -42,7 +38,7 @@ internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObje
     }
 }
 
-internal fun ClassifierDescriptor.isActivity(): Boolean =
+internal fun ClassifierDescriptor.isAndroidActivity(): Boolean =
     this.getAllSuperClassifiers().any {
         FqName("androidx.appcompat.app.AppCompatActivity") == it.fqNameSafe
     }

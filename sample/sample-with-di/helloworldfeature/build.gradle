@@ -13,16 +13,11 @@ dependencies {
     implementation project(":annotations")
 
     api project(":runtime")
-    kapt project(":processor")
 
     implementation deps.dagger2
     kapt deps.dagger2_compiler
 
     anvil project(":processor")
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 android {

@@ -49,7 +49,7 @@ class InjectableCodeGenerator : CodeGenerator {
                 if (it.isFragment()) {
                     validateFragment(descriptor, clazz)
                     classType = ClassType.FRAGMENT
-                } else if (it.isActivity()) {
+                } else if (it.isAndroidActivity()) {
                     validateActivity(descriptor, clazz)
                     classType = ClassType.ACTIVITY
                 }

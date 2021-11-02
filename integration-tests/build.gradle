@@ -28,12 +28,6 @@ dependencies {
     androidTestImplementation project(':testing')
 }
 
-pluginManager.withPlugin('kotlin-kapt') {
-    kapt {
-        correctErrorTypes = true
-    }
-}
-
 // This allows the generated source sets to be resolved in IntelliJ and only runs when we're syncing in the IDE
 if (System.getProperty("idea.sync.active") != null) {
     android.libraryVariants.all { variant ->
