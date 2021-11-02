@@ -14,30 +14,37 @@ internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObje
         "The ClassDescriptor for ${clazz.name} is null"
     }
 
+    check(clazz.fqName != null) {
+        "The ClassDescriptor for ${clazz.name} is null"
+    }
+
+    val fqName: FqName = requireNotNull(clazz.fqName) {
+        "The fully qualified name for ${clazz.name} is null"
+    }
+
     check(descriptor.visibility == DescriptorVisibilities.PUBLIC) {
-        "The class ${clazz.fqName!!.shortName()} is not public"
+        "The class ${fqName.shortName()} is not public"
     }
 
     check(!DescriptorUtils.classCanHaveAbstractDeclaration(descriptor)) {
-        "The class ${clazz.fqName!!.shortName()} is abstract"
+        "The class ${fqName.shortName()} is abstract"
     }
 
     check(descriptor.isActivity()) {
-        "The class ${clazz.fqName!!.shortName()} is not an Android activity. Found: ${
+        "The class ${fqName.shortName()} is not an Android activity. Found: ${
         descriptor.getAllSuperClassifiers().toList().map { it.name }
         }"
     }
 
     check(descriptor.implementsInjectorHolder()) {
-        "The class ${clazz.fqName!!.shortName()} does not implement" +
+        "The class ${fqName.shortName()} does not implement" +
             " DependencyProviderResolver"
     }
 }
 
 internal fun ClassifierDescriptor.isActivity(): Boolean =
     this.getAllSuperClassifiers().any {
-        FqName("androidx.appcompat.app.AppCompatActivity") == it.fqNameSafe ||
-            FqName("com.dropbox.kaiken.processor.internal.fakes.FakeActivity") == it.fqNameSafe
+        FqName("androidx.appcompat.app.AppCompatActivity") == it.fqNameSafe
     }
 
 private fun ClassifierDescriptor.implementsInjectorHolder(): Boolean =

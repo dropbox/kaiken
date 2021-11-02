@@ -10,16 +10,18 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import org.jetbrains.kotlin.resolve.descriptorUtil.getAllSuperClassifiers
 
 internal fun validateFragment(descriptor: ClassDescriptor, clazz: KtClassOrObject) {
+    val fqName = requireNotNull(clazz.fqName)
+
     check(descriptor.visibility == DescriptorVisibilities.PUBLIC) {
-        "The class ${clazz.fqName!!.shortName()} is not public"
+        "The class ${fqName.shortName()} is not public"
     }
 
     check(!DescriptorUtils.classCanHaveAbstractDeclaration(descriptor)) {
-        "The class ${clazz.fqName!!.shortName()} is abstract"
+        "The class ${fqName.shortName()} is abstract"
     }
 
     check(descriptor.isFragment()) {
-        "The class ${clazz.fqName!!.shortName()} is not an Android activity. Found: ${
+        "The class ${fqName.shortName()} is not an Android activity. Found: ${
         descriptor.getAllSuperClassifiers().toList().map { it.name }
         }"
     }
@@ -27,6 +29,5 @@ internal fun validateFragment(descriptor: ClassDescriptor, clazz: KtClassOrObjec
 
 internal fun ClassifierDescriptor.isFragment(): Boolean =
     this.getAllSuperClassifiers().any {
-        FqName("androidx.fragment.app.Fragment") == it.fqNameSafe ||
-            FqName("com.dropbox.kaiken.processor.internal.fakes.FakeFragment") == it.fqNameSafe
+        FqName("androidx.fragment.app.Fragment") == it.fqNameSafe
     }
