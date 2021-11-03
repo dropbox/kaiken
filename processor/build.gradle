@@ -4,6 +4,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
+    api "com.squareup.anvil:compiler-api:2.3.6"
+    implementation "com.squareup.anvil:compiler-utils:2.3.6"
+
     implementation deps.kotlinStdLib
 
     implementation project(":annotations")
@@ -13,7 +16,13 @@ dependencies {
 
     implementation deps.incap_annotations
     kapt deps.incap_processor
+    kapt deps.autoservice_processor
 
     implementation deps.javapoet
     implementation deps.kotlinpoet
+    implementation deps.kotlinpoet_interop
+
+    testImplementation deps.truth
+    testImplementation 'com.github.tschuchortdev:kotlin-compile-testing:1.4.5'
+    testImplementation testFixtures("com.squareup.anvil:compiler-utils:2.3.6")
 }

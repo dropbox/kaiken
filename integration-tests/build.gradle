@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
 
 dependencies {
     implementation deps.dagger2
@@ -13,6 +14,7 @@ dependencies {
     debugImplementation project(":annotations")
     debugImplementation project(":runtime")
     debugImplementation project(":scoping")
+    anvil project(":processor")
 
     kaptDebug project(":processor")
 
@@ -25,6 +27,17 @@ dependencies {
 
     androidTestImplementation project(':testing')
 }
-kapt {
-    correctErrorTypes = true
+
+// This allows the generated source sets to be resolved in IntelliJ and only runs when we're syncing in the IDE
+if (System.getProperty("idea.sync.active") != null) {
+    android.libraryVariants.all { variant ->
+        android.sourceSets.getByName("main").java.srcDirs += new File(project.buildDir, "anvil/src-gen-${variant.name}")
+    }
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/integration-tests_debug.kotlin_module'
+        exclude 'META-INF/annotations.kotlin_module'
+    }
 }

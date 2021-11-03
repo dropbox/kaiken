@@ -1,55 +1,49 @@
 package com.dropbox.kaiken.processor
 
-import com.dropbox.kaiken.processor.internal.error
-import com.dropbox.kaiken.processor.internal.implementsInjectionHolder
-import com.dropbox.kaiken.processor.internal.isAbstract
-import com.dropbox.kaiken.processor.internal.isAndroidActivity
-import com.dropbox.kaiken.processor.internal.isPublic
-import javax.annotation.processing.Messager
-import javax.tools.Diagnostic
+import org.jetbrains.kotlin.descriptors.ClassDescriptor
+import org.jetbrains.kotlin.descriptors.ClassifierDescriptor
+import org.jetbrains.kotlin.descriptors.DescriptorVisibilities
+import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.jetbrains.kotlin.resolve.DescriptorUtils
+import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
+import org.jetbrains.kotlin.resolve.descriptorUtil.getAllSuperClassifiers
 
-internal class InjectableActivityValidator(
-    private val messager: Messager
-) {
-    fun isValid(annotatedActivity: InjectableAnnotatedActivity): Boolean {
+internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObject) {
+    check(descriptor != null) {
+        "The ClassDescriptor for ${clazz.name} is null"
+    }
 
-        val typeElement = annotatedActivity.annotatedActivityElement
+    val fqName: FqName = requireNotNull(clazz.fqName) {
+        "The fully qualified name for ${clazz.name} is null"
+    }
 
-        return when {
-            !typeElement.isPublic() -> {
-                messager.error(typeElement, "The class ${typeElement.qualifiedName} is not public")
-                false
-            }
+    check(descriptor.visibility == DescriptorVisibilities.PUBLIC) {
+        "The class ${fqName.shortName()} is not public"
+    }
 
-            typeElement.isAbstract() -> {
-                messager.error(typeElement, "The class ${typeElement.qualifiedName} is abstract")
-                false
-            }
+    check(!DescriptorUtils.classCanHaveAbstractDeclaration(descriptor)) {
+        "The class ${fqName.shortName()} is abstract"
+    }
 
-            !typeElement.isAndroidActivity() -> {
-                messager.error(
-                    typeElement,
-                    "The class ${typeElement.qualifiedName} is not an Android activity"
-                )
-                messager.printMessage(Diagnostic.Kind.NOTE, typeElement.superclass.kind.name)
-                false
-            }
+    check(descriptor.isAndroidActivity()) {
+        "The class ${fqName.shortName()} is not an Android activity. Found: ${
+        descriptor.getAllSuperClassifiers().toList().map { it.name }
+        }"
+    }
 
-            !typeElement.implementsInjectionHolder() -> {
-                messager.error(
-                    typeElement,
-                    "The class ${typeElement.qualifiedName} does not implement" +
-                        " DependencyProviderResolver"
-                )
-                typeElement.interfaces.forEach {
-                    messager.printMessage(Diagnostic.Kind.NOTE, it.kind.name)
-                }
-                false
-            }
-
-            else -> {
-                true
-            }
-        }
+    check(descriptor.implementsInjectorHolder()) {
+        "The class ${fqName.shortName()} does not implement" +
+            " DependencyProviderResolver"
     }
 }
+
+internal fun ClassifierDescriptor.isAndroidActivity(): Boolean =
+    this.getAllSuperClassifiers().any {
+        FqName("androidx.appcompat.app.AppCompatActivity") == it.fqNameSafe
+    }
+
+private fun ClassifierDescriptor.implementsInjectorHolder(): Boolean =
+    this.getAllSuperClassifiers().any {
+        it.fqNameSafe == FqName("com.dropbox.kaiken.runtime.InjectorHolder")
+    }
