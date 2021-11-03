@@ -178,7 +178,7 @@ Artifacts are hosted on **Maven Central**.
 ###### Latest version:
 
 ```groovy
-def kaiken_version = "2.0.0"
+def kaiken_version = "2.0.1-SNAPSHOT"
 ```
 
 ###### Add the dependency to your `build.gradle`:
