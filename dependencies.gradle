@@ -13,7 +13,7 @@ ext.versions = [
         spotlessGradlePlugin        : '3.26.1',
         jacocoGradlePlugin          : '0.8.5',
         binaryCompatibilityValidator: '0.2.3',
-        atomicFuPlugin              : '0.14.2',
+        atomicFuPlugin              : '0.16.3',
 
         // Other
         javaxInject                 : '1',
