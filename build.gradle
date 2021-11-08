@@ -17,7 +17,7 @@ buildscript {
         classpath "com.diffplug.spotless:spotless-plugin-gradle:${versions.spotlessGradlePlugin}"
         classpath "org.jacoco:org.jacoco.core:${versions.jacocoGradlePlugin}"
         classpath "org.jetbrains.kotlinx:atomicfu-gradle-plugin:${versions.atomicFuPlugin}"
-        classpath "com.vanniktech:gradle-maven-publish-plugin:0.13.0"
+        classpath "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.10.1"
         classpath "com.squareup.anvil:gradle-plugin:2.3.9"
     }
