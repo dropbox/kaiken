@@ -28,11 +28,8 @@ dependencies {
     androidTestImplementation project(':testing')
 }
 
-// This allows the generated source sets to be resolved in IntelliJ and only runs when we're syncing in the IDE
-if (System.getProperty("idea.sync.active") != null) {
-    android.libraryVariants.all { variant ->
-        android.sourceSets.getByName("main").java.srcDirs += new File(project.buildDir, "anvil/src-gen-${variant.name}")
-    }
+anvil {
+    syncGeneratedSources = true
 }
 
 android {
