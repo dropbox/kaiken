@@ -15,7 +15,6 @@ fun <InjectorType : Injector> Fragment.findInjector(): InjectorType {
     return injectorHolder.locateInjector()
 }
 
-@OptIn(InternalKaikenApi::class)
 @Suppress("UNCHECKED_CAST")
 fun <InjectorType : Injector> Fragment.findInjectorHolder(): InjectorHolder<InjectorType>? {
     return when {
@@ -25,11 +24,8 @@ fun <InjectorType : Injector> Fragment.findInjectorHolder(): InjectorHolder<Inje
         activity is InjectorHolder<*> -> {
             activity as InjectorHolder<InjectorType>
         }
-        BuildConfig.DEBUG && KaikenRuntimeTestUtils.testMode -> {
-            KaikenRuntimeTestUtils.injectorHolderOverrideFor(this::class)
-        }
         else -> {
-            null
+            KaikenRuntimeTestUtils.injectorHolderOverrideFor(this::class)
         }
     }
 }
