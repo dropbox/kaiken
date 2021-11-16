@@ -2,7 +2,6 @@ package com.dropbox.kaiken.runtime
 
 import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.Injector
-import com.dropbox.kaiken.annotation.InternalKaikenApi
 
 @Suppress("UNCHECKED_CAST", "IfThenToElvis")
 fun <InjectorType : Injector> Fragment.findInjector(): InjectorType {
