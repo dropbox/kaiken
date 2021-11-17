@@ -22,7 +22,7 @@ ext.versions = [
         androidxFragment            : '1.2.5',
         androidxAppCompat           : '1.1.0',
         navGraph                    : '2.3.2',
-        androidLifecycle            : '2.2.0',
+        androidLifecycle            : '2.4.0',
 
         // Annotation Processing
         autoservice                 : '1.0-rc6',
