@@ -19,7 +19,7 @@ ext.versions = [
         javaxInject                 : '1',
 
         // UI libraries
-        androidxFragment            : '1.2.5',
+        androidxFragment            : '1.4.0',
         androidxAppCompat           : '1.1.0',
         navGraph                    : '2.3.2',
         androidLifecycle            : '2.2.0',
