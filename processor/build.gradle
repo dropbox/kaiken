@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
-    api "com.squareup.anvil:compiler-api:2.3.6"
-    implementation "com.squareup.anvil:compiler-utils:2.3.6"
+    api "com.squareup.anvil:compiler-api:2.3.10"
+    implementation "com.squareup.anvil:compiler-utils:2.3.10"
 
     implementation deps.kotlinStdLib
 
@@ -24,5 +24,5 @@ dependencies {
 
     testImplementation deps.truth
     testImplementation 'com.github.tschuchortdev:kotlin-compile-testing:1.4.5'
-    testImplementation testFixtures("com.squareup.anvil:compiler-utils:2.3.6")
+    testImplementation testFixtures("com.squareup.anvil:compiler-utils:2.3.10")
 }

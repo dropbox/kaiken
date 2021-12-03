@@ -1,33 +1,87 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
-import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.skeleton.core.SkeletonApplication
+import com.dropbox.kaiken.skeleton.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.skeleton.usermanagement.UserManager
+import com.dropbox.kaiken.scoping.AppScope
+import com.dropbox.kaiken.scoping.SingleIn
+import com.dropbox.kaiken.scoping.SkeletonScope
+import com.dropbox.kaiken.scoping.UserScope
+import com.dropbox.kaiken.scoping.cast
+import com.squareup.anvil.annotations.ContributesTo
+import com.squareup.anvil.annotations.MergeComponent
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
+import dagger.Provides
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AdvancedKaikenSampleApplication : Application(), ScopedServicesProvider {
 
-    private lateinit var appServices: AdvancedKaikenSampleAppServices
+class AdvancedKaikenSampleApplication : SkeletonApplication() {
 
-    // Let's use a map to mimic our "UserManager".
-    private val userServicesMap = mutableMapOf<String, AdvancedKaikenSampleUserServices>()
+    override fun getSdkSpec(): SdkSpec = DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
+
+    @Inject
+    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<String>
+
+    @Inject
+    lateinit var userManager: UserManager
 
     override fun onCreate() {
         super.onCreate()
-
-        appServices = DaggerAdvancedKaikenSampleAppServices.factory().create()
-
-        // Let's "log-in" in a user for sample purposes. In a real application this code would definitely not live
+        appServices.cast<ApplicationInjector>().inject(this)
+        // Let's "log-in" users for sample purposes. In a real application this code would definitely not live
         // here and would be way way more complex
-        val userProfile = UserProfile("awesome_user", "Awesome User")
+        GlobalScope.launch {
+            userFlow.collect {
+                userManager.setActiveUser(it)
+            }
+        }
 
-        userServicesMap["awesome_user"] = DaggerAdvancedKaikenSampleUserServices.factory().create(
-            appServices,
-            userProfile
-        )
+           GlobalScope.launch {
+               userFlow.emit("1")
+           }
+           GlobalScope.launch {
+               userManager.setActiveUser("1")
+
+           }
     }
+}
 
-    override fun provideAppServices(): AppServices = appServices
+@ContributesTo(AppScope::class)
+interface ApplicationInjector {
+    fun inject(application: AdvancedKaikenSampleApplication)
+}
 
-    override fun provideUserServicesOf(userId: String): UserServices? = userServicesMap.get(userId)
+@ContributesTo(UserScope::class)
+@Module
+class UserModule {
+    @Provides
+    @SingleIn(UserScope::class)
+    fun provideUserProfile(userId: Int) = UserProfile(userId.toString(), userId.toString())
+}
+
+@ContributesTo(SkeletonScope::class)
+@Module
+class SkeletonModule {
+    @Provides
+    @SingleIn(SkeletonScope::class)
+    fun provideSkeletonApplication(application: Application):SkeletonApplication= application as SkeletonApplication
+}
+
+
+@MergeComponent(SkeletonScope::class)
+@SingleIn(SkeletonScope::class)
+interface SkeletonComponent : SdkSpec {
+    @Component.Factory
+    interface Factory {
+        fun create(
+                @BindsInstance app: Application,
+        ): SkeletonComponent
+    }
 }

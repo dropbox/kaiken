@@ -1,13 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'com.squareup.anvil'
 
 dependencies {
     implementation deps.androidx_fragment
     implementation deps.kotlinStdLib
     implementation deps.lifecycle_viewmodel
+    implementation deps.javaxInject
+    implementation deps.dagger2
 
-    implementation project(":annotations")
+    api project(":annotations")
 
     debugImplementation deps.appcompat
 
@@ -29,4 +32,14 @@ apply plugin: 'kotlin-android-extensions'
 // https://blog.jetbrains.com/kotlin/2017/08/kotlin-1-1-4-is-out/
 androidExtensions {
     experimental = true
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=compatibility']
+    }
 }

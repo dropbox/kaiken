@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/helloWorldTextView"
-            android:text="HelloWorld"
+            android:text="Welcome User "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"

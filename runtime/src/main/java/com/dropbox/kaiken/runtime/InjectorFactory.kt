@@ -16,13 +16,13 @@ import com.dropbox.kaiken.Injector
  *
  * ```
  */
-interface InjectorFactory<InjectorType : Injector> {
+fun interface InjectorFactory<InjectorType : Injector> {
     fun createInjector(): InjectorType
 }
 
 /**
  * Provides an `InjectorFactory`. This usually will be implemented by activities.
  */
-interface InjectorFactoryProvider<InjectorType : Injector> {
+fun interface InjectorFactoryProvider<InjectorType : Injector> {
     fun getInjectorFactory(): InjectorFactory<InjectorType>
 }

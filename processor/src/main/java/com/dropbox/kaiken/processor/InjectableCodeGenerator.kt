@@ -40,47 +40,51 @@ class InjectableCodeGenerator : CodeGenerator {
     ): Collection<GeneratedFile> {
         return projectFiles.classesAndInnerClass(module).filter { clazz ->
             clazz.hasAnnotation(FqName("com.dropbox.kaiken.annotation.Injectable"), module)
-        }.map { clazz: KtClassOrObject ->
-            var classType = ClassType.INVALID
-            val descriptor: ClassDescriptor? =
-                module.resolveClassByFqName(clazz.fqName!!, checkNotNull(clazz.createLookupLocation()))
-
-            checkNotNull(descriptor).getAllSuperClassifiers().forEach {
-                if (it.isFragment()) {
-                    validateFragment(descriptor, clazz)
-                    classType = ClassType.FRAGMENT
-                } else if (it.isAndroidActivity()) {
-                    validateActivity(descriptor, clazz)
-                    classType = ClassType.ACTIVITY
-                }
-            }
-            check(classType != ClassType.INVALID) {
-                "Only Android Activities or Fragments can be annotated with" +
-                    " ${Injectable::class.java.simpleName}"
-            }
-            val className = clazz.asClassName()
-            val packageName =
-                (clazz as KtClass).fqName!!.parent().safePackageString(dotPrefix = true)
-
-            val fileSpec = if (classType == ClassType.ACTIVITY)
-                generateActivityFileSpec(
-                    packageName,
-                    "${className.simpleName}Injector",
-                    className
-                ) else
-                generateFragmentFileSpec(
-                    packageName,
-                    "${className.simpleName}Injector",
-                    className
-                )
-            return@map createGeneratedFile(
-                codeGenDir = codeGenDir,
-                packageName = packageName,
-                fileName = "${className.simpleName}Injector",
-                content = fileSpec.toString()
-            )
-        }.toList()
+        }.map(mapper(module, codeGenDir)).toList()
     }
+
+    private fun mapper(module: ModuleDescriptor, codeGenDir: File): (KtClassOrObject) -> GeneratedFile =
+            { clazz: KtClassOrObject ->
+                var classType = ClassType.INVALID
+                val descriptor: ClassDescriptor? =
+                        module.resolveClassByFqName(clazz.fqName!!, checkNotNull(clazz.createLookupLocation()))
+
+                checkNotNull(descriptor).getAllSuperClassifiers().forEach {
+                    if (it.isFragment()) {
+                        validateFragment(descriptor, clazz)
+                        classType = ClassType.FRAGMENT
+                    } else if (it.isAndroidActivity()) {
+                        validateActivity(descriptor, clazz)
+                        classType = ClassType.ACTIVITY
+                    }
+                }
+                check(classType != ClassType.INVALID) {
+                    "Only Android Activities or Fragments can be annotated with" +
+                            " ${Injectable::class.java.simpleName}"
+                }
+                val className = clazz.asClassName()
+                val packageName =
+                        (clazz as KtClass).fqName!!.parent().safePackageString(dotPrefix = true)
+
+                val fileSpec = if (classType == ClassType.ACTIVITY)
+                    generateActivityFileSpec(
+                            packageName,
+                            "${className.simpleName}Injector",
+                            className
+                    ) else
+                    generateFragmentFileSpec(
+                            packageName,
+                            "${className.simpleName}Injector",
+                            className,
+                            true
+                    )
+               createGeneratedFile(
+                        codeGenDir = codeGenDir,
+                        packageName = packageName,
+                        fileName = "${className.simpleName}Injector",
+                        content = fileSpec.toString()
+                )
+            }
 
     override fun isApplicable(context: AnvilContext): Boolean = !context.disableComponentMerging
 }
