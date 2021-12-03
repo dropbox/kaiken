@@ -62,9 +62,9 @@ class RealUserManager @Inject constructor(
     private suspend fun hasUser(userId: String): Boolean = getUserState().first().users.any { account -> account.userId == userId }
 
     override suspend fun getActiveUser(): User? = getUserState().first().users.firstOrNull { account -> account.isActiveUser }
-
+    //TODO default to first user active if non is currently set
     override fun getUserState(): Flow<UserState> =
-            skeletonAuthInteractor.observeAuthChanges().combine(activeUserState) { usersInput, _ ->
+            skeletonAuthInteractor.observeAlLUsers().combine(activeUserState) { usersInput, _ ->
                 // Find the active user ID and set at most 1 user to being active
                 val activeUserId = activeUserManager.getActiveUserId()
                 val result = mutableSetOf<User>()

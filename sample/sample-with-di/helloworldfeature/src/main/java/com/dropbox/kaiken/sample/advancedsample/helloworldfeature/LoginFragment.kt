@@ -69,7 +69,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
         view.findViewById<Button>(R.id.button).setOnClickListener {
             val newActiveUserId = username.text.toString()
             MainScope().launch {
-                userManager.setActiveUser(newActiveUserId)
+//                userManager.setActiveUser(newActiveUserId)
                 userFlow.emit(newActiveUserId)
                 view.context.startActivity(intentFactory(view.context, newActiveUserId))
             }

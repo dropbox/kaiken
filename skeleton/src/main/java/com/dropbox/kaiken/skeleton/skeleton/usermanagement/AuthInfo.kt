@@ -18,6 +18,7 @@ data class User(val userId: String, val accessToken: String, val isActiveUser: B
 /**
  * Potential information the [UserManager] can return.
  */
+//TODO: add active user logic back in
 data class UserState(
         /**
          * Current users authenticated with the app

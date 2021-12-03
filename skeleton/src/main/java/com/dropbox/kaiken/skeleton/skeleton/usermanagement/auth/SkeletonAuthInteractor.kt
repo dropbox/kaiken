@@ -18,19 +18,20 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
- * Bridges the app's account persistence layer and Skeleton's [UserManager]. In most cases, this is the [AccountMakerInteractor].
+ * Bridges the app's account persistence layer and Skeleton's [UserManager].
+ *  We provide a naive implementation of a [SkeletonAuthInteractor]
+ * AppSkeleton consumers can leverage [ContributesBinding] (AppScope::class, replaces = SkeletonAuthInteractor)
+ * when supplying their own implementation
+ * See [RealSkeletonAuthInteractor]
  */
 interface SkeletonAuthInteractor {
     /**
      * This should be called and observed for the life of the application as it will feed changes from the Account Maker into the User Manager.
      */
-    fun observeAuthChanges(): Flow<Set<UserInput>>
+    fun observeAlLUsers(): Flow<Set<UserInput>>
 }
 
-/**
- * We provide a naive implementation of a [SkeletonAuthInteractor]
- * AppSkeleton consumers can leverage [@ContributesBinding](replaces api
- */
+
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
@@ -47,7 +48,7 @@ class RealSkeletonAuthInteractor @Inject constructor(
         }
     }).build()
 
-    override fun observeAuthChanges(): Flow<Set<UserInput>> {
+    override fun observeAlLUsers(): Flow<Set<UserInput>> {
         return authStore
                 .stream(StoreRequest.cached("", refresh = false))
                 .filter { storeResponse -> storeResponse is StoreResponse.Data }

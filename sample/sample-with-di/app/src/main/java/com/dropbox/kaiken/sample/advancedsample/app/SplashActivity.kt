@@ -18,7 +18,7 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.android.synthetic.main.mainactivity.bottomNavigationView
 
-class LoggedOutActivity : AppCompatActivity(), AuthOptionalActivity {
+class SplashActivity : AppCompatActivity(), AuthOptionalActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainactivity)
