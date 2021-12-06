@@ -18,6 +18,7 @@ import com.dropbox.kaiken.scoping.AuthOptionalActivityComponent
 import com.dropbox.kaiken.scoping.AuthOptionalActivityScope
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.skeleton.usermanagement.UserManager
+import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -49,7 +50,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     lateinit var userManager: UserManager
 
     @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<String>
+    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,8 +70,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
         view.findViewById<Button>(R.id.button).setOnClickListener {
             val newActiveUserId = username.text.toString()
             MainScope().launch {
-//                userManager.setActiveUser(newActiveUserId)
-                userFlow.emit(newActiveUserId)
+                userFlow.emit(UserInput(newActiveUserId, "Bart Simpson"))
                 view.context.startActivity(intentFactory(view.context, newActiveUserId))
             }
         }

@@ -65,7 +65,7 @@ dependencies {
     implementation deps.dagger2
     implementation deps.material
     implementation deps.navgraph
-    implementation "com.dropbox.mobile.store:store4:4.0.2-KT15"
+    implementation deps.nav_ui
 
     kapt deps.dagger2_compiler
 }

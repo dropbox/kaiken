@@ -1,9 +1,8 @@
 package com.dropbox.kaiken.skeleton.skeleton.core
 
 import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.TeardownHelper
 import com.dropbox.kaiken.scoping.UserServices
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -20,7 +19,8 @@ constructor(
 
     init {
         //TODO Mike figure out if we want another scope to launch from
-        GlobalScope.launch {
+        MainScope().launch {
+
             (applicationServices as KaikenAppServices).userManager().getUserState().collect { userState ->
                 userState.usersRemoved.forEach { user ->
                     teardownUserServicesOf(user.userId)
@@ -48,16 +48,10 @@ constructor(
 
     override fun teardownUserServicesOf(userId: String) {
         synchronized(userServicesMap) {
-            val teardownHelper = userServicesMap.remove(userId)?.getTeardownHelper()
-            if (teardownHelper != null) {
-                dispatchTeardown(teardownHelper)
-            }
+            userServicesMap.remove(userId)?.getUserTeardownHelper()?.teardown()
         }
     }
 
-    override fun dispatchTeardown(teardownHelper: TeardownHelper) {
-        teardownHelper.teardown()
-    }
 
     override fun provideUserServicesOf(userId: String): UserServices? {
         synchronized(userServicesMap) {

@@ -9,6 +9,7 @@ import com.dropbox.kaiken.scoping.SingleIn
 import com.dropbox.kaiken.scoping.SkeletonScope
 import com.dropbox.kaiken.scoping.UserScope
 import com.dropbox.kaiken.scoping.cast
+import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
@@ -27,7 +28,7 @@ class AdvancedKaikenSampleApplication : SkeletonApplication() {
     override fun getSdkSpec(): SdkSpec = DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
 
     @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<String>
+    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
 
     @Inject
     lateinit var userManager: UserManager
@@ -37,16 +38,11 @@ class AdvancedKaikenSampleApplication : SkeletonApplication() {
         appServices.cast<ApplicationInjector>().inject(this)
         // Let's "log-in" users for sample purposes. In a real application this code would definitely not live
         // here and would be way way more complex
-        GlobalScope.launch {
-            userFlow.collect {
-                userManager.setActiveUser(it)
-            }
-        }
-
            GlobalScope.launch {
-               userFlow.emit("1")
-           }
-           GlobalScope.launch {
+               //this user flow is references in [SkeletonAuthInteractor]
+               // which is a simplified version of an UserStore/Account Manager
+               //normally the
+               userFlow.emit(UserInput("1", "Mike"))
                userManager.setActiveUser("1")
 
            }
