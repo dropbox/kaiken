@@ -32,6 +32,12 @@ jobs:
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
           SIGNING_ID: ${{ secrets.SIGNING_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+      - name: Publish release
+        run: ./gradlew closeAndReleaseRepository --no-daemon --no-parallel
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
       
       - name: Clean up Artifacts
         if: always()
