@@ -1,5 +1,5 @@
 # Change Log
-## Version 2.0.2 *(2021-11-18)*
+## Version 2.0.2 *(2021-12-06)*
 - No code changes, improved release process and need to test it
 
 ## Version 2.0.1 *(2021-11-18)*
