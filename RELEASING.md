@@ -10,7 +10,8 @@ Releasing
  6. `git push && git push --tags`
     * This should be pushed to your fork.
  7. Create a PR with this commit and merge it.
- 8. Update the top level `gradle.properties` to the next SNAPSHOT version.
- 9. `git commit -am "Prepare next development version."`
- 10. Create a PR with this commit and merge it.
- 11. Login to Sonatype to promote the artifacts https://central.sonatype.org/pages/releasing-the-deployment.html
+ 8. Confirm the new artifacts are present in https://repo1.maven.org/maven2/com/dropbox/kaiken/
+    * If the plugin fails to publish the release, you'll need to log into Sonatype and drop any repositories under 'Staging Repositories' and re-run the CI job to publish.
+ 9. Update the top level `gradle.properties` to the next SNAPSHOT version.
+ 10. `git commit -am "Prepare next development version."`
+ 11. Create a PR with this commit and merge it.
