@@ -25,13 +25,12 @@ jobs:
           java-version: 1.8
 
       - name: Upload Artifacts
-        run: tools/release/deploy_snapshot.sh
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-daemon --no-parallel
         env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
-          SIGNING_ID: ${{ secrets.SIGNING_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
 
       - name: Retrieve version
         run: |
@@ -43,10 +42,6 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
-      
-      - name: Clean up Artifacts
-        if: always()
-        run: tools/release/deploy_cleanup.sh
   test:
     runs-on: macos-latest
     timeout-minutes: 30
