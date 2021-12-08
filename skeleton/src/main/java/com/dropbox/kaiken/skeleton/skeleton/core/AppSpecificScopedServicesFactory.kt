@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.skeleton.skeleton.core
 
-import com.dropbox.kaiken.skeleton.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.skeleton.dagger.SdkSpec
 
 /**
  * Factory that allows an Application that uses the AppSkeleton to provide factory methods for its scoped
@@ -27,8 +27,8 @@ interface AppSpecificScopedServicesFactory {
      */
     //TODO mike make appInfoProvider injectable in xplat
     fun createUserServices(
-            appServices: AppServices,
-            user: SkeletonUser,
+        appServices: AppServices,
+        user: SkeletonUser,
 //            appInfoProvider: AppInfoProvider
     ): UserServices
 }
@@ -41,4 +41,8 @@ data class SkeletonOauth2(
     val accessToken: String
 ) : SkeletonAccessToken
 
-data class SkeletonUser(val userId: String, val accessToken: SkeletonAccessToken, val isActiveUser: Boolean)
+data class SkeletonUser(
+    val userId: String,
+    val accessToken: SkeletonAccessToken,
+    val isActiveUser: Boolean
+)

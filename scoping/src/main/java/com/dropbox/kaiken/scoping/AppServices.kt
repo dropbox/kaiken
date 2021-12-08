@@ -1,8 +1,6 @@
 package com.dropbox.kaiken.scoping
 
-
 interface AppServices : Teardownable
-
 
 /**
  * Marks as object as exposing a [TeardownHelper] that must be called before the reference
@@ -11,7 +9,6 @@ interface AppServices : Teardownable
 interface Teardownable {
     fun getTeardownHelper(): AppTeardownHelper
 }
-
 
 /**
  * Provide a method to teardown an object.

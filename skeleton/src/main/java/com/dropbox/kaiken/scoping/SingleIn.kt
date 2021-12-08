@@ -1,5 +1,3 @@
-
-
 package com.dropbox.kaiken.scoping
 
 import com.dropbox.kaiken.Injector
@@ -9,6 +7,7 @@ import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import dagger.BindsInstance
 import javax.inject.Scope
 import kotlin.reflect.KClass
+
 @OptIn(ExperimentalAnvilApi::class)
 
 
@@ -30,7 +29,7 @@ inline fun <reified T> Any.cast(): T = this as T
 )
 @SingleIn(AppScope::class)
 @OptIn(ExperimentalAnvilApi::class)
-interface AppComponent:AppServices{
+interface AppComponent : AppServices {
     @OptIn(ExperimentalAnvilApi::class)
     @ContributesTo(SkeletonScope::class)
     interface AppParentComponent {
@@ -44,15 +43,16 @@ interface AppComponent:AppServices{
     parentScope = AppScope::class
 )
 @SingleIn(UserScope::class)
-interface UserComponent:UserServices {
+interface UserComponent : UserServices {
     @OptIn(ExperimentalAnvilApi::class)
     @ContributesSubcomponent.Factory
-       interface Factory {
-             fun userComponent(
-                   @BindsInstance userId: Int
-             ): UserComponent
-           }
+    interface Factory {
+        fun userComponent(
+            @BindsInstance userId: Int
+        ): UserComponent
+    }
 }
+
 @ContributesTo(AppScope::class)
 interface UserParentComponent {
     @OptIn(ExperimentalAnvilApi::class)
@@ -81,7 +81,7 @@ interface AuthRequiredActivityComponent {
     parentScope = AppScope::class
 )
 @SingleIn(AuthOptionalActivityScope::class)
-interface AuthOptionalActivityComponent: Injector {
+interface AuthOptionalActivityComponent : Injector {
     @ContributesTo(AppScope::class)
     interface ParentComponent {
         fun createAuthOptionalComponent(): AuthOptionalActivityComponent

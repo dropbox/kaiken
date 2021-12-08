@@ -20,16 +20,16 @@ data class User(val userId: String, val accessToken: String, val isActiveUser: B
  */
 //TODO: add active user logic back in
 data class UserState(
-        /**
-         * Current users authenticated with the app
-         */
-        val users: Set<User>,
-        /**
-         * Any users which have been added since the last state
-         */
-        val usersAdded: Set<User> = emptySet(),
-        /**
-         * Any users which have been removed since the last state
-         */
-        val usersRemoved: Set<User> = emptySet()
+    /**
+     * Current users authenticated with the app
+     */
+    val users: Set<User>,
+    /**
+     * Any users which have been added since the last state
+     */
+    val usersAdded: Set<User> = emptySet(),
+    /**
+     * Any users which have been removed since the last state
+     */
+    val usersRemoved: Set<User> = emptySet()
 )

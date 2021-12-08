@@ -2,8 +2,8 @@
 
 package com.dropbox.kaiken.skeleton.skeleton.dagger
 
-import com.dropbox.kaiken.skeleton.skeleton.core.SkeletonConfig
 import com.dropbox.kaiken.scoping.SkeletonScope
+import com.dropbox.kaiken.skeleton.skeleton.core.SkeletonConfig
 import com.squareup.anvil.annotations.ContributesTo
 
 /**

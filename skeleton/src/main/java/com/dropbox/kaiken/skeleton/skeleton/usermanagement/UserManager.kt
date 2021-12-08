@@ -39,8 +39,8 @@ interface UserManager {
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 class RealUserManager @Inject constructor(
-        private val skeletonAuthInteractor: SkeletonAuthInteractor,
-        private val activeUserManager: ActiveUserManager,
+    private val skeletonAuthInteractor: SkeletonAuthInteractor,
+    private val activeUserManager: ActiveUserManager,
 ) : UserManager {
 
     private val mutex = Mutex()
@@ -59,34 +59,37 @@ class RealUserManager @Inject constructor(
         }
     }
 
-    private suspend fun hasUser(userId: String): Boolean = getUserState().first().users.any { account -> account.userId == userId }
+    private suspend fun hasUser(userId: String): Boolean =
+        getUserState().first().users.any { account -> account.userId == userId }
 
-    override suspend fun getActiveUser(): User? = getUserState().first().users.firstOrNull { account -> account.isActiveUser }
+    override suspend fun getActiveUser(): User? =
+        getUserState().first().users.firstOrNull { account -> account.isActiveUser }
+
     //TODO default to first user active if non is currently set
     override fun getUserState(): Flow<UserState> =
-            skeletonAuthInteractor.observeAlLUsers().combine(activeUserState) { usersInput, _ ->
-                // Find the active user ID and set at most 1 user to being active
-                val activeUserId = activeUserManager.getActiveUserId()
-                val result = mutableSetOf<User>()
-                usersInput.mapTo(result) { userInput ->
-                    User(userInput.userId, userInput.accessToken, activeUserId == userInput.userId)
-                }
-
-                // Handle a case where the active user has been removed from the users
-                if (usersInput.none { it.userId == activeUserId }) {
-                    activeUserManager.clearActiveUser()
-                }
-
-                result
+        skeletonAuthInteractor.observeAlLUsers().combine(activeUserState) { usersInput, _ ->
+            // Find the active user ID and set at most 1 user to being active
+            val activeUserId = activeUserManager.getActiveUserId()
+            val result = mutableSetOf<User>()
+            usersInput.mapTo(result) { userInput ->
+                User(userInput.userId, userInput.accessToken, activeUserId == userInput.userId)
             }
-                    .scan(UserState(emptySet())) { prev, next ->
-                        val usersRemoved = prev.users.minusById(next)
-                        val usersAdded = next.minusById(prev.users)
+
+            // Handle a case where the active user has been removed from the users
+            if (usersInput.none { it.userId == activeUserId }) {
+                activeUserManager.clearActiveUser()
+            }
+
+            result
+        }
+            .scan(UserState(emptySet())) { prev, next ->
+                val usersRemoved = prev.users.minusById(next)
+                val usersAdded = next.minusById(prev.users)
 //                        val activeUserUpdate = findActiveUserChange(prev.users, next)
 
-                        UserState(next, usersAdded, usersRemoved)//, activeUserUpdate)
-                    }
-                    .drop(1)
+                UserState(next, usersAdded, usersRemoved)//, activeUserUpdate)
+            }
+            .drop(1)
 
 //    internal fun findActiveUserChange(prev: Set<User>, next: Set<User>): ActiveUserUpdate? {
 //        val prevActiveUserId = prev.getActiveUserId()
@@ -99,14 +102,6 @@ class RealUserManager @Inject constructor(
 //    }
 }
 
-//internal fun Collection<User>.getActiveUserId(): String? {
-//    forEach { user ->
-//        if (user.isActiveUser) {
-//            return user.userId
-//        }
-//    }
-//    return null
-//}
 
 internal fun Set<User>.minusById(elements: Set<User>): Set<User> {
     val result = toMutableSet()

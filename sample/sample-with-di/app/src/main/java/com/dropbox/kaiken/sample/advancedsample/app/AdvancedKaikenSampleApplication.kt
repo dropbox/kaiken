@@ -44,7 +44,6 @@ class AdvancedKaikenSampleApplication : SkeletonApplication() {
                //normally the
                userFlow.emit(UserInput("1", "Mike"))
                userManager.setActiveUser("1")
-
            }
     }
 }

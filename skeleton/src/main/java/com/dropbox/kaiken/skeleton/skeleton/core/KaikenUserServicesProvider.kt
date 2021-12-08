@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
  */
 class KaikenUserServicesProvider
 constructor(
-        private val applicationServices: AppServices,
-        private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
+    private val applicationServices: AppServices,
+    private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
 ) : SkeletonUserServicesProvider {
     private val userServicesMap = mutableMapOf<String, KaikenUserServices>()
 
@@ -21,27 +21,30 @@ constructor(
         //TODO Mike figure out if we want another scope to launch from
         MainScope().launch {
 
-            (applicationServices as KaikenAppServices).userManager().getUserState().collect { userState ->
-                userState.usersRemoved.forEach { user ->
-                    teardownUserServicesOf(user.userId)
-                }
-                //TODO Mike figure out what we want to do for the base user type
-                userState.usersAdded.forEach { user ->
-                    initUserServicesOf(
+            (applicationServices as KaikenAppServices).userManager().getUserState()
+                .collect { userState ->
+
+                    userState.usersRemoved.forEach { user ->
+                        teardownUserServicesOf(user.userId)
+                    }
+                    //TODO Mike figure out what we want to do for the base user type
+                    userState.usersAdded.forEach { user ->
+                        initUserServicesOf(
                             SkeletonUser(
-                                    user.userId,
-                                    SkeletonOauth2(user.accessToken),
-                                    user.isActiveUser
+                                user.userId,
+                                SkeletonOauth2(user.accessToken),
+                                user.isActiveUser
                             )
-                    )
+                        )
+                    }
                 }
-            }
         }
     }
 
     override fun initUserServicesOf(user: SkeletonUser) {
         synchronized(userServicesMap) {
-            val userServices: KaikenUserServices = userServicesFactory(applicationServices, user) as KaikenUserServices
+            val userServices: KaikenUserServices =
+                userServicesFactory(applicationServices, user) as KaikenUserServices
             userServicesMap[user.userId] = userServices
         }
     }

@@ -37,7 +37,7 @@ import com.squareup.kotlinpoet.typeNameOf
  */
 private fun generateInjectExtensionFunction(
     interfaceName: String,
-    fragmentType: TypeName
+    fragmentType: TypeName,
 ): FunSpec {
     return FunSpec.builder("inject")
         .receiver(fragmentType)
@@ -49,7 +49,7 @@ private fun generateInjectExtensionFunction(
 @ExperimentalStdlibApi
 private fun generateInjectInterfaceSpec(
     interfaceName: String,
-    fragmentType: TypeName
+    fragmentType: TypeName,
 ): TypeSpec {
     val interfaceBuilder = TypeSpec.interfaceBuilder(interfaceName)
     return interfaceBuilder
@@ -73,10 +73,10 @@ private fun generateInjectInterfaceSpec(
 
 @ExperimentalStdlibApi
 internal fun generateFragmentFileSpec(
-        pack: String,
-        interfaceName: String,
-        fragmentType: TypeName,
-        shouldGenerateAuthAww: Boolean
+    pack: String,
+    interfaceName: String,
+    fragmentType: TypeName,
+    shouldGenerateAuthAww: Boolean,
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
     val interfaceSpec = generateInjectInterfaceSpec(interfaceName, fragmentType)

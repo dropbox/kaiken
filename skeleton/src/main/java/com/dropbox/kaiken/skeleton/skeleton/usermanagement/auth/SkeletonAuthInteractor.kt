@@ -25,12 +25,11 @@ interface SkeletonAuthInteractor {
     fun observeAlLUsers(): Flow<Set<UserInput>>
 }
 
-
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 class RealSkeletonAuthInteractor @Inject constructor(
-        private val newUser: @JvmSuppressWildcards MutableSharedFlow<UserInput>,
+    private val newUser: @JvmSuppressWildcards MutableSharedFlow<UserInput>,
 ) : SkeletonAuthInteractor {
     private val users = mutableSetOf<UserInput>()
     override fun observeAlLUsers(): Flow<Set<UserInput>> {

@@ -5,8 +5,8 @@ import android.content.Intent
 
 
 //TODO mike backport skeleton config class change to xplat
-interface SkeletonConfig{
-     val scopedServicesFactory: AppSpecificScopedServicesFactory
+interface SkeletonConfig {
+    val scopedServicesFactory: AppSpecificScopedServicesFactory
 }
 
 /**
