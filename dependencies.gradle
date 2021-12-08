@@ -32,7 +32,7 @@ ext.versions = [
         kotlinpoet_interop         : '1.10.2',
 
         // Testing
-        androidxTestCore            : '1.2.0',
+        androidxTestCore            : '1.4.0',
         androidxTestExtJunit        : '1.1.1',
         espresso                    : '3.1.0',
         junit                       : '1.8.4',
