@@ -7,4 +7,3 @@ abstract class SkeletonApplication : BaseSkeletonApplication() {
         appSkeleton = AppSkeletonInitializer.getInstance().appSkeletonDelegate
     }
 }
-

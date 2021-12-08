@@ -3,6 +3,7 @@ package com.dropbox.kaiken.scoping.internal
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.ScopedServicesProvider
 import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
@@ -155,9 +156,10 @@ private class FakeAppServices : AppServices, MyDependencyProvider {
 }
 
 private class FakeUserServices : UserServices, MyDependencyProvider {
-    override fun getTeardownHelper() = fail("Should not have been called")
-
     override fun helloWorldSayer() = userScopedHelloWorldSayer
+    override fun getUserTeardownHelper(): UserTeardownHelper {
+        TODO("Not yet implemented")
+    }
 }
 
 private interface MyDependencyProvider {

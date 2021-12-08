@@ -43,3 +43,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=compatibility']
     }
 }
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

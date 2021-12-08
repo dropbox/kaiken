@@ -1,15 +1,5 @@
 package com.dropbox.kaiken.skeleton.skeleton.usermanagement
 
-
-typealias UserId = String
-typealias AccessToken = String
-
-sealed class AuthInfo {
-    data class LoggedOut(val userId: String) : AuthInfo()
-    data class LoggedIn(val userId: String, val oauth2Token: String) : AuthInfo()
-    object NoAuth : AuthInfo()
-}
-
 /**
  * A holder which gives basic user information from the [UserManager]
  */
@@ -18,7 +8,7 @@ data class User(val userId: String, val accessToken: String, val isActiveUser: B
 /**
  * Potential information the [UserManager] can return.
  */
-//TODO: add active user logic back in
+// TODO: add active user logic back in
 data class UserState(
     /**
      * Current users authenticated with the app

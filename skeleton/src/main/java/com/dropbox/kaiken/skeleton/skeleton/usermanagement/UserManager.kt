@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.skeleton.skeleton.usermanagement
 
+import com.dropbox.kaiken.scoping.AppScope
 import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.ActiveUserManager
 import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.SkeletonAuthInteractor
-import com.dropbox.kaiken.scoping.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -65,7 +65,7 @@ class RealUserManager @Inject constructor(
     override suspend fun getActiveUser(): User? =
         getUserState().first().users.firstOrNull { account -> account.isActiveUser }
 
-    //TODO default to first user active if non is currently set
+    // TODO default to first user active if non is currently set
     override fun getUserState(): Flow<UserState> =
         skeletonAuthInteractor.observeAlLUsers().combine(activeUserState) { usersInput, _ ->
             // Find the active user ID and set at most 1 user to being active
@@ -87,7 +87,7 @@ class RealUserManager @Inject constructor(
                 val usersAdded = next.minusById(prev.users)
 //                        val activeUserUpdate = findActiveUserChange(prev.users, next)
 
-                UserState(next, usersAdded, usersRemoved)//, activeUserUpdate)
+                UserState(next, usersAdded, usersRemoved) // , activeUserUpdate)
             }
             .drop(1)
 
@@ -102,13 +102,16 @@ class RealUserManager @Inject constructor(
 //    }
 }
 
-
 internal fun Set<User>.minusById(elements: Set<User>): Set<User> {
     val result = toMutableSet()
-    forEach { item ->
+    myForEach { item ->
         if (elements.any { item.userId == it.userId }) {
             result.remove(item)
         }
     }
     return result
+}
+
+inline fun <T> Iterable<T>.myForEach(action: (T) -> Unit) {
+    for (element in this) action(element)
 }

@@ -22,38 +22,41 @@ class SplashActivity : AppCompatActivity(), AuthOptionalActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainactivity)
-        if(finishIfInvalidAuth()) return
+        if (finishIfInvalidAuth()) return
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         // Setup bottom navigation with navigation controller
         bottomNavigationView.setupWithNavController(navController)
     }
 }
+
 fun getLaunchIntent(
-        context: Context,
-        userId: String,
+    context: Context,
+    userId: String,
 ): Intent = Intent(context, LoggedInActivity::class.java).apply {
     putViewingUserSelector(ViewingUserSelector.fromUserId(userId))
 }
 
-
 @ContributesTo(AppScope::class)
 @Module
-class IntentFactoryModule{
+class IntentFactoryModule {
     @Provides
     @SingleIn(AppScope::class)
-    fun intentFactory(): @JvmSuppressWildcards (Context, String) -> Intent = { context:Context, userId:String-> getLaunchIntent(context,userId)}
+    fun intentFactory(): @JvmSuppressWildcards (Context, String) -> Intent =
+        { context: Context, userId: String -> getLaunchIntent(context, userId) }
 }
+
 class LoggedInActivity : AppCompatActivity(), AuthRequiredActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(finishIfInvalidAuth()) return
+        if (finishIfInvalidAuth()) return
         setContentView(R.layout.authactivity)
 
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         // Setup bottom navigation with navigation controller

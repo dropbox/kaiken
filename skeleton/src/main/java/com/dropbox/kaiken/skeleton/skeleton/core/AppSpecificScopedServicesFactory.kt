@@ -25,7 +25,7 @@ interface AppSpecificScopedServicesFactory {
      *
      * This method will be called every time a user is logged-in, and will be destroyed when the user is logged-out.
      */
-    //TODO mike make appInfoProvider injectable in xplat
+    // TODO mike make appInfoProvider injectable in xplat
     fun createUserServices(
         appServices: AppServices,
         user: SkeletonUser,

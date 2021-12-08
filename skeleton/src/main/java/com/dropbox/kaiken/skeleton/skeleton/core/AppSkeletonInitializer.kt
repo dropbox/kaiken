@@ -13,7 +13,6 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonDelegate) :
         )
     }
 
-
     companion object {
         internal lateinit var appSkeleton: AppSkeletonInitializer
 

@@ -2,7 +2,6 @@ package com.dropbox.kaiken.scoping
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import kotlin.test.fail
 
 class UserServicesProviderTest {
     @Test
@@ -43,7 +42,7 @@ private class FakeUserServicesProvider : UserServicesProvider {
 }
 
 private class FakeUserServices : UserServices {
-    override fun getTeardownHelper(): TeardownHelper {
-        fail("Unreachable")
+    override fun getUserTeardownHelper(): UserTeardownHelper {
+        TODO("Not yet implemented")
     }
 }

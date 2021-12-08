@@ -15,14 +15,13 @@ import dagger.Provides
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
-
 @Module
 @ContributesTo(AppScope::class)
 object AppServicesModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideHelloWorldMessageProvider(): HelloWorldMessageProvider =
-            RealWorldMessageProvider("Hello world!")
+        RealWorldMessageProvider("Hello world!")
 
     @Provides
     @SingleIn(AppScope::class)
@@ -30,7 +29,8 @@ object AppServicesModule {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideUserFlow(): @JvmSuppressWildcards MutableSharedFlow<UserInput> = MutableSharedFlow(replay = 1)
+    fun provideUserFlow(): @JvmSuppressWildcards MutableSharedFlow<UserInput> =
+        MutableSharedFlow(replay = 1)
 }
 
 // You can implement your own teardown logic here.

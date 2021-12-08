@@ -18,7 +18,7 @@ constructor(
     private val userServicesMap = mutableMapOf<String, KaikenUserServices>()
 
     init {
-        //TODO Mike figure out if we want another scope to launch from
+        // TODO Mike figure out if we want another scope to launch from
         MainScope().launch {
 
             (applicationServices as KaikenAppServices).userManager().getUserState()
@@ -27,7 +27,7 @@ constructor(
                     userState.usersRemoved.forEach { user ->
                         teardownUserServicesOf(user.userId)
                     }
-                    //TODO Mike figure out what we want to do for the base user type
+                    // TODO Mike figure out what we want to do for the base user type
                     userState.usersAdded.forEach { user ->
                         initUserServicesOf(
                             SkeletonUser(
@@ -54,7 +54,6 @@ constructor(
             userServicesMap.remove(userId)?.getUserTeardownHelper()?.teardown()
         }
     }
-
 
     override fun provideUserServicesOf(userId: String): UserServices? {
         synchronized(userServicesMap) {

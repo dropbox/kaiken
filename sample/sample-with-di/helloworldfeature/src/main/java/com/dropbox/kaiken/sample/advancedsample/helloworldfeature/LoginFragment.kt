@@ -25,12 +25,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 fun DependencyProviderResolver.daggerInjector() =
-        InjectorFactory { (resolveDependencyProvider() as AuthOptionalActivityComponent.ParentComponent).createAuthOptionalComponent() as HellowWorldManualInjector }
+    InjectorFactory { (resolveDependencyProvider() as AuthOptionalActivityComponent.ParentComponent).createAuthOptionalComponent() as HellowWorldManualInjector }
 
 @ContributesTo(AuthOptionalActivityScope::class)
-interface HellowWorldManualInjector: Injector {
+interface HellowWorldManualInjector : Injector {
     fun inject(fragment: LoginFragment)
 }
 
@@ -59,9 +58,9 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.login_fragment, null)
 
@@ -77,6 +76,4 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
 
         return view
     }
-
-
 }

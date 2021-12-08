@@ -10,7 +10,6 @@ import kotlin.reflect.KClass
 
 @OptIn(ExperimentalAnvilApi::class)
 
-
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
 annotation class SingleIn(val clazz: KClass<*>)

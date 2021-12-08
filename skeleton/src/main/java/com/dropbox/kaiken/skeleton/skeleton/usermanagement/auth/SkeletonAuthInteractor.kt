@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth
 
-
 import com.dropbox.kaiken.scoping.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,4 +38,3 @@ class RealSkeletonAuthInteractor @Inject constructor(
         }
     }
 }
-

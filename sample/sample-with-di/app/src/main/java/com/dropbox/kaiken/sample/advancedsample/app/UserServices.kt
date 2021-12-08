@@ -22,12 +22,10 @@ interface CoreAppServices {
 @ContributesTo(UserScope::class)
 @Module
 object UserServicesModule {
-
-
     @Provides
     @SingleIn(UserScope::class)
     fun provideHelloWorldMessageProvider(userProfile: UserProfile): HelloWorldMessageProviderUser =
-            RealWorldMessageProviderUser("Hello ${userProfile.name}!")
+        RealWorldMessageProviderUser("Hello ${userProfile.name}!")
 }
 
 // You can implement your own teardown logic here.

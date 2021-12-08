@@ -1,16 +1,13 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.Injector
-import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
@@ -24,14 +21,18 @@ import com.squareup.anvil.annotations.ContributesTo
 import javax.inject.Inject
 
 fun DependencyProviderResolver.daggerInjectorAuth() =
-        InjectorFactory { (resolveDependencyProvider() as AuthRequiredActivityComponent.ParentComponent).createAuthRequiredComponent() as HellowWorldAuthedManualInjector }
+    InjectorFactory { (resolveDependencyProvider() as AuthRequiredActivityComponent.ParentComponent).createAuthRequiredComponent() as HellowWorldAuthedManualInjector }
 
 @ContributesTo(AuthRequiredActivityScope::class)
-interface HellowWorldAuthedManualInjector: Injector {
+interface HellowWorldAuthedManualInjector :
+    Injector {
     fun inject(fragment: HelloWorldFragmentAuthed)
 }
 
-class HelloWorldFragmentAuthed : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldAuthedManualInjector> {
+class HelloWorldFragmentAuthed :
+    Fragment(),
+    AuthAwareFragment,
+    InjectorHolder<HellowWorldAuthedManualInjector> {
 
     @Inject
     @SingleIn(UserScope::class)
@@ -40,20 +41,16 @@ class HelloWorldFragmentAuthed : Fragment(), AuthAwareFragment, InjectorHolder<H
     @Inject
     lateinit var timeMessageProvider: TimeMessageProvider
 
-    @Inject
-    lateinit var intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(finishIfInvalidAuth()) return
+        if (finishIfInvalidAuth()) return
         locateInjector().inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.helloworldfragment, null)
 
@@ -65,6 +62,7 @@ class HelloWorldFragmentAuthed : Fragment(), AuthAwareFragment, InjectorHolder<H
 
         return view
     }
+
     override fun getInjectorFactory(): InjectorFactory<HellowWorldAuthedManualInjector> =
-            daggerInjectorAuth()
+        daggerInjectorAuth()
 }
