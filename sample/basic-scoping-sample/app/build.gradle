@@ -55,3 +55,4 @@ dependencies {
     implementation project(":scoping")
     implementation project(":sample:basic-scoping-sample:helloworldfeature")
 }
+
