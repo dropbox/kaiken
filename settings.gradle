@@ -4,6 +4,7 @@ include ':processor'
 include ':runtime'
 include ':scoping'
 include ':scoping-navgraph'
+include ':skeleton'
 include ':testing'
 
 // Samples

@@ -12,3 +12,8 @@ dependencies {
     implementation deps.kotlinStdLib
     debugImplementation deps.androidx_test_core
 }
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

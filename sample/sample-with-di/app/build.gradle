@@ -3,7 +3,11 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.squareup.anvil'
 }
+
+
+apply plugin: 'com.squareup.anvil'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -50,10 +54,18 @@ dependencies {
     implementation deps.androidx_fragment
     implementation deps.appcompat
     implementation deps.constraint_layout
+    implementation deps.coroutines
+    implementation deps.coroutinesAndroid
+
 
     implementation project(":scoping")
+    implementation project(":scoping-navgraph")
     implementation project(":sample:sample-with-di:helloworldfeature")
 
     implementation deps.dagger2
+    implementation deps.material
+    implementation deps.navgraph
+    implementation deps.nav_ui
+
     kapt deps.dagger2_compiler
 }

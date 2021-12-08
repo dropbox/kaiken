@@ -28,3 +28,9 @@ apply plugin: 'kotlin-android-extensions'
 androidExtensions {
     experimental = true
 }
+
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

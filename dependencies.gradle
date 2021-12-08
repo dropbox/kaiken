@@ -47,13 +47,17 @@ ext.versions = [
 ext.deps = [
         // Other
         kotlinStdLib                : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
+        coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
+        coroutinesAndroid           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2",
         javaxInject                 : "javax.inject:javax.inject:$versions.javaxInject",
 
         // UI Libraries
         androidx_fragment           : "androidx.fragment:fragment:$versions.androidxFragment",
         appcompat                   : "androidx.appcompat:appcompat:$versions.androidxAppCompat",
         navgraph                    : "androidx.navigation:navigation-fragment-ktx:$versions.navGraph",
+        nav_ui                      : "androidx.navigation:navigation-ui-ktx:$versions.navGraph",
         lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
+        material                    : "com.google.android.material:material:1.2.1",
 
         // Annotation Processing
         autoservice_annotations     : "com.google.auto.service:auto-service-annotations:$versions.autoservice",

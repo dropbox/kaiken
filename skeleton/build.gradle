@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
+
+dependencies {
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+    implementation deps.javax_inject
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation deps.coroutines
+
+    implementation project(":scoping")
+    implementation project(":annotations")
+
+    api project(":runtime")
+
+    implementation deps.dagger2
+    kapt deps.dagger2_compiler
+
+    anvil project(":processor")
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

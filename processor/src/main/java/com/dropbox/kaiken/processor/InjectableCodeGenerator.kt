@@ -36,14 +36,24 @@ class InjectableCodeGenerator : CodeGenerator {
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
-        projectFiles: Collection<KtFile>
+        projectFiles: Collection<KtFile>,
     ): Collection<GeneratedFile> {
         return projectFiles.classesAndInnerClass(module).filter { clazz ->
             clazz.hasAnnotation(FqName("com.dropbox.kaiken.annotation.Injectable"), module)
-        }.map { clazz: KtClassOrObject ->
+        }.map(mapper(module, codeGenDir)).toList()
+    }
+
+    private fun mapper(
+        module: ModuleDescriptor,
+        codeGenDir: File
+    ): (KtClassOrObject) -> GeneratedFile =
+        { clazz: KtClassOrObject ->
             var classType = ClassType.INVALID
             val descriptor: ClassDescriptor? =
-                module.resolveClassByFqName(clazz.fqName!!, checkNotNull(clazz.createLookupLocation()))
+                module.resolveClassByFqName(
+                    clazz.fqName!!,
+                    checkNotNull(clazz.createLookupLocation())
+                )
 
             checkNotNull(descriptor).getAllSuperClassifiers().forEach {
                 if (it.isFragment()) {
@@ -71,16 +81,16 @@ class InjectableCodeGenerator : CodeGenerator {
                 generateFragmentFileSpec(
                     packageName,
                     "${className.simpleName}Injector",
-                    className
+                    className,
+                    true
                 )
-            return@map createGeneratedFile(
+            createGeneratedFile(
                 codeGenDir = codeGenDir,
                 packageName = packageName,
                 fileName = "${className.simpleName}Injector",
                 content = fileSpec.toString()
             )
-        }.toList()
-    }
+        }
 
     override fun isApplicable(context: AnvilContext): Boolean = !context.disableComponentMerging
 }

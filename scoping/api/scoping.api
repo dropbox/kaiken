@@ -5,6 +5,10 @@ public abstract interface class com/dropbox/kaiken/scoping/AppServicesProvider {
 	public abstract fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
 }
 
+public abstract interface class com/dropbox/kaiken/scoping/AppTeardownHelper {
+	public abstract fun teardown ()V
+}
+
 public abstract interface class com/dropbox/kaiken/scoping/AuthAwareBroadcastReceiver {
 	public abstract fun getAuthRequired ()Z
 	public fun onReceiveResolveDependencyProvider (Landroid/content/Context;Landroid/content/Intent;)Ljava/lang/Object;
@@ -134,15 +138,11 @@ public final class com/dropbox/kaiken/scoping/ScopedServicesProvider$DefaultImpl
 	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ScopedServicesProvider;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/TeardownHelper {
-	public abstract fun teardown ()V
-}
-
 public abstract interface class com/dropbox/kaiken/scoping/Teardownable {
-	public abstract fun getTeardownHelper ()Lcom/dropbox/kaiken/scoping/TeardownHelper;
+	public abstract fun getTeardownHelper ()Lcom/dropbox/kaiken/scoping/AppTeardownHelper;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/UserServices : com/dropbox/kaiken/scoping/Teardownable {
+public abstract interface class com/dropbox/kaiken/scoping/UserServices : com/dropbox/kaiken/scoping/UserTeardownable {
 }
 
 public abstract interface class com/dropbox/kaiken/scoping/UserServicesProvider {
@@ -152,6 +152,14 @@ public abstract interface class com/dropbox/kaiken/scoping/UserServicesProvider 
 
 public final class com/dropbox/kaiken/scoping/UserServicesProvider$DefaultImpls {
 	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/UserServicesProvider;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserTeardownHelper {
+	public abstract fun teardown ()V
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserTeardownable {
+	public abstract fun getUserTeardownHelper ()Lcom/dropbox/kaiken/scoping/UserTeardownHelper;
 }
 
 public final class com/dropbox/kaiken/scoping/ViewingUserSelector : android/os/Parcelable {

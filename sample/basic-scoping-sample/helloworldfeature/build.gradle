@@ -8,3 +8,8 @@ dependencies {
 
     implementation project(":scoping")
 }
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

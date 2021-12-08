@@ -1,0 +1,403 @@
+public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/skeleton/core/Com_dropbox_kaiken_skeleton_skeleton_core_KaikenConfigKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenConfig_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenConfig_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/skeleton/usermanagement/Com_dropbox_kaiken_skeleton_skeleton_usermanagement_RealUserManagerKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_RealUserManager_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_RealUserManager_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/Com_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealActiveUserManagerKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealActiveUserManager_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealActiveUserManager_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/Com_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealSkeletonAuthInteractorKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealSkeletonAuthInteractor_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_usermanagement_auth_RealSkeletonAuthInteractor_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AppComponent_AppParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AppComponent_AppParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AppComponent_AppParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AuthOptionalActivityComponent_ParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AuthOptionalActivityComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AuthOptionalActivityComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AuthRequiredActivityComponent_ParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AuthRequiredActivityComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AuthRequiredActivityComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_UserParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_UserParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_UserParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/skeleton/core/Com_dropbox_kaiken_skeleton_skeleton_core_KaikenAppServicesKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenAppServices_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenAppServices_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/skeleton/core/Com_dropbox_kaiken_skeleton_skeleton_core_KaikenUserServicesKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenUserServices_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_core_KaikenUserServices_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/skeleton/dagger/Com_dropbox_kaiken_skeleton_skeleton_dagger_SdkSpecKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_dagger_SdkSpec_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_skeleton_dagger_SdkSpec_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AppComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AppComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AppComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AuthOptionalActivityComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AuthOptionalActivityComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AuthOptionalActivityComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_AuthRequiredActivityComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_AuthRequiredActivityComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_AuthRequiredActivityComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/scoping/Com_dropbox_kaiken_scoping_UserComponentKt {
+	public static final fun getCom_dropbox_kaiken_scoping_UserComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_scoping_UserComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AppComponent : com/dropbox/kaiken/scoping/AppServices {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AppComponent$AppParentComponent {
+	public abstract fun appComponent ()Lcom/dropbox/kaiken/scoping/AppComponent;
+}
+
+public abstract class com/dropbox/kaiken/scoping/AppScope {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalActivityComponent : com/dropbox/kaiken/Injector {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalActivityComponent$ParentComponent {
+	public abstract fun createAuthOptionalComponent ()Lcom/dropbox/kaiken/scoping/AuthOptionalActivityComponent;
+}
+
+public abstract class com/dropbox/kaiken/scoping/AuthOptionalActivityScope {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredActivityComponent {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredActivityComponent$ParentComponent {
+	public abstract fun createAuthRequiredComponent ()Lcom/dropbox/kaiken/scoping/AuthRequiredActivityComponent;
+}
+
+public abstract class com/dropbox/kaiken/scoping/AuthRequiredActivityScope {
+}
+
+public abstract interface annotation class com/dropbox/kaiken/scoping/SingleIn : java/lang/annotation/Annotation {
+	public abstract fun clazz ()Ljava/lang/Class;
+}
+
+public final class com/dropbox/kaiken/scoping/SingleInKt {
+	public static final synthetic fun cast (Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract class com/dropbox/kaiken/scoping/SkeletonScope {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserComponent : com/dropbox/kaiken/scoping/UserServices {
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserComponent$Factory {
+	public abstract fun userComponent (I)Lcom/dropbox/kaiken/scoping/UserComponent;
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserParentComponent {
+	public abstract fun createUserComponent ()Lcom/dropbox/kaiken/scoping/UserComponent$Factory;
+}
+
+public abstract class com/dropbox/kaiken/scoping/UserScope {
+}
+
+public final class com/dropbox/kaiken/skeleton/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate : com/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices {
+	public field userServicesProvider Lcom/dropbox/kaiken/scoping/UserServicesProvider;
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;)V
+	public fun getAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun getComponent ()Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;
+	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
+	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
+	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
+	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer : com/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices {
+	public static final field Companion Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer$Companion;
+	public static field appSkeleton Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer;
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate;)V
+	public fun getAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public final fun getAppSkeletonDelegate ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate;
+	public fun getComponent ()Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;
+	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
+	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
+	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
+	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer$Companion {
+	public final fun getAppSkeleton$skeleton_release ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer;
+	public final fun getInstance ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer;
+	public final fun init$skeleton_release (Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;)Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer;
+	public final fun setAppSkeleton$skeleton_release (Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonInitializer;)V
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/AppSpecificScopedServicesFactory {
+	public abstract fun createAppServices (Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;)Lcom/dropbox/kaiken/scoping/AppServices;
+	public abstract fun createUserServices (Lcom/dropbox/kaiken/scoping/AppServices;Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/skeleton/core/BaseSkeletonApplication : android/app/Application, com/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices {
+	protected field appSkeleton Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate;
+	public fun <init> ()V
+	public fun getAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	protected final fun getAppSkeleton ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate;
+	public fun getComponent ()Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;
+	public abstract fun getSdkSpec ()Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;
+	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
+	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
+	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
+	protected final fun setAppSkeleton (Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSkeletonDelegate;)V
+	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/KaikenAppServices : com/dropbox/kaiken/scoping/AppServices {
+	public abstract fun userManager ()Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/UserManager;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/KaikenConfig : com/dropbox/kaiken/skeleton/skeleton/core/SkeletonConfig {
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonApplication;)V
+	public final fun getApp ()Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonApplication;
+	public fun getScopedServicesFactory ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSpecificScopedServicesFactory;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/KaikenConfig_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/skeleton/core/KaikenConfig_Factory;
+	public fun get ()Lcom/dropbox/kaiken/skeleton/skeleton/core/KaikenConfig;
+	public synthetic fun get ()Ljava/lang/Object;
+	public static fun newInstance (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonApplication;)Lcom/dropbox/kaiken/skeleton/skeleton/core/KaikenConfig;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/KaikenUserServices : com/dropbox/kaiken/scoping/UserServices {
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/KaikenUserServicesProvider : com/dropbox/kaiken/skeleton/skeleton/core/SkeletonUserServicesProvider {
+	public fun <init> (Lcom/dropbox/kaiken/scoping/AppServices;Lkotlin/jvm/functions/Function2;)V
+	public fun initUserServicesOf (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;)V
+	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
+	public fun teardownUserServicesOf (Ljava/lang/String;)V
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken {
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessTokenPair : com/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getSecret ()Ljava/lang/String;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonApplication : com/dropbox/kaiken/skeleton/skeleton/core/BaseSkeletonApplication {
+	public fun <init> ()V
+	public fun onCreate ()V
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonConfig {
+	public abstract fun getScopedServicesFactory ()Lcom/dropbox/kaiken/skeleton/skeleton/core/AppSpecificScopedServicesFactory;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonOauth2 : com/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonOauth2;
+	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonOauth2;Ljava/lang/String;ILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonOauth2;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccessToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser {
+	public fun <init> (Ljava/lang/String;Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken;Z)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken;
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken;Z)Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;
+	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;Ljava/lang/String;Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken;ZILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccessToken ()Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonAccessToken;
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isActiveUser ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonUserServicesProvider : com/dropbox/kaiken/scoping/UserServicesProvider {
+	public abstract fun initUserServicesOf (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUser;)V
+	public abstract fun teardownUserServicesOf (Ljava/lang/String;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/core/SkeletonUserServicesProvider$DefaultImpls {
+	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonUserServicesProvider;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec {
+	public abstract fun getSkeletonConfig ()Lcom/dropbox/kaiken/skeleton/skeleton/core/SkeletonConfig;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices : com/dropbox/kaiken/scoping/ScopedServicesProvider {
+	public abstract fun getAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public abstract fun getComponent ()Lcom/dropbox/kaiken/skeleton/skeleton/dagger/SdkSpec;
+	public abstract fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
+	public abstract fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
+	public abstract fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices$DefaultImpls {
+	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/skeleton/skeleton/dependencymanagement/SkeletonScopedServices;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/RealUserManager : com/dropbox/kaiken/skeleton/skeleton/usermanagement/UserManager {
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/SkeletonAuthInteractor;Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/ActiveUserManager;)V
+	public fun getActiveUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserState ()Lkotlinx/coroutines/flow/Flow;
+	public fun setActiveUser (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/RealUserManager_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/RealUserManager_Factory;
+	public fun get ()Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/RealUserManager;
+	public synthetic fun get ()Ljava/lang/Object;
+	public static fun newInstance (Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/SkeletonAuthInteractor;Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/ActiveUserManager;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/RealUserManager;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/User {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Z)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/User;
+	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/User;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/User;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccessToken ()Ljava/lang/String;
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isActiveUser ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/usermanagement/UserManager {
+	public abstract fun getActiveUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUserState ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setActiveUser (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/UserManagerKt {
+	public static final fun minusById (Ljava/util/Set;Ljava/util/Set;)Ljava/util/Set;
+	public static final fun myForEach (Ljava/lang/Iterable;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/UserState {
+	public fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V
+	public synthetic fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/Set;
+	public final fun component2 ()Ljava/util/Set;
+	public final fun component3 ()Ljava/util/Set;
+	public final fun copy (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/UserState;
+	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/UserState;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/UserState;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUsers ()Ljava/util/Set;
+	public final fun getUsersAdded ()Ljava/util/Set;
+	public final fun getUsersRemoved ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/ActiveUserManager {
+	public abstract fun clearActiveUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getActiveUserId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setActiveUser (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager : com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/ActiveUserManager {
+	public static final field ACTIVE_USER_SHARED_PREFS Ljava/lang/String;
+	public static final field Companion Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager$Companion;
+	public fun <init> (Landroid/app/Application;)V
+	public fun clearActiveUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getActiveUserId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setActiveUser (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager$Companion {
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager_Factory;
+	public fun get ()Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager;
+	public synthetic fun get ()Ljava/lang/Object;
+	public static fun newInstance (Landroid/app/Application;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealActiveUserManager;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealSkeletonAuthInteractor : com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/SkeletonAuthInteractor {
+	public fun <init> (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
+	public fun observeAlLUsers ()Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealSkeletonAuthInteractor_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealSkeletonAuthInteractor_Factory;
+	public fun get ()Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealSkeletonAuthInteractor;
+	public synthetic fun get ()Ljava/lang/Object;
+	public static fun newInstance (Lkotlinx/coroutines/flow/MutableSharedFlow;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/RealSkeletonAuthInteractor;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/SkeletonAuthInteractor {
+	public abstract fun observeAlLUsers ()Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class com/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/UserInput {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/UserInput;
+	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/UserInput;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/skeleton/usermanagement/auth/UserInput;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccessToken ()Ljava/lang/String;
+	public final fun getUserId ()Ljava/lang/String;
+	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

@@ -42,6 +42,11 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
     }
 }
 
+android {
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}
 dependencies {
     implementation deps.androidx_fragment
     implementation deps.appcompat
@@ -50,3 +55,4 @@ dependencies {
     implementation project(":scoping")
     implementation project(":sample:basic-scoping-sample:helloworldfeature")
 }
+
