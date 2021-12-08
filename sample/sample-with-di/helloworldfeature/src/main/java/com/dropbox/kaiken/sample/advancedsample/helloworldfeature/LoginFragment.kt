@@ -46,7 +46,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     lateinit var intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
 
     @Inject
-    lateinit var userManager: UserManager
+    lateinit var userStore: UserStore
 
     @Inject
     lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>

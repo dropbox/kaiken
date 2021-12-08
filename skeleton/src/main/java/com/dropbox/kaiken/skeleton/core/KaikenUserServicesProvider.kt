@@ -28,11 +28,7 @@ constructor(
                     // TODO Mike figure out what we want to do for the base user type
                     userState.usersAdded.forEach { user ->
                         initUserServicesOf(
-                            SkeletonUser(
-                                user.userId,
-                                SkeletonOauth2(user.accessToken),
-                                user.isActiveUser
-                            )
+                            SkeletonUser(user.userId, user.accessToken)
                         )
                     }
                 }
@@ -40,17 +36,12 @@ constructor(
     }
 
     override fun initUserServicesOf(user: SkeletonUser) {
-        synchronized(userServicesMap) {
-            val userServices: KaikenUserServices =
-                userServicesFactory(applicationServices, user) as KaikenUserServices
-            userServicesMap[user.userId] = userServices
-        }
+        val userServices = userServicesFactory(applicationServices, user) as KaikenUserServices
+        userServicesMap[user.userId] = userServices
     }
 
     override fun teardownUserServicesOf(userId: String) {
-        synchronized(userServicesMap) {
-            userServicesMap.remove(userId)?.getUserTeardownHelper()?.teardown()
-        }
+        userServicesMap.remove(userId)?.getUserTeardownHelper()?.teardown()
     }
 
     override fun provideUserServicesOf(userId: String): UserServices? {

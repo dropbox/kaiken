@@ -1,15 +1,14 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
-import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
-import com.dropbox.kaiken.skeleton.scoping.AppScope
-import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.SkeletonScope
-import com.dropbox.kaiken.skeleton.scoping.UserScope
-import com.dropbox.kaiken.skeleton.scoping.cast
-import com.dropbox.kaiken.skeleton.usermanagement.UserManager
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
+import com.dropbox.kaiken.skeleton.skeleton.core.SkeletonApplication
+import com.dropbox.kaiken.skeleton.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.skeleton.usermanagement.UserStore
+import com.dropbox.kaiken.scoping.AppScope
+import com.dropbox.kaiken.scoping.SingleIn
+import com.dropbox.kaiken.scoping.SkeletonScope
+import com.dropbox.kaiken.scoping.UserScope
+import com.dropbox.kaiken.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
@@ -28,7 +27,7 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
     lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
 
     @Inject
-    lateinit var userManager: UserManager
+    lateinit var userStore: UserStore
 
     override fun onCreate() {
         super.onCreate()
