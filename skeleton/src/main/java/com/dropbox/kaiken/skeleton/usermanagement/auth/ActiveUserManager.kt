@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
@@ -30,6 +31,7 @@ interface ActiveUserManager {
     suspend fun getActiveUserId(): String?
 }
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RealActiveUserManager @Inject constructor(
     private val context: Application
 ) : ActiveUserManager {

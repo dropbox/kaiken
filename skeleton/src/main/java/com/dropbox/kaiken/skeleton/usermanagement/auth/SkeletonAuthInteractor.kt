@@ -31,6 +31,7 @@ interface SkeletonAuthInteractor {
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RealSkeletonAuthInteractor @Inject constructor(
     private val newUser: @JvmSuppressWildcards MutableSharedFlow<UserInput>,
 ) : SkeletonAuthInteractor {

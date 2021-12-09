@@ -2,7 +2,7 @@ package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.skeleton.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.UserServices
-import kotlinx.coroutines.MainScope
+import com.dropbox.kaiken.skeleton.scoping.cast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -19,11 +19,9 @@ constructor(
 
     init {
         // TODO Mike figure out if we want another scope to launch from
-        MainScope().launch {
-
+        applicationServices.cast<CoroutineScopeBindings>().coroutineScopes().mainScope.launch {
             (applicationServices as KaikenAppServices).userManager().getUserState()
                 .collect { userState ->
-
                     userState.usersRemoved.forEach { user ->
                         teardownUserServicesOf(user.userId)
                     }

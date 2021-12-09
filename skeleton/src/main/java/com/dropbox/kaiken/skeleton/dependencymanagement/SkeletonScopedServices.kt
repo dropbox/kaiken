@@ -8,7 +8,6 @@ import com.dropbox.kaiken.skeleton.scoping.UserServices
 import com.dropbox.kaiken.skeleton.scoping.UserServicesProvider
 
 interface SkeletonScopedServices : ScopedServicesProvider {
-    val appServices: AppServices
     val userServicesFactory: (AppServices, SkeletonUser) -> UserServices
     var userServicesProvider: UserServicesProvider
     val component: SdkSpec
