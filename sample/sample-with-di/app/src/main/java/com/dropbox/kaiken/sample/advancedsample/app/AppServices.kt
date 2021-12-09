@@ -7,12 +7,10 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessagePro
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.AppTeardownHelper
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
 @Module

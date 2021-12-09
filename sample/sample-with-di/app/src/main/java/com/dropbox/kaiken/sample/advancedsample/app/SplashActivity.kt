@@ -13,7 +13,6 @@ import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.putViewingUserSelector
-
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides

@@ -17,7 +17,6 @@ import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivityScope
 import com.dropbox.kaiken.skeleton.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.UserScope
-
 import com.squareup.anvil.annotations.ContributesTo
 import javax.inject.Inject
 
