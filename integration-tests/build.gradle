@@ -10,10 +10,12 @@ dependencies {
     implementation deps.appcompat
     implementation deps.kotlinStdLib
     implementation deps.javaxInject
-
+    implementation deps.coroutines
+    implementation deps.coroutinesAndroid
     debugImplementation project(":annotations")
     debugImplementation project(":runtime")
     debugImplementation project(":scoping")
+    debugImplementation project(":skeleton")
     anvil project(":processor")
 
     kaptDebug project(":processor")
@@ -26,6 +28,9 @@ dependencies {
     androidTestImplementation deps.truth
 
     androidTestImplementation project(':testing')
+    kaptAndroidTest deps.dagger2_compiler
+
+
 }
 
 anvil {

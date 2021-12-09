@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.dropbox.kaiken.basic_scoping_sample.app.R
 import com.dropbox.kaiken.sample.basicscoping.helloworldfeatue.HelloWorldFragment
-import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

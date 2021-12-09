@@ -6,8 +6,8 @@ import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.runtime.findInjector
-import com.dropbox.kaiken.scoping.AuthAwareFragment
-import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.skeleton.scoping.AuthAwareFragment
+import com.dropbox.kaiken.skeleton.scoping.DependencyProviderResolver
 import dagger.Component
 import javax.inject.Inject
 

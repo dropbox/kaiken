@@ -11,12 +11,12 @@ import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
-import com.dropbox.kaiken.scoping.AuthAwareFragment
-import com.dropbox.kaiken.scoping.AuthRequiredActivityComponent
-import com.dropbox.kaiken.scoping.AuthRequiredActivityScope
-import com.dropbox.kaiken.scoping.DependencyProviderResolver
-import com.dropbox.kaiken.scoping.SingleIn
-import com.dropbox.kaiken.scoping.UserScope
+import com.dropbox.kaiken.skeleton.scoping.AuthAwareFragment
+import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivityComponent
+import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivityScope
+import com.dropbox.kaiken.skeleton.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
+import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.squareup.anvil.annotations.ContributesTo
 import javax.inject.Inject
 

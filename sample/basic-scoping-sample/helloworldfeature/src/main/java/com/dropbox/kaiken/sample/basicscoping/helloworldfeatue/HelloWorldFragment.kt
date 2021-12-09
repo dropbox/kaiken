@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.basic_scoping_sample.helloworldfeature.R
-import com.dropbox.kaiken.scoping.AuthOptionalFragment
-import com.dropbox.kaiken.scoping.ViewingUserSelector
-import com.dropbox.kaiken.scoping.putViewingUserSelector
+import com.dropbox.kaiken.skeleton.scoping.AuthOptionalFragment
+import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
+import com.dropbox.kaiken.skeleton.scoping.putViewingUserSelector
 
 class HelloWorldFragment : Fragment(), AuthOptionalFragment {
 

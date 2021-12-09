@@ -3,10 +3,10 @@ package test.com.dropbox.kaiken.testing
 import android.content.Context
 import android.content.ContextWrapper
 import androidx.appcompat.app.AppCompatActivity
-import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.scoping.UserServices
-import com.dropbox.kaiken.scoping.UserTeardownHelper
+import com.dropbox.kaiken.skeleton.scoping.AppServices
+import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.skeleton.scoping.UserServices
+import com.dropbox.kaiken.skeleton.scoping.UserTeardownHelper
 
 abstract class TestActivity : AppCompatActivity() {
     override fun getApplicationContext(): Context {

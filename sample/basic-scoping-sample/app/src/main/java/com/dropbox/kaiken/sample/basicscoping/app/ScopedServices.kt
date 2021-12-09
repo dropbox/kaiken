@@ -5,10 +5,10 @@ import com.dropbox.kaiken.sample.basicscoping.helloworldfeatue.HelloWorldMessage
 import com.dropbox.kaiken.sample.basicscoping.helloworldfeatue.RealTimeMessageProvider
 import com.dropbox.kaiken.sample.basicscoping.helloworldfeatue.RealWorldMessageProvider
 import com.dropbox.kaiken.sample.basicscoping.helloworldfeatue.TimeMessageProvider
-import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.AppTeardownHelper
-import com.dropbox.kaiken.scoping.UserServices
-import com.dropbox.kaiken.scoping.UserTeardownHelper
+import com.dropbox.kaiken.skeleton.scoping.AppServices
+import com.dropbox.kaiken.skeleton.scoping.AppTeardownHelper
+import com.dropbox.kaiken.skeleton.scoping.UserServices
+import com.dropbox.kaiken.skeleton.scoping.UserTeardownHelper
 
 class BasicKaikenSampleAppServices : AppServices, HelloWorldDependencies {
 

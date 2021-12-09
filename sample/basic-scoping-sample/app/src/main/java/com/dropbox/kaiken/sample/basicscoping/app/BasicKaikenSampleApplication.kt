@@ -1,9 +1,9 @@
 package com.dropbox.kaiken.sample.basicscoping.app
 
 import android.app.Application
-import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.scoping.AppServices
+import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.skeleton.scoping.UserServices
 
 class BasicKaikenSampleApplication : Application(), ScopedServicesProvider {
 
