@@ -22,7 +22,6 @@ constructor(
         applicationServices.cast<CoroutineScopeBindings>().coroutineScopes().mainScope.launch {
             (applicationServices as KaikenAppServices).userManager().getUserState()
                 .collect { userState ->
-
                     userState.usersRemoved.forEach { user ->
                         teardownUserServicesOf(user.userId)
                     }

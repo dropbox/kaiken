@@ -6,9 +6,17 @@ import com.dropbox.kaiken.skeleton.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.UserServices
 import com.dropbox.kaiken.skeleton.scoping.UserServicesProvider
 
-class AppSkeletonScopedServices internal  constructor(
+class AppSkeletonScopedServices internal constructor(
     override val component: SdkSpec
 ) : SkeletonScopedServices {
+
+    val appServices: AppServices = component.getSkeletonConfig()
+        .scopedServicesFactory
+        .createAppServices(
+            component
+        )
+
+    override fun provideAppServices(): AppServices = appServices
 
     override val userServicesFactory = { appServices: AppServices, user: SkeletonUser ->
         component.getSkeletonConfig().scopedServicesFactory.createUserServices(
@@ -18,12 +26,6 @@ class AppSkeletonScopedServices internal  constructor(
     }
 
     override lateinit var userServicesProvider: UserServicesProvider
-
-    override fun provideAppServices(): AppServices = component.getSkeletonConfig()
-        .scopedServicesFactory
-        .createAppServices(
-            component
-        )
 
     override fun provideUserServicesOf(userId: String): UserServices? =
         userServicesProvider.provideUserServicesOf(userId)

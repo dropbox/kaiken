@@ -27,4 +27,3 @@ interface SkeletonOwner : SkeletonScopedServices {
             appSkeleton.userServicesProvider = value
         }
 }
-

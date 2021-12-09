@@ -3,15 +3,13 @@ package com.dropbox.kaiken.skeleton.core
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.Teardownable
 import com.dropbox.kaiken.skeleton.usermanagement.UserManager
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
+import javax.inject.Inject
 
 /**
  * Holds the common dependencies for [AAppScope]
@@ -23,21 +21,20 @@ interface KaikenAppServices : AppServices {
 }
 
 @ContributesTo(AppScope::class)
-interface CoroutineScopeBindings  {
-    fun coroutineScopes():CoroutineScopes
+interface CoroutineScopeBindings {
+    fun coroutineScopes(): CoroutineScopes
 }
 
 @ContributesBinding(AppScope::class)
-class RealCoroutineScopes:CoroutineScopes {
-        override val mainScope: CoroutineScope
-            get() = MainScope()
-        override val globalScope: CoroutineScope
-            get() = GlobalScope
-
-    }
-
+@SingleIn(AppScope::class)
+class RealCoroutineScopes @Inject constructor() : CoroutineScopes {
+    override val mainScope: CoroutineScope
+        get() = MainScope()
+    override val globalScope: CoroutineScope
+        get() = GlobalScope
+}
 
 interface CoroutineScopes {
-    val mainScope:CoroutineScope
-    val globalScope:CoroutineScope
+    val mainScope: CoroutineScope
+    val globalScope: CoroutineScope
 }

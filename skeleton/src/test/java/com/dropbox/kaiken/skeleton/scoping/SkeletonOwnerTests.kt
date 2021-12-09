@@ -26,7 +26,8 @@ class SkeletonOwnerTests {
         val skeletonServices = DaggerSkeletonTestComponent.factory().create()
 
         val config = KaikenConfig()
-        val appServices: AppServices = config.scopedServicesFactory.createAppServices(skeletonServices)
+        val appServices: AppServices =
+            config.scopedServicesFactory.createAppServices(skeletonServices)
         assertThat(appServices).isInstanceOf(AppComponent::class.java)
     }
 }

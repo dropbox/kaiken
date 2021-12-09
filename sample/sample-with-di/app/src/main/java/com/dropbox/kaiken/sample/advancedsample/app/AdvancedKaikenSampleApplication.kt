@@ -16,8 +16,10 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,12 +39,18 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
         provideAppServices().cast<ApplicationInjector>().inject(this)
         // Let's "log-in" users for sample purposes. In a real application this code would definitely not live
         // here and would be way way more complex
-        GlobalScope.launch {
+
+        MainScope().launch {
+            userFlow.asSharedFlow().collect {
+                it.accessToken
+            }
+        }
+        MainScope().launch {
             // this user flow is references in [SkeletonAuthInteractor]
             // which is a simplified version of an UserStore/Account Manager
             // normally the
-            userFlow.emit(UserInput("1", "Mike"))
             userManager.setActiveUser("1")
+            userFlow.emit(UserInput("1", "Mike"))
         }
     }
 }

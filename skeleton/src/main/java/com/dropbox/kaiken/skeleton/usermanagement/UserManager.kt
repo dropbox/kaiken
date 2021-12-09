@@ -1,6 +1,7 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
 import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.usermanagement.auth.ActiveUserManager
 import com.dropbox.kaiken.skeleton.usermanagement.auth.SkeletonAuthInteractor
 import com.squareup.anvil.annotations.ContributesBinding
@@ -38,6 +39,7 @@ interface UserManager {
 
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RealUserManager @Inject constructor(
     private val skeletonAuthInteractor: SkeletonAuthInteractor,
     private val activeUserManager: ActiveUserManager,
