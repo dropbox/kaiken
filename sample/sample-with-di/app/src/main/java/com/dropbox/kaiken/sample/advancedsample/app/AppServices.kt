@@ -26,11 +26,6 @@ object AppServicesModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideTimeMessageProvider(): TimeMessageProvider = RealTimeMessageProvider()
-
-    @Provides
-    @SingleIn(AppScope::class)
-    fun provideUserFlow(): @JvmSuppressWildcards MutableSharedFlow<UserInput> =
-        MutableSharedFlow(replay = 1)
 }
 
 // You can implement your own teardown logic here.
