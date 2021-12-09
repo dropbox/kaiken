@@ -6,6 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.scan
 import javax.inject.Inject
 
@@ -18,6 +19,10 @@ interface UserStore<T : User> {
      *
      */
     fun getUserEvents(): Flow<UsersEvent<T>>
+
+    suspend fun getUserById(userId: String): T?
+
+    fun getUsers(): Flow<Set<T>>
 }
 
 @ExperimentalCoroutinesApi
@@ -42,6 +47,12 @@ class RealUserStore<T : User> @Inject constructor(
                 UsersEvent(users, usersAdded, usersRemoved, next.first)
             }
             .drop(1)
+
+    override suspend fun getUserById(userId: String): T? {
+        return getAllUsers().first().firstOrNull { it.userId == userId }
+    }
+
+    override fun getUsers(): Flow<Set<T>> = getAllUsers()
 }
 
 internal fun <T : User> Set<T>.minusById(elements: Set<T>): Set<T> {

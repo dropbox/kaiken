@@ -3,8 +3,12 @@ package com.dropbox.kaiken.skeleton.skeleton.usermanagement
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource<T : User> {
-    fun addUser(user: T): Boolean
-    fun removeUser(userId: String): Boolean
+    suspend fun add(user: User): Boolean
+    suspend fun remove(userId: String): Boolean
     fun getAllUsers(): Flow<Set<T>>
-    fun getUser(userId: String): Flow<T>
+}
+
+interface DataSource<T> {
+    fun add(t: T)
+    fun remove(t: T)
 }
