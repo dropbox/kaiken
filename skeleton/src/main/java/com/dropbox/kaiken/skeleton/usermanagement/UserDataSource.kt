@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.skeleton.usermanagement
+package com.dropbox.kaiken.skeleton.usermanagement
 
 import kotlinx.coroutines.flow.Flow
 

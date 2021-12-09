@@ -1,25 +1,31 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
-/**
- * A holder which gives basic user information from the [UserManager]
- */
-data class User(val userId: String, val accessToken: String, val isActiveUser: Boolean)
+import com.dropbox.kaiken.skeleton.core.SkeletonAccessToken
+
+interface User {
+    val userId: String
+    val accessToken: SkeletonAccessToken
+}
 
 /**
- * Potential information the [UserManager] can return.
+ * Potential information the [UserStore] can return.
  */
-// TODO: add active user logic back in
-data class UserState(
+// TODO: add active user logic back in ???
+data class UsersEvent<T : User>(
     /**
      * Current users authenticated with the app
      */
-    val users: Set<User>,
+    internal val users: Set<T>,
     /**
      * Any users which have been added since the last state
      */
-    val usersAdded: Set<User> = emptySet(),
+    val usersAdded: Set<T> = emptySet(),
     /**
      * Any users which have been removed since the last state
      */
-    val usersRemoved: Set<User> = emptySet()
+    val usersRemoved: Set<T> = emptySet(),
+    /**
+     * The UserID which is identified as active, null if none is set.
+     */
+    val activeUserId: String? = null
 )

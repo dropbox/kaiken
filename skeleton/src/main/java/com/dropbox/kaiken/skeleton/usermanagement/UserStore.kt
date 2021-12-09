@@ -1,6 +1,6 @@
-package com.dropbox.kaiken.skeleton.skeleton.usermanagement
+package com.dropbox.kaiken.skeleton.usermanagement
 
-import com.dropbox.kaiken.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -21,8 +21,6 @@ interface UserStore<T : User> {
     fun getUserEvents(): Flow<UsersEvent<T>>
 
     suspend fun getUserById(userId: String): T?
-
-    fun getUsers(): Flow<Set<T>>
 }
 
 @ExperimentalCoroutinesApi
@@ -51,8 +49,6 @@ class RealUserStore<T : User> @Inject constructor(
     override suspend fun getUserById(userId: String): T? {
         return getAllUsers().first().firstOrNull { it.userId == userId }
     }
-
-    override fun getUsers(): Flow<Set<T>> = getAllUsers()
 }
 
 internal fun <T : User> Set<T>.minusById(elements: Set<T>): Set<T> {
