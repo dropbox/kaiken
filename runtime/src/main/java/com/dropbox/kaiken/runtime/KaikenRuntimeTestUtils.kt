@@ -48,6 +48,7 @@ object KaikenRuntimeTestUtils {
         injectorHolderKClass: KClass<out InjectorHolder<*>>,
         injectorFactory: InjectorFactory<InjectorType>
     ) {
+        require(testMode)
         injectorFactoryOverrides[injectorHolderKClass] = injectorFactory
     }
 
@@ -66,6 +67,7 @@ object KaikenRuntimeTestUtils {
         injectableClass: KClass<out Fragment>,
         injector: InjectorType
     ) {
+        require(testMode)
         injectorOverrides[injectableClass] = StaticInjectorHolder(injector)
     }
 
@@ -83,10 +85,6 @@ object KaikenRuntimeTestUtils {
 private class StaticInjectorHolder<InjectorType : Injector>(
     private val injector: InjectorType
 ) : InjectorHolder<InjectorType> {
-
-    init {
-        require(testMode)
-    }
 
     private val viewModelStore: ViewModelStore = ViewModelStore()
 

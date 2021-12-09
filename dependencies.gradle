@@ -27,7 +27,7 @@ ext.versions = [
         // Annotation Processing
         autoservice                 : '1.0-rc6',
         incap                       : '0.3',
-        javapoet                    : '1.11.1',
+        javapoet                    : '1.13.0',
         kotlinpooet                 : '1.5.0',
         kotlinpoet_interop         : '1.10.2',
 

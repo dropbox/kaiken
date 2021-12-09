@@ -1,4 +1,11 @@
 # Change Log
+## Version 2.0.2 *(2021-12-06)*
+- No code changes, improved release process and need to test it
+
+## Version 2.0.1 *(2021-11-18)*
+- Remove guards on injector read - https://github.com/dropbox/kaiken/pull/64
+- Upgrade Anvil and use the built-in mechanism to sync sources - https://github.com/dropbox/kaiken/pull/61
+
 ## Version 2.0.0 *(2021-11-03)*
 - Upgraded the project to Kotlin 1.5
 - Migrated the code generation from kapt to anvil
