@@ -6,9 +6,11 @@ import com.dropbox.kaiken.skeleton.scoping.cast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
- * Skeleton implementation of [UserServicesProvider] that registers itself with a [UserManager].
+ * Skeleton implementation of [UserServicesProvider] that registers itself with a [UserStore].
  *
  */
 @OptIn(InternalCoroutinesApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
@@ -17,8 +19,8 @@ constructor(
     private val applicationServices: AppServices,
     private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
 ) : SkeletonUserServicesProvider {
-    // better way to handle init?
     private lateinit var userServices: Flow<Map<String, KaikenUserServices>>
+    private val mutex = Mutex(true)
 
     init {
         // TODO Mike figure out if we want another scope to launch from
@@ -37,6 +39,7 @@ constructor(
                     result
                 }
                 .drop(1)
+            mutex.unlock()
             userServices.collect()
         }
     }
@@ -47,7 +50,8 @@ constructor(
         }
     }
 
-    suspend fun provideUserServices(userId: String): UserServices? {
-        return userServices.firstOrNull()?.get(userId)
-    }
+    suspend fun provideUserServices(userId: String): UserServices? =
+        mutex.withLock {
+            userServices.first()[userId]
+        }
 }
