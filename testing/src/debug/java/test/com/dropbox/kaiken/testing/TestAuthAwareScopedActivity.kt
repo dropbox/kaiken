@@ -1,7 +1,7 @@
 package test.com.dropbox.kaiken.testing
 
 import android.os.Bundle
-import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity
+import com.dropbox.kaiken.skeleton.scoping.AuthAwareScopeOwnerActivity
 
 abstract class TestAuthAwareScopedActivity : TestActivity(), AuthAwareScopeOwnerActivity {
 

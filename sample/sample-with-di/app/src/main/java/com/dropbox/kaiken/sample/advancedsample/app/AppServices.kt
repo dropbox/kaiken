@@ -4,15 +4,13 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldMess
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealTimeMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
-import com.dropbox.kaiken.scoping.AppScope
-import com.dropbox.kaiken.scoping.AppTeardownHelper
-import com.dropbox.kaiken.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.UserInput
+import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.AppTeardownHelper
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
 @Module
@@ -26,11 +24,6 @@ object AppServicesModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideTimeMessageProvider(): TimeMessageProvider = RealTimeMessageProvider()
-
-    @Provides
-    @SingleIn(AppScope::class)
-    fun provideUserFlow(): @JvmSuppressWildcards MutableSharedFlow<UserInput> =
-        MutableSharedFlow(replay = 1)
 }
 
 // You can implement your own teardown logic here.

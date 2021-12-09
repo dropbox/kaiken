@@ -20,7 +20,10 @@ dependencies {
     kapt deps.dagger2_compiler
 
     anvil project(":processor")
-}
+    testImplementation deps.kotlintestjunit
+    testImplementation deps.truth
+    testImplementation project(':testing')
+    kaptTest deps.dagger2_compiler}
 
 android {
     packagingOptions {

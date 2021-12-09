@@ -1,15 +1,15 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
-import com.dropbox.kaiken.scoping.AppScope
-import com.dropbox.kaiken.scoping.SingleIn
-import com.dropbox.kaiken.scoping.SkeletonScope
-import com.dropbox.kaiken.scoping.UserScope
-import com.dropbox.kaiken.scoping.cast
-import com.dropbox.kaiken.skeleton.skeleton.core.SkeletonApplication
-import com.dropbox.kaiken.skeleton.skeleton.dagger.SdkSpec
-import com.dropbox.kaiken.skeleton.skeleton.usermanagement.UserManager
-import com.dropbox.kaiken.skeleton.skeleton.usermanagement.auth.UserInput
+import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
+import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
+import com.dropbox.kaiken.skeleton.scoping.SkeletonScope
+import com.dropbox.kaiken.skeleton.scoping.UserScope
+import com.dropbox.kaiken.skeleton.scoping.cast
+import com.dropbox.kaiken.skeleton.usermanagement.UserManager
+import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AdvancedKaikenSampleApplication : SkeletonApplication() {
+class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
 
     override fun getSdkSpec(): SdkSpec =
         DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
@@ -65,8 +65,8 @@ class UserModule {
 class SkeletonModule {
     @Provides
     @SingleIn(SkeletonScope::class)
-    fun provideSkeletonApplication(application: Application): SkeletonApplication =
-        application as SkeletonApplication
+    fun provideApplication(application: SkeletonOwnerApplication): Application =
+        application
 }
 
 @MergeComponent(SkeletonScope::class)
@@ -75,7 +75,7 @@ interface SkeletonComponent : SdkSpec {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance app: Application,
+            @BindsInstance app: SkeletonOwnerApplication,
         ): SkeletonComponent
     }
 }
