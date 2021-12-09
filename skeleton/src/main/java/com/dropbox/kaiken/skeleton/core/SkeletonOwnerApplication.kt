@@ -8,5 +8,5 @@ abstract class SkeletonOwnerApplication : SkeletonOwner, Application() {
         appSkeleton = AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
     }
 
-    override lateinit var appSkeleton: AppSkeletonDelegate
+    override lateinit var appSkeleton: AppSkeletonScopedServices
 }

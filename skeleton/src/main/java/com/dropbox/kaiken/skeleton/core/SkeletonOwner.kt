@@ -8,14 +8,14 @@ import com.dropbox.kaiken.skeleton.scoping.UserServicesProvider
 
 interface SkeletonOwner : SkeletonScopedServices {
 
-    var appSkeleton: AppSkeletonDelegate
+    var appSkeleton: AppSkeletonScopedServices
+
     override val component: SdkSpec
         get() = appSkeleton.component
 
     fun getSdkSpec(): SdkSpec
+
     override fun provideAppServices() = appSkeleton.provideAppServices()
-    override val appServices: AppServices
-        get() = provideAppServices()
 
     override fun provideUserServicesOf(userId: String) = appSkeleton.provideUserServicesOf(userId)
     override val userServicesFactory: (AppServices, SkeletonUser) -> UserServices
@@ -28,13 +28,3 @@ interface SkeletonOwner : SkeletonScopedServices {
         }
 }
 
-class FakeSkeletonOwner : SkeletonOwner {
-    override lateinit var appSkeleton: AppSkeletonDelegate
-    lateinit var fakeSdkSpec: SdkSpec
-    override fun getSdkSpec(): SdkSpec =
-        fakeSdkSpec
-
-    fun initialize() {
-        appSkeleton = AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
-    }
-}

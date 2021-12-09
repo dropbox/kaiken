@@ -3,12 +3,12 @@ package com.dropbox.kaiken.skeleton.core
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 
-class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonDelegate) :
+class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices) :
     SkeletonScopedServices by appSkeletonDelegate {
 
     init {
         userServicesProvider = KaikenUserServicesProvider(
-            appServices,
+            provideAppServices(),
             userServicesFactory
         )
     }
@@ -28,7 +28,7 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonDelegate) :
             component: SdkSpec,
         ): AppSkeletonInitializer {
             check(!this::appSkeleton.isInitialized)
-            appSkeleton = AppSkeletonInitializer(AppSkeletonDelegate(component))
+            appSkeleton = AppSkeletonInitializer(AppSkeletonScopedServices(component))
             return appSkeleton
         }
 

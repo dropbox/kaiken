@@ -34,7 +34,7 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        appServices.cast<ApplicationInjector>().inject(this)
+        provideAppServices().cast<ApplicationInjector>().inject(this)
         // Let's "log-in" users for sample purposes. In a real application this code would definitely not live
         // here and would be way way more complex
         GlobalScope.launch {
