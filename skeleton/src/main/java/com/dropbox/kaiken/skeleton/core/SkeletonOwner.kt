@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.skeleton.core
 
-
 abstract class SkeletonOwner : BaseSkeletonApplication() {
 
     override fun onCreate() {

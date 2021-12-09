@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.skeleton.scoping
 
-
 import com.dropbox.kaiken.skeleton.core.AppSpecificScopedServicesFactory
 import com.dropbox.kaiken.skeleton.core.KaikenConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonAccessTokenPair
@@ -16,7 +15,6 @@ import com.squareup.anvil.annotations.MergeComponent
 import dagger.Component
 import org.junit.Test
 import javax.inject.Inject
-
 
 class ScopesConstructionTests {
     @Test
@@ -37,8 +35,12 @@ class ScopesConstructionTests {
         val noAuthActivityComponent: AuthOptionalActivityComponent =
             appServices.cast<AuthOptionalActivityComponent.ParentComponent>()
                 .createAuthOptionalComponent()
-        assertThat(authActivityComponent.cast<UserTeardownHelperProvider>().userTeardownHelper()).isInstanceOf(UserTeardownHelper::class.java)
-        assertThat(noAuthActivityComponent.cast<AppTeardownHelperProvider>().appTeardownHelper()).isInstanceOf(AppTeardownHelper::class.java)
+        assertThat(
+            authActivityComponent.cast<UserTeardownHelperProvider>().userTeardownHelper()
+        ).isInstanceOf(UserTeardownHelper::class.java)
+        assertThat(
+            noAuthActivityComponent.cast<AppTeardownHelperProvider>().appTeardownHelper()
+        ).isInstanceOf(AppTeardownHelper::class.java)
     }
 }
 
@@ -62,7 +64,6 @@ class FakeSkeletonConfig @Inject constructor() : SkeletonConfig {
                     .cast<AppComponent.AppParentComponent>()
                     .appComponent()
 
-
             override fun createUserServices(
                 appServices: AppServices,
                 user: SkeletonUser
@@ -72,7 +73,6 @@ class FakeSkeletonConfig @Inject constructor() : SkeletonConfig {
                     .createUserComponent()
                     .userComponent(user.userId.toInt())
         }
-
 }
 
 // You can implement your own teardown logic here.
@@ -85,8 +85,7 @@ class NoOpTeardownHelper @Inject constructor() : AppTeardownHelper {
 }
 
 @ContributesBinding(AppScope::class, replaces = [RealActiveUserManager::class])
-class FakeActiveUserManager @Inject constructor(
-) : ActiveUserManager {
+class FakeActiveUserManager @Inject constructor() : ActiveUserManager {
     override suspend fun clearActiveUser(): Boolean {
         TODO("Not yet implemented")
     }
@@ -111,12 +110,11 @@ class NoOpUserTeardownHelper @Inject constructor() : UserTeardownHelper {
 
 @ContributesTo(AuthRequiredActivityScope::class)
 interface UserTeardownHelperProvider {
-    fun userTeardownHelper():UserTeardownHelper
+    fun userTeardownHelper(): UserTeardownHelper
 //    fun appTeardownHelper():AppTeardownHelper
 }
 
-
 @ContributesTo(AuthOptionalActivityScope::class)
 interface AppTeardownHelperProvider {
-    fun appTeardownHelper():AppTeardownHelper
+    fun appTeardownHelper(): AppTeardownHelper
 }

@@ -1,11 +1,11 @@
 package com.dropbox.kaiken.skeleton.core
 
 import android.app.Application
+import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 import com.dropbox.kaiken.skeleton.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.UserServices
 import com.dropbox.kaiken.skeleton.scoping.UserServicesProvider
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
-import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 
 abstract class BaseSkeletonApplication : SkeletonScopedServices, Application() {
     protected lateinit var appSkeleton: AppSkeletonDelegate

@@ -45,7 +45,7 @@ class RealSkeletonAuthInteractor @Inject constructor(
 
 @Module
 @ContributesTo(AppScope::class)
-class BindingModule{
+class BindingModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideUserFlow(): @JvmSuppressWildcards MutableSharedFlow<UserInput> =
