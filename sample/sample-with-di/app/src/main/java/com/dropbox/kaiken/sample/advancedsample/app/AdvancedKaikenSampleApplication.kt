@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
-import com.dropbox.kaiken.skeleton.core.SkeletonOwner
+import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AdvancedKaikenSampleApplication : SkeletonOwner() {
+class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
 
     override fun getSdkSpec(): SdkSpec =
         DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
@@ -65,7 +65,7 @@ class UserModule {
 class SkeletonModule {
     @Provides
     @SingleIn(SkeletonScope::class)
-    fun provideApplication(application: SkeletonOwner): Application =
+    fun provideApplication(application: SkeletonOwnerApplication): Application =
         application
 }
 
@@ -75,7 +75,7 @@ interface SkeletonComponent : SdkSpec {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance app: SkeletonOwner,
+            @BindsInstance app: SkeletonOwnerApplication,
         ): SkeletonComponent
     }
 }

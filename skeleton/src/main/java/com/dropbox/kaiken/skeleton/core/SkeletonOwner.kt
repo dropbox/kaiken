@@ -1,10 +1,12 @@
 package com.dropbox.kaiken.skeleton.core
 
-abstract class SkeletonOwner : BaseSkeletonApplication() {
+import android.app.Application
 
+abstract class SkeletonOwnerApplication : SkeletonOwner, Application() {
     override fun onCreate() {
         super.onCreate()
-        AppSkeletonInitializer.init(getSdkSpec())
-        appSkeleton = AppSkeletonInitializer.getInstance().appSkeletonDelegate
+        appSkeleton = AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
     }
+
+    override lateinit var appSkeleton: AppSkeletonDelegate
 }

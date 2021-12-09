@@ -28,8 +28,7 @@ interface AppSpecificScopedServicesFactory {
     // TODO mike make appInfoProvider injectable in xplat
     fun createUserServices(
         appServices: AppServices,
-        user: SkeletonUser,
-//            appInfoProvider: AppInfoProvider
+        user: SkeletonUser
     ): UserServices
 }
 

@@ -29,8 +29,6 @@ dependencies {
 
     androidTestImplementation project(':testing')
     kaptAndroidTest deps.dagger2_compiler
-
-
 }
 
 anvil {

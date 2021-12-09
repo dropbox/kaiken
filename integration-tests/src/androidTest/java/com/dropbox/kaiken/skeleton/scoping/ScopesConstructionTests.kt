@@ -49,9 +49,7 @@ class ScopesConstructionTests {
 interface SkeletonTestComponent : SdkSpec {
     @Component.Factory
     interface Factory {
-        fun create(
-//            @BindsInstance app: SkeletonOwner,
-        ): SkeletonTestComponent
+        fun create(): SkeletonTestComponent
     }
 }
 
