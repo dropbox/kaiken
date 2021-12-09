@@ -11,13 +11,14 @@ import kotlinx.coroutines.runBlocking
  * Skeleton implementation of [UserServicesProvider] that registers itself with a [UserManager].
  *
  */
-@OptIn(InternalCoroutinesApi::class)
+@OptIn(InternalCoroutinesApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class KaikenUserServicesProvider
 constructor(
     private val applicationServices: AppServices,
     private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
 ) : SkeletonUserServicesProvider {
-    private val userServicesMap = mutableMapOf<String, KaikenUserServices>()
+    // better way to handle init?
+    private lateinit var userServices: Flow<Map<String, KaikenUserServices>>
 
     init {
         // TODO Mike figure out if we want another scope to launch from
@@ -27,26 +28,17 @@ constructor(
                     userState.usersRemoved.forEach { user ->
                         teardownUserServicesOf(user.userId)
                     }
-                    // TODO Mike figure out what we want to do for the base user type
-                    userState.usersAdded.forEach { user ->
-                        initUserServicesOf(
-                            SkeletonUser(user.userId, user.accessToken)
-                        )
+
+                    next.usersAdded.forEach { user ->
+                        val services = userServicesFactory(applicationServices, SkeletonUser(user.userId, user.accessToken)) as KaikenUserServices
+                        result[user.userId] = services
                     }
+
+                    result
                 }
+                .drop(1)
+            userServices.collect()
         }
-    }
-
-    private val userManager = (applicationServices as KaikenAppServices).userStore()
-
-    override fun initUserServicesOf(user: SkeletonUser): KaikenUserServices =
-        with(userServicesFactory(applicationServices, user) as KaikenUserServices) {
-            userServicesMap[user.userId] = this
-            this
-        }
-
-    override fun teardownUserServicesOf(userId: String) {
-        userServicesMap.remove(userId)?.getUserTeardownHelper()?.teardown()
     }
 
     override fun provideUserServicesOf(userId: String): UserServices? {
@@ -56,14 +48,6 @@ constructor(
     }
 
     suspend fun provideUserServices(userId: String): UserServices? {
-        with(userServicesMap[userId]) {
-            if (this != null) {
-                return this
-            }
-        }
-
-        return userManager.getUserById(userId)?.let {
-            initUserServicesOf(SkeletonUser(it.userId, it.accessToken))
-        }
+        return userServices.firstOrNull()?.get(userId)
     }
 }
