@@ -37,21 +37,6 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
     override fun onCreate() {
         super.onCreate()
         provideAppServices().cast<ApplicationInjector>().inject(this)
-        // Let's "log-in" users for sample purposes. In a real application this code would definitely not live
-        // here and would be way way more complex
-
-        MainScope().launch {
-            userFlow.asSharedFlow().collect {
-                it.accessToken
-            }
-        }
-        MainScope().launch {
-            // this user flow is references in [SkeletonAuthInteractor]
-            // which is a simplified version of an UserStore/Account Manager
-            // normally the
-            userManager.setActiveUser("1")
-            userFlow.emit(UserInput("1", "Mike"))
-        }
     }
 }
 

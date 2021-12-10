@@ -5,8 +5,8 @@ import android.app.Application
 abstract class SkeletonOwnerApplication : SkeletonOwner, Application() {
     override fun onCreate() {
         super.onCreate()
-        appSkeleton = AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
+        scopedServices = AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
     }
 
-    override lateinit var appSkeleton: AppSkeletonScopedServices
+    override lateinit var scopedServices: AppSkeletonScopedServices
 }
