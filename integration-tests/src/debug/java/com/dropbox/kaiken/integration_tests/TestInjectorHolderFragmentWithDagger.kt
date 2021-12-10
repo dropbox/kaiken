@@ -12,7 +12,10 @@ import dagger.Component
 import javax.inject.Inject
 
 @Injectable
-class TestInjectorHolderFragmentWithDagger : AuthAwareFragment, Fragment(), InjectorHolder<TestComponent> {
+class TestInjectorHolderFragmentWithDagger :
+    AuthAwareFragment,
+    Fragment(),
+    InjectorHolder<TestComponent> {
     @Inject
     lateinit var message: String
 
@@ -24,11 +27,16 @@ class TestInjectorHolderFragmentWithDagger : AuthAwareFragment, Fragment(), Inje
     fun testInject() {
         inject()
     }
+
     override fun getInjectorFactory(): InjectorFactory<TestComponent> = daggerInjector()
 }
 
 @Component(dependencies = [Dependencies::class])
-interface TestComponent : TestInjectorHolderFragmentWithDaggerInjector, Dependencies, TestInjectorHolderActivityInjector, TestSimpleFragmentInjector
+interface TestComponent :
+    TestInjectorHolderFragmentWithDaggerInjector,
+    Dependencies,
+    TestInjectorHolderActivityInjector,
+    TestSimpleFragmentInjector
 
 interface Dependencies {
     val messages: String
@@ -43,7 +51,8 @@ fun DependencyProviderResolver.daggerInjector() =
 
 private fun buildPhotosInternalComponent(
     dependencies: TestComponent
-): TestComponent = DaggerTestComponent.builder().dependencies(dependencies).build()
+):
+    TestComponent = DaggerTestComponent.builder().dependencies(dependencies).build()
 
 internal fun Fragment.providePhotosPresenterDependencies():
     Dependencies = findInjector<TestComponent>()

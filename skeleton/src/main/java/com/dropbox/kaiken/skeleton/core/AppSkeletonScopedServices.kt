@@ -1,10 +1,10 @@
 package com.dropbox.kaiken.skeleton.core
 
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
-import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.scoping.UserServicesProvider
+import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 
 class AppSkeletonScopedServices internal constructor(
     override val component: SdkSpec

@@ -9,7 +9,9 @@ import com.dropbox.kaiken.runtime.InjectorHolder
 import javax.inject.Inject
 
 @Injectable
-class TestInjectorHolderActivity : AppCompatActivity(), InjectorHolder<TestInjectorHolderActivityInjector> {
+class TestInjectorHolderActivity :
+    AppCompatActivity(),
+    InjectorHolder<TestInjectorHolderActivityInjector> {
     @Inject
     lateinit var message: String
 

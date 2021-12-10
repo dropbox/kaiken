@@ -30,7 +30,11 @@ class HelloWorldFragment : Fragment(), AuthOptionalFragment {
         timeMessageProvider = dependencies.timeMessageProvider
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.helloworldfragment, null)
 
         val helloWorldTextView = view.findViewById<TextView>(R.id.helloWorldTextView)
