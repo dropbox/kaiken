@@ -3,12 +3,12 @@ ext.versions = [
         targetSdk         : 30,
         compileSdk        : 30,
         buildTools        : '29.0.3',
-        kotlin            : '1.5.30',
+        kotlin            : '1.6.0',
         ktlint            : '0.39.0',
 
         // Plugins
         androidGradlePlugin         : '4.1.0',
-        dokkaGradlePlugin           : '0.10.0',
+        dokkaGradlePlugin           : '1.6.0',
         ktlintGradle                : '9.1.1',
         spotlessGradlePlugin        : '3.26.1',
         jacocoGradlePlugin          : '0.8.5',
@@ -32,7 +32,7 @@ ext.versions = [
         kotlinpoet_interop         : '1.10.2',
 
         // Testing
-        androidxTestCore            : '1.2.0',
+        androidxTestCore            : '1.4.0',
         androidxTestExtJunit        : '1.1.1',
         espresso                    : '3.1.0',
         junit                       : '1.8.4',
