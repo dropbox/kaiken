@@ -56,7 +56,7 @@ class KaikenTestRule(
      */
     private val injectorOverride: Pair<KClass<out AuthAwareFragment>, Injector>? = null,
 
-    ) : ExternalResource() {
+) : ExternalResource() {
 
     @OptIn(InternalKaikenApi::class)
     override fun before() {

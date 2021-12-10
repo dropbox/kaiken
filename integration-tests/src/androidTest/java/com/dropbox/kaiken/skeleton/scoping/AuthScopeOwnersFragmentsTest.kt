@@ -147,8 +147,7 @@ class AuthScopeOwnersFragmentsTest {
     private fun Fragment.findChildTestAuthAwareFragment() =
         this.childFragmentManager.findFragmentByTag(CHILD_FRAGMENT_TAG) as TestAuthAwareFragment
 
-    private fun ActivityScenario<out TestSimpleActivity>
-    .assertFragmentCanResolveAppScopedDependency() {
+    private fun ActivityScenario<out TestSimpleActivity>.assertFragmentCanResolveAppScopedDependency() {
         onActivity { activity ->
             val testObject = activity.findTestAuthAwareScopedFragment()
             assertThat(testObject.onAttachExceptionThrown).isNull()
@@ -161,8 +160,7 @@ class AuthScopeOwnersFragmentsTest {
         }
     }
 
-    private fun ActivityScenario<out TestSimpleActivity>
-    .assertFragmentCanResolveUserScopedDependency() {
+    private fun ActivityScenario<out TestSimpleActivity>.assertFragmentCanResolveUserScopedDependency() {
         onActivity { activity ->
             val testObject = activity.findTestAuthAwareScopedFragment()
             assertThat(testObject.onAttachExceptionThrown).isNull()

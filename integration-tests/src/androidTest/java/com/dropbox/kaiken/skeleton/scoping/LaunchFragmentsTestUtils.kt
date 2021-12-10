@@ -39,7 +39,7 @@ internal fun ActivityScenario<out TestActivity>.addTestAuthAwareFragment() {
 }
 
 internal fun <T> T.addChildTestAuthAwareFragment()
-    where T : AuthAwareScopeOwnerFragment, T : Fragment {
+        where T : AuthAwareScopeOwnerFragment, T : Fragment {
     this.childFragmentManager
         .beginTransaction()
         .add(TestAuthAwareFragment(), CHILD_FRAGMENT_TAG)

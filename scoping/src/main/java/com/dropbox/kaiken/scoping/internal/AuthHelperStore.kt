@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.dropbox.kaiken.scoping.AuthAwareBroadcastReceiver
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerFragment
-import com.dropbox.kaiken.skeleton.scoping.BuildConfig
 import com.dropbox.kaiken.scoping.ScopedServicesProvider
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.getViewingUserSelector
+import com.dropbox.kaiken.skeleton.scoping.BuildConfig
 
 internal fun AuthAwareScopeOwnerActivity.locateAuthHelperStore(): AuthHelperStore {
     val activity = (this as ComponentActivity)
@@ -34,9 +34,10 @@ private fun ComponentActivity.locateAuthHelperStore(authRequired: Boolean): Auth
     val viewingUserSelector = intent.getViewingUserSelector()
 
     if (BuildConfig.DEBUG) {
-        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)?.let { override ->
-            return override
-        }
+        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)
+            ?.let { override ->
+                return override
+            }
     }
 
     val appServicesProvider = locateScopedServicesProvider()
@@ -48,9 +49,10 @@ private fun Fragment.locateAuthHelperStore(authRequired: Boolean): AuthHelperSto
     val viewingUserSelector = arguments?.getViewingUserSelector()
 
     if (BuildConfig.DEBUG) {
-        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)?.let { override ->
-            return override
-        }
+        KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)
+            ?.let { override ->
+                return override
+            }
     }
 
     val context = requireActivity()

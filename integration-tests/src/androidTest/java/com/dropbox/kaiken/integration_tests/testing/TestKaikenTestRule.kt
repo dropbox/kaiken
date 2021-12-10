@@ -12,8 +12,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-private const val messageActivity = "Hello Activity! I've overridden the default injector! Muaha Muaha!"
-private const val messageFragment = "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
+private const val messageActivity =
+    "Hello Activity! I've overridden the default injector! Muaha Muaha!"
+private const val messageFragment =
+    "Hello Fragment! I've overridden the default injector! Muaha Muaha!"
 
 @RunWith(AndroidJUnit4::class)
 class TestKaikenTestRule {

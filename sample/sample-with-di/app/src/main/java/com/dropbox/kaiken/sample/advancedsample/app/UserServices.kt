@@ -3,10 +3,10 @@ package com.dropbox.kaiken.sample.advancedsample.app
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldMessageProviderUser
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProviderUser
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
+import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.UserScope
-import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
