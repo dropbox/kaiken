@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.integration_tests.scoping
 
 import android.content.Context
 import android.content.ContextWrapper
