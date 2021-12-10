@@ -16,11 +16,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {

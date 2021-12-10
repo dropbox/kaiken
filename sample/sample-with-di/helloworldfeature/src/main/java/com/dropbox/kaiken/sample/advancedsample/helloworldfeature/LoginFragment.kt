@@ -14,9 +14,9 @@ import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityComponent
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityScope
-import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.usermanagement.UserManager
 import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo

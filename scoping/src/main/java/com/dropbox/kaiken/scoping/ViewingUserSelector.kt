@@ -7,7 +7,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-private const val BUNDLE_KEY = "com.dropbox.kaiken.skeleton.scoping.VIEWING_USER_SELECTOR_BUNDLE_KEY"
+private const val BUNDLE_KEY =
+    "com.dropbox.kaiken.skeleton.scoping.VIEWING_USER_SELECTOR_BUNDLE_KEY"
 
 /**
  * Opaque data structure to help identify what is the current viewing user on an activity or

@@ -64,8 +64,7 @@ class AuthAwareFragmentTest {
     private fun FragmentActivity.findTestAuthAwareFragment() =
         this.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as TestAuthAwareFragment
 
-    private fun ActivityScenario<out TestAuthAwareScopedActivity>
-    .assertFragmentCanResolveAppScopedDependency() {
+    private fun ActivityScenario<out TestAuthAwareScopedActivity>.assertFragmentCanResolveAppScopedDependency() {
         onActivity { activity ->
             assertThat(activity.onCreateExceptionThrown).isNull()
             val testObject = activity.findTestAuthAwareFragment()
@@ -81,8 +80,7 @@ class AuthAwareFragmentTest {
         }
     }
 
-    private fun ActivityScenario<out TestAuthAwareScopedActivity>
-    .assertFragmentCanResolveUserScopedDependency() {
+    private fun ActivityScenario<out TestAuthAwareScopedActivity>.assertFragmentCanResolveUserScopedDependency() {
         onActivity { activity ->
             assertThat(activity.onCreateExceptionThrown).isNull()
             val testObject = activity.findTestAuthAwareFragment()

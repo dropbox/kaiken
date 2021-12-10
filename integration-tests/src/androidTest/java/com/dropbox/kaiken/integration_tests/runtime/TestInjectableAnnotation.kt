@@ -16,7 +16,6 @@ import org.junit.After
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.RuntimeException
 
 @RunWith(AndroidJUnit4::class)
 class TestInjectableAnnotation {
