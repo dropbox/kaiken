@@ -1,7 +1,7 @@
-package com.dropbox.kaiken.skeleton.scoping.internal
+package com.dropbox.kaiken.scoping.internal
 
 import android.content.Context
-import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.scoping.ScopedServicesProvider
 
 internal fun Context.locateScopedServicesProvider(): ScopedServicesProvider {
     return (this.applicationContext as ScopedServicesProvider)

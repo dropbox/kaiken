@@ -1,10 +1,10 @@
-package com.dropbox.kaiken.skeleton.scoping.internal
+package com.dropbox.kaiken.scoping.internal
 
-import com.dropbox.kaiken.skeleton.scoping.AppServices
-import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.skeleton.scoping.UserServices
-import com.dropbox.kaiken.skeleton.scoping.UserServicesProvider
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.scoping.UserServicesProvider
+import com.dropbox.kaiken.scoping.ViewingUserSelector
 
 /**
  * Servers as both as validator for the current authentication state, as as well as a dependency

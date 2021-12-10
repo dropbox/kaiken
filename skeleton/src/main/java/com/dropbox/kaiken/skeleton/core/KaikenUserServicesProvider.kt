@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.skeleton.core
 
-import com.dropbox.kaiken.skeleton.scoping.AppServices
-import com.dropbox.kaiken.skeleton.scoping.UserServices
+import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.scoping.cast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

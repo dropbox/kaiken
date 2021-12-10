@@ -1,9 +1,9 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelStoreOwner
-import com.dropbox.kaiken.skeleton.scoping.internal.AuthHelper
-import com.dropbox.kaiken.skeleton.scoping.internal.locateAuthHelperStore
+import com.dropbox.kaiken.scoping.internal.AuthHelper
+import com.dropbox.kaiken.scoping.internal.locateAuthHelperStore
 
 /**
  * An activity that is authentication aware (i.e. the activity is running under a specific user

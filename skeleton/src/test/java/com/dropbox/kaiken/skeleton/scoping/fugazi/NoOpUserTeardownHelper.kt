@@ -2,7 +2,7 @@ package com.dropbox.kaiken.skeleton.scoping.fugazi
 
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.UserScope
-import com.dropbox.kaiken.skeleton.scoping.UserTeardownHelper
+import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 

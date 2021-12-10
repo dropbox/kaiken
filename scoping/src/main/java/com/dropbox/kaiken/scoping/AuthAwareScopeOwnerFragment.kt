@@ -1,8 +1,8 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 import androidx.fragment.app.FragmentActivity
-import com.dropbox.kaiken.skeleton.scoping.internal.AuthHelper
-import com.dropbox.kaiken.skeleton.scoping.internal.locateAuthHelperStore
+import com.dropbox.kaiken.scoping.internal.AuthHelper
+import com.dropbox.kaiken.scoping.internal.locateAuthHelperStore
 
 /**
  * Fragment that starts a new user scope (as opposed to inheriting it from its parent activity).

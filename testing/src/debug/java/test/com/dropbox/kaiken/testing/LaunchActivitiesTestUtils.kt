@@ -3,8 +3,8 @@ package test.com.dropbox.kaiken.testing
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
-import com.dropbox.kaiken.skeleton.scoping.putViewingUserSelector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
 
 fun launchAuthRequiredActivity(
     callFinishIfInvalidAuth: Boolean = true,

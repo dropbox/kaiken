@@ -1,6 +1,8 @@
 package com.dropbox.kaiken.skeleton.scoping
 
 import com.dropbox.kaiken.Injector
+import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.UserServices
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.ExperimentalAnvilApi

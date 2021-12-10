@@ -5,7 +5,7 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealTimeMessag
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
 import com.dropbox.kaiken.skeleton.scoping.AppScope
-import com.dropbox.kaiken.skeleton.scoping.AppTeardownHelper
+import com.dropbox.kaiken.scoping.AppTeardownHelper
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo

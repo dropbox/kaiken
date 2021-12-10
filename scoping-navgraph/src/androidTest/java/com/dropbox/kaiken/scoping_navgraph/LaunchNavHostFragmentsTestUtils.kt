@@ -3,8 +3,8 @@ package com.dropbox.kaiken.scoping_navgraph
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
-import com.dropbox.kaiken.skeleton.scoping.putViewingUserSelector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
 import test.com.dropbox.kaiken.testing.TestActivity
 
 internal const val FRAGMENT_TAG = "AUTH_AWARE_FRAGMENT"

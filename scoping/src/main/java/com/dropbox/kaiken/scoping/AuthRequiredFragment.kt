@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 /**
  * A fragment that does not require a user to be logged in.
@@ -6,8 +6,8 @@ package com.dropbox.kaiken.skeleton.scoping
  * Avoid using this class. This should only be used when it's not possible for the parent activity
  * to be an [AuthAwareScopeOwnerActivity].
  */
-interface AuthOptionalFragment : AuthAwareScopeOwnerFragment {
+interface AuthRequiredFragment : AuthAwareScopeOwnerFragment {
     @JvmDefault
     override val authRequired: Boolean
-        get() = false
+        get() = true
 }

@@ -1,5 +1,5 @@
 package test.com.dropbox.kaiken.testing
 
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivity
+import com.dropbox.kaiken.scoping.AuthOptionalActivity
 
 class TestAuthOptionalActivity : TestAuthAwareScopedActivity(), AuthOptionalActivity

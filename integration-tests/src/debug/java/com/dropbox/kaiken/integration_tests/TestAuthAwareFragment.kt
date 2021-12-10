@@ -3,7 +3,7 @@ package com.dropbox.kaiken.integration_tests
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.annotation.Injectable
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.AuthAwareFragment
 import javax.inject.Inject
 
 @Injectable

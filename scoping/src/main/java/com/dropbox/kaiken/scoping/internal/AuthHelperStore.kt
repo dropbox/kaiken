@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping.internal
+package com.dropbox.kaiken.scoping.internal
 
 import android.content.Context
 import androidx.activity.ComponentActivity
@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareBroadcastReceiver
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareScopeOwnerActivity
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareScopeOwnerFragment
+import com.dropbox.kaiken.scoping.AuthAwareBroadcastReceiver
+import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity
+import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerFragment
 import com.dropbox.kaiken.skeleton.scoping.BuildConfig
-import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
-import com.dropbox.kaiken.skeleton.scoping.getViewingUserSelector
+import com.dropbox.kaiken.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.getViewingUserSelector
 
 internal fun AuthAwareScopeOwnerActivity.locateAuthHelperStore(): AuthHelperStore {
     val activity = (this as ComponentActivity)

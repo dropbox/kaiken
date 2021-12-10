@@ -2,6 +2,11 @@ package com.dropbox.kaiken.skeleton.scoping
 
 import android.content.Intent
 import android.os.Bundle
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.getViewingUserSelector
+import com.dropbox.kaiken.scoping.hasViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
+import com.dropbox.kaiken.scoping.requireViewingUserSelector
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

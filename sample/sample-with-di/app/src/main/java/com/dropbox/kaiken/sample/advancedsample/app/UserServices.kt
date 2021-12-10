@@ -6,7 +6,7 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessagePro
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.UserScope
-import com.dropbox.kaiken.skeleton.scoping.UserTeardownHelper
+import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module

@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.skeleton.scoping.internal
 
 import androidx.lifecycle.ViewModelStore
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivity
+import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

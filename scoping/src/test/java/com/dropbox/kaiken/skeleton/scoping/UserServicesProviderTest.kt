@@ -1,5 +1,9 @@
 package com.dropbox.kaiken.skeleton.scoping
 
+import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.scoping.UserServicesProvider
+import com.dropbox.kaiken.scoping.UserTeardownHelper
+import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

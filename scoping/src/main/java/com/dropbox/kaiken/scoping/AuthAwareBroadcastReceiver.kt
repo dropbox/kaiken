@@ -1,9 +1,9 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 import android.content.Context
 import android.content.Intent
-import com.dropbox.kaiken.skeleton.scoping.internal.RealAuthHelper
-import com.dropbox.kaiken.skeleton.scoping.internal.locateScopedServicesProvider
+import com.dropbox.kaiken.scoping.internal.RealAuthHelper
+import com.dropbox.kaiken.scoping.internal.locateScopedServicesProvider
 
 interface AuthAwareBroadcastReceiver {
 
