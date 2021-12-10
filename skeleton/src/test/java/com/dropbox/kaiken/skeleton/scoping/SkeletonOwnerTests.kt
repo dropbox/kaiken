@@ -11,7 +11,7 @@ class SkeletonOwnerTests {
     @Test
     fun testSkeletonOwner() {
         val skeletonServices = DaggerSkeletonTestComponent.factory().create()
-        val skeleton = FakeSkeletonOwner(skeletonServices).appSkeleton
+        val skeleton = FakeSkeletonOwner(skeletonServices).scopedServices
         val appServices = skeleton.provideAppServices()
         assertThat(appServices).isInstanceOf(AppComponent::class.java)
         val userServicesFactory = skeleton.userServicesFactory

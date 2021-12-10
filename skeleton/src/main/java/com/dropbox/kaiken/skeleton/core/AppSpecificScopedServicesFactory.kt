@@ -36,11 +36,11 @@ interface SkeletonAccessToken
 
 class SkeletonAccessTokenPair(val key: String, val secret: String) : SkeletonAccessToken
 
-data class SkeletonOauth2(
+class SkeletonOauth2(
     val accessToken: String
 ) : SkeletonAccessToken
 
-data class SkeletonUser(
+class SkeletonUser(
     val userId: String,
     val accessToken: SkeletonAccessToken,
     val isActiveUser: Boolean
