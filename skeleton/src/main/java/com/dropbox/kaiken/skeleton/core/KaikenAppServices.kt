@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.skeleton.scoping.AppScope
-import com.dropbox.kaiken.skeleton.scoping.AppServices
+import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.usermanagement.UserManager
 import com.squareup.anvil.annotations.ContributesBinding

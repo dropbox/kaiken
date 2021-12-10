@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 /**
  * An activity that does not require a user to be logged in.

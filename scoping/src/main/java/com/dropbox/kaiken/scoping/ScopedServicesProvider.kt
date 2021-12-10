@@ -1,3 +1,3 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 interface ScopedServicesProvider : AppServicesProvider, UserServicesProvider

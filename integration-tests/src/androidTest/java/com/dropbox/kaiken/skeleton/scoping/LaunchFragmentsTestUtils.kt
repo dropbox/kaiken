@@ -3,6 +3,9 @@ package com.dropbox.kaiken.skeleton.scoping
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
+import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerFragment
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
 import test.com.dropbox.kaiken.testing.TestActivity
 import test.com.dropbox.kaiken.testing.TestAuthAwareFragment
 import test.com.dropbox.kaiken.testing.TestAuthAwareScopedFragment

@@ -2,6 +2,7 @@ package com.dropbox.kaiken.skeleton.scoping
 
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Ignore

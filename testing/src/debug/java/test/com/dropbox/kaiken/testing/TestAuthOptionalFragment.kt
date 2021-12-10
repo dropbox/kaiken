@@ -1,5 +1,5 @@
 package test.com.dropbox.kaiken.testing
 
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalFragment
+import com.dropbox.kaiken.scoping.AuthOptionalFragment
 
 class TestAuthOptionalFragment : TestAuthAwareScopedFragment(), AuthOptionalFragment

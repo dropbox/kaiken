@@ -2,7 +2,7 @@ package test.com.dropbox.kaiken.testing
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.AuthAwareFragment
 
 class TestAuthAwareFragment : Fragment(), AuthAwareFragment {
 

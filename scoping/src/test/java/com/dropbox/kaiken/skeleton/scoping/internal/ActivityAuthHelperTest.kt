@@ -1,10 +1,11 @@
 package com.dropbox.kaiken.skeleton.scoping.internal
 
-import com.dropbox.kaiken.skeleton.scoping.AppServices
-import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.skeleton.scoping.UserServices
-import com.dropbox.kaiken.skeleton.scoping.UserTeardownHelper
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.scoping.UserTeardownHelper
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.internal.RealAuthHelper
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import kotlin.test.fail

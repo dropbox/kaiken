@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 /**
  * Resolves the dependency provider of the given type in the user's [UserServices] or

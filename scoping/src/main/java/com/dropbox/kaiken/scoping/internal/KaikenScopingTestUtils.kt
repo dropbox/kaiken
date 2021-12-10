@@ -1,7 +1,7 @@
-package com.dropbox.kaiken.skeleton.scoping.internal
+package com.dropbox.kaiken.scoping.internal
 
 import com.dropbox.kaiken.annotation.InternalKaikenApi
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
 
 object KaikenScopingTestUtils {
 
@@ -25,7 +25,7 @@ object KaikenScopingTestUtils {
     @InternalKaikenApi
     fun disableAuthValidation(resolveDependencyProviderOverride: Any?) {
         disableAuthValidation = true
-        this.resolveDependencyProviderOverride = resolveDependencyProviderOverride
+        KaikenScopingTestUtils.resolveDependencyProviderOverride = resolveDependencyProviderOverride
     }
 
     @InternalKaikenApi

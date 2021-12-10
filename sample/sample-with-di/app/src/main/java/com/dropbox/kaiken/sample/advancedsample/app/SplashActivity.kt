@@ -8,11 +8,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dropbox.kaiken.sample_with_di.app.R
 import com.dropbox.kaiken.skeleton.scoping.AppScope
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivity
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivity
+import com.dropbox.kaiken.scoping.AuthOptionalActivity
+import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
-import com.dropbox.kaiken.skeleton.scoping.putViewingUserSelector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides

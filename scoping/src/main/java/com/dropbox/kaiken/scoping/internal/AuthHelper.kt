@@ -1,6 +1,6 @@
-package com.dropbox.kaiken.skeleton.scoping.internal
+package com.dropbox.kaiken.scoping.internal
 
-import com.dropbox.kaiken.skeleton.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
 
 internal interface AuthHelper {
 

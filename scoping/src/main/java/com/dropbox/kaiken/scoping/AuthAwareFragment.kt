@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

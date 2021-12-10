@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.scoping
 
 /**
  * An broadcast received that does not require a user to be logged in.

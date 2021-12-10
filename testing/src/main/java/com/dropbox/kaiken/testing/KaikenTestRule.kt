@@ -6,9 +6,9 @@ import com.dropbox.kaiken.annotation.InternalKaikenApi
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.runtime.KaikenRuntimeTestUtils
-import com.dropbox.kaiken.skeleton.scoping.AuthAwareFragment
-import com.dropbox.kaiken.skeleton.scoping.ScopedServicesProvider
-import com.dropbox.kaiken.skeleton.scoping.internal.KaikenScopingTestUtils
+import com.dropbox.kaiken.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.ScopedServicesProvider
+import com.dropbox.kaiken.scoping.internal.KaikenScopingTestUtils
 import org.junit.rules.ExternalResource
 import kotlin.reflect.KClass
 
@@ -56,7 +56,7 @@ class KaikenTestRule(
      */
     private val injectorOverride: Pair<KClass<out AuthAwareFragment>, Injector>? = null,
 
-) : ExternalResource() {
+    ) : ExternalResource() {
 
     @OptIn(InternalKaikenApi::class)
     override fun before() {
