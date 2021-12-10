@@ -6,7 +6,7 @@ import com.dropbox.kaiken.scoping.UserServicesProvider
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 
-class AppSkeletonScopedServices internal constructor(
+class AppSkeletonScopedServices constructor(
     override val component: SdkSpec
 ) : SkeletonScopedServices {
 
