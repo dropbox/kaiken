@@ -5,7 +5,6 @@ import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.scan
@@ -27,21 +26,16 @@ interface UserStore {
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 class RealUserStore @Inject constructor(
-    private val users: Flow<Set<SkeletonUser>>,
-    private val activeUserDataSource: ActiveUserDataSource,
+    private val users: AllUsersFlow,
 ) : UserStore {
 
     override fun getUserEvents(): Flow<UsersEvent> =
-        activeUserDataSource.getActiveUser()
-            .combine(users) { activeUserId, users ->
-                Pair(activeUserId, users)
-            }
+        users
             .scan(UsersEvent(emptySet())) { prev, next ->
-                val users = next.second
-                val usersRemoved = prev.users.minusById(users)
-                val usersAdded = users.minusById(prev.users)
+                val usersRemoved = prev.users.minusById(next)
+                val usersAdded = next.minusById(prev.users)
 
-                UsersEvent(users, usersAdded, usersRemoved, next.first)
+                UsersEvent(next, usersAdded, usersRemoved, "")
             }
             .drop(1)
 
@@ -63,3 +57,5 @@ internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<Skele
 interface SkeletonMapper<T> {
     fun toSkeletonUser(from: T): SkeletonUser
 }
+
+interface AllUsersFlow : Flow<Set<SkeletonUser>>
