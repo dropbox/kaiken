@@ -49,7 +49,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     lateinit var userStore: UserStore
 
     @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
+    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<HelloWorldUser>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,7 +69,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
         view.findViewById<Button>(R.id.button).setOnClickListener {
             val newActiveUserId = username.text.toString()
             MainScope().launch {
-                userFlow.emit(UserInput(newActiveUserId, "Bart Simpson"))
+                userFlow.emit(HelloWorldUser(newActiveUserId, SkeletonOauth2("fakeToken")))
                 view.context.startActivity(intentFactory(view.context, newActiveUserId))
             }
         }

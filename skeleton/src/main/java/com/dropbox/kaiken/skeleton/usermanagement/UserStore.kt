@@ -13,31 +13,29 @@ import javax.inject.Inject
 /**
  * Manages the set of authenticated users for an app.
  */
-interface UserStore<T : User> {
+interface UserStore {
     /**
      * Provides a flow of the [UsersEvent].  Observe this for changes related to users added, removed, and active users updated.
      *
      */
-    fun getUserEvents(): Flow<UsersEvent<T>>
+    fun getUserEvents(): Flow<UsersEvent<User>>
 
-    suspend fun getUserById(userId: String): T?
+    suspend fun getUserById(userId: String): User?
 }
 
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
-class RealUserStore<T : User> @Inject constructor(
-    private val userDataSource: UserDataSource<T>,
+class RealUserStore @Inject constructor(
+    private val userDataSource: UserDataSource<User>,
     private val activeUserDataSource: ActiveUserDataSource,
-) : UserStore<T>,
-    UserDataSource<T> by userDataSource,
-    ActiveUserDataSource by activeUserDataSource {
+) : UserStore {
 
-    override fun getUserEvents(): Flow<UsersEvent<T>> =
+    override fun getUserEvents(): Flow<UsersEvent<User>> =
         activeUserDataSource.getActiveUser()
-            .combine(getAllUsers()) { activeUserId, users ->
+            .combine(userDataSource.getAllUsers()) { activeUserId, users ->
                 Pair(activeUserId, users)
             }
-            .scan(UsersEvent<T>(emptySet())) { prev, next ->
+            .scan(UsersEvent(emptySet())) { prev, next ->
                 val users = next.second
                 val usersRemoved = prev.users.minusById(users)
                 val usersAdded = users.minusById(prev.users)
@@ -46,8 +44,8 @@ class RealUserStore<T : User> @Inject constructor(
             }
             .drop(1)
 
-    override suspend fun getUserById(userId: String): T? {
-        return getAllUsers().first().firstOrNull { it.userId == userId }
+    override suspend fun getUserById(userId: String): User? {
+        return userDataSource.getAllUsers().first().firstOrNull { it.userId == userId }
     }
 }
 

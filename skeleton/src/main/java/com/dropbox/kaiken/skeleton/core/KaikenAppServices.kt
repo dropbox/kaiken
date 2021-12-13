@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @ContributesTo(AppScope::class)
 interface KaikenAppServices : AppServices {
-    fun userStore(): UserStore<out User>
+    fun userStore(): UserStore
 }
 
 @ContributesTo(AppScope::class)
