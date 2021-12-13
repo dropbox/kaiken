@@ -1,10 +1,14 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
+import javax.inject.Inject
 
 interface ActiveUserDataSource {
     suspend fun setActiveUser(userId: String)
@@ -13,12 +17,10 @@ interface ActiveUserDataSource {
     fun getActiveUser(): Flow<String?>
 }
 
-class RealActiveUserDataSource(context: Context) : ActiveUserDataSource {
-    init {
-        require(context == context.applicationContext) {
-            "Must use application context when instantiating"
-        }
-    }
+@ContributesBinding(AppScope::class)
+class RealActiveUserDataSource @Inject constructor(application: Application) : ActiveUserDataSource {
+
+    private val context = application.applicationContext
 
     private val sharedPrefs: SharedPreferences by lazy {
         context.getSharedPreferences(

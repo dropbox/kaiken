@@ -26,7 +26,7 @@ interface UserStore {
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 class RealUserStore @Inject constructor(
-    private val userDataSource: UserDataSource<User>,
+    private val userDataSource: UserDataSource<out User>,
     private val activeUserDataSource: ActiveUserDataSource,
 ) : UserStore {
 

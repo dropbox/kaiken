@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.squareup.anvil'
 
 dependencies {
+
     implementation deps.androidx_fragment
     implementation deps.appcompat
     implementation deps.constraint_layout

@@ -15,10 +15,10 @@ import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.skeleton.core.SkeletonOauth2
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityComponent
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityScope
-import com.dropbox.kaiken.skeleton.usermanagement.UserManager
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
+import com.dropbox.kaiken.skeleton.usermanagement.UserStore
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -49,7 +49,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     lateinit var userStore: UserStore
 
     @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<HelloWorldUser>
+    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<DiSampleUser>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,7 +69,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
         view.findViewById<Button>(R.id.button).setOnClickListener {
             val newActiveUserId = username.text.toString()
             MainScope().launch {
-                userFlow.emit(HelloWorldUser(newActiveUserId, SkeletonOauth2("fakeToken")))
+                userFlow.emit(DiSampleUser(newActiveUserId, SkeletonOauth2("fakeToken")))
                 view.context.startActivity(intentFactory(view.context, newActiveUserId))
             }
         }
