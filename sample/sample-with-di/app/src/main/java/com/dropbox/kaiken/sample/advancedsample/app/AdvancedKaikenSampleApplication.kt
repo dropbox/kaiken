@@ -2,15 +2,16 @@ package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.DiSampleUser
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealSkeletonUserMapper
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
+import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.SkeletonScope
 import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.dropbox.kaiken.skeleton.scoping.cast
-import com.dropbox.kaiken.skeleton.usermanagement.User
-import com.dropbox.kaiken.skeleton.usermanagement.UserDataSource
+import com.dropbox.kaiken.skeleton.usermanagement.SkeletonMapper
 import com.dropbox.kaiken.skeleton.usermanagement.UserStore
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
@@ -20,6 +21,7 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
@@ -81,21 +83,13 @@ class BindingModule {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideUserDataSource(): UserDataSource<DiSampleUser> = object : UserDataSource<DiSampleUser> {
-        override suspend fun add(user: DiSampleUser): Boolean {
-            TODO("Not yet implemented")
-        }
-
-        override suspend fun remove(userId: String): Boolean {
-            TODO("Not yet implemented")
-        }
-
-        override fun getAllUsers(): Flow<Set<DiSampleUser>> {
-            TODO("Not yet implemented")
-        }
+    fun provideSkeletonMapper(): SkeletonMapper<DiSampleUser> {
+        return RealSkeletonUserMapper()
     }
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideUserDataSourceGeneric(userDataSource: UserDataSource<DiSampleUser>): UserDataSource<out User> = userDataSource
+    fun provideSkeletonUserFlow(accountStore: AccountStore, mapper: SkeletonMapper<DiSampleUser>): Flow<Set<SkeletonUser>> {
+        return accountStore.getAllUsers().map { it.map { mapper.toSkeletonUser(it) }.toSet() }
+    }
 }

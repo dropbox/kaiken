@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
+import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,21 +19,21 @@ interface UserStore {
      * Provides a flow of the [UsersEvent].  Observe this for changes related to users added, removed, and active users updated.
      *
      */
-    fun getUserEvents(): Flow<UsersEvent<User>>
+    fun getUserEvents(): Flow<UsersEvent>
 
-    suspend fun getUserById(userId: String): User?
+    suspend fun getUserById(userId: String): SkeletonUser?
 }
 
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 class RealUserStore @Inject constructor(
-    private val userDataSource: UserDataSource<out User>,
+    private val users: Flow<Set<SkeletonUser>>,
     private val activeUserDataSource: ActiveUserDataSource,
 ) : UserStore {
 
-    override fun getUserEvents(): Flow<UsersEvent<User>> =
+    override fun getUserEvents(): Flow<UsersEvent> =
         activeUserDataSource.getActiveUser()
-            .combine(userDataSource.getAllUsers()) { activeUserId, users ->
+            .combine(users) { activeUserId, users ->
                 Pair(activeUserId, users)
             }
             .scan(UsersEvent(emptySet())) { prev, next ->
@@ -44,12 +45,12 @@ class RealUserStore @Inject constructor(
             }
             .drop(1)
 
-    override suspend fun getUserById(userId: String): User? {
-        return userDataSource.getAllUsers().first().firstOrNull { it.userId == userId }
+    override suspend fun getUserById(userId: String): SkeletonUser? {
+        return users.first().firstOrNull { it.userId == userId }
     }
 }
 
-internal fun <T : User> Set<T>.minusById(elements: Set<T>): Set<T> {
+internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<SkeletonUser> {
     val result = toMutableSet()
     forEach { item ->
         if (elements.any { item.userId == it.userId }) {
@@ -57,4 +58,8 @@ internal fun <T : User> Set<T>.minusById(elements: Set<T>): Set<T> {
         }
     }
     return result
+}
+
+interface SkeletonMapper<T> {
+    fun toSkeletonUser(from: T): SkeletonUser
 }
