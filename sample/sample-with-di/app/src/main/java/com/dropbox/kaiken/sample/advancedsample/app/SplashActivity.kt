@@ -8,7 +8,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dropbox.kaiken.sample_with_di.app.R
 import com.dropbox.kaiken.scoping.AuthOptionalActivity
-import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AppScope
@@ -49,17 +48,3 @@ class IntentFactoryModule {
         { context: Context, userId: String -> getLaunchIntent(context, userId) }
 }
 
-class LoggedInActivity : AppCompatActivity(), AuthRequiredActivity {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (finishIfInvalidAuth()) return
-        setContentView(R.layout.authactivity)
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        // Setup bottom navigation with navigation controller
-        bottomNavigationView.setupWithNavController(navController)
-    }
-}

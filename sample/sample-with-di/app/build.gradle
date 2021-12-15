@@ -5,16 +5,14 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.squareup.anvil'
 }
-
-
-apply plugin: 'com.squareup.anvil'
+apply plugin: 'app.cash.molecule'
 
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "com.dropbox.kaiken.sample"
-        minSdkVersion 19
+        minSdkVersion 21
         compileSdkVersion versions.compileSdk
         targetSdkVersion versions.targetSdk
         versionCode 1
@@ -38,6 +36,18 @@ android {
 
     packagingOptions {
         exclude 'META-INF/annotations.kotlin_module'
+    }
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.5'
     }
 }
 

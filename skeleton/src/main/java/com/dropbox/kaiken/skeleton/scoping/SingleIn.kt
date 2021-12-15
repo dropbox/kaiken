@@ -1,7 +1,14 @@
 package com.dropbox.kaiken.skeleton.scoping
 
+import androidx.fragment.app.Fragment
 import com.dropbox.kaiken.Injector
+import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.AuthOptionalFragment
+import com.dropbox.kaiken.scoping.AuthRequiredFragment
+import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.scoping.UserServices
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
@@ -88,3 +95,15 @@ interface AuthOptionalActivityComponent : Injector {
         fun createAuthOptionalComponent(): AuthOptionalActivityComponent
     }
 }
+
+inline fun  <reified T:Injector> DependencyProviderResolver.authOptionalInjector() =
+    InjectorFactory { (resolveDependencyProvider() as AuthOptionalActivityComponent.ParentComponent).createAuthOptionalComponent() as T }
+
+inline fun  <reified T:Injector> DependencyProviderResolver.authInjector() =
+    InjectorFactory { (resolveDependencyProvider() as AuthRequiredActivityComponent.ParentComponent).createAuthRequiredComponent() as T }
+
+abstract class AuthAwareInjectorHolder<T:Injector>: Fragment(), AuthAwareFragment, InjectorHolder<T>
+
+abstract class AuthOptionalInjectorHolder<T:Injector>: Fragment(), AuthOptionalFragment, InjectorHolder<T>
+
+abstract class AuthRequiredInjectorHolder<T:Injector>: Fragment(), AuthRequiredFragment, InjectorHolder<T>
