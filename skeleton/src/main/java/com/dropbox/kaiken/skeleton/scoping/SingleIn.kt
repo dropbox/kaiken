@@ -96,7 +96,7 @@ interface AuthOptionalActivityComponent : Injector {
     }
 }
 
-inline fun  <reified T:Injector> DependencyProviderResolver.authOptionalInjector() =
+inline fun  <reified T:Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
     InjectorFactory { (resolveDependencyProvider() as AuthOptionalActivityComponent.ParentComponent).createAuthOptionalComponent() as T }
 
 inline fun  <reified T:Injector> DependencyProviderResolver.authInjector() =

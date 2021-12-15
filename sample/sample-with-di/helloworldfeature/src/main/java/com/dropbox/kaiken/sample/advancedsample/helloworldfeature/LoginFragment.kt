@@ -13,7 +13,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,12 +20,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.AndroidUiDispatcher.Companion.Main
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import app.cash.molecule.launchMolecule
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.runtime.InjectorViewModel
 import com.dropbox.kaiken.skeleton.scoping.AuthAwareInjectorHolder
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityScope
-import com.dropbox.kaiken.skeleton.scoping.authOptionalInjector
+import com.dropbox.kaiken.skeleton.scoping.authOptionalInjectorFactory
 import com.dropbox.kaiken.skeleton.usermanagement.UserManager
 import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesBinding
@@ -36,22 +40,20 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @ContributesTo(AuthOptionalActivityScope::class)
 interface HellowWorldManualInjector : Injector {
     fun inject(fragment: LoginFragment)
+    fun presenter(): LoginPresenter
 }
 
 
 class LoginFragment : AuthAwareInjectorHolder<HellowWorldManualInjector>() {
     override fun getInjectorFactory(): InjectorFactory<HellowWorldManualInjector> =
-        authOptionalInjector()
+        authOptionalInjectorFactory()
 
-    @Inject
-    lateinit var loginPresenter: LoginPresenter
 
     @Inject
     lateinit var helloWorldMessageProvider: HelloWorldMessageProvider
@@ -87,57 +89,71 @@ class LoginFragment : AuthAwareInjectorHolder<HellowWorldManualInjector>() {
     ): View? {
         //create a single stream for event callbacks between fragment and presenter
         val eventFlow = MutableStateFlow<LoginEvent>(LoginLaunched)
-        //once we are started we want to launch our presenter.
-        //the presenter present scope will be tied to the fragment's lifecycle
-        val models = scope.launchMolecule {
-            loginPresenter.present(events = eventFlow.asStateFlow())
-        }
-        //create a compose view
         return ComposeView(requireContext()).apply {
-            // Dispose of the Composition when the view's LifecycleOwner
-            // is destroyed
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                MaterialTheme {
-                    Column {
-                        val presenterState = models.collectAsState().value
-                        when (presenterState) {
-                            is LoginNeeded -> {
-                                // In Compose world
-                                Text("Enter User ID")
-                                var text by remember { mutableStateOf("1") }
-                                TextField(
-                                    value = text,
-                                    onValueChange = { text = it },
-                                    label = { Text("Label") }
-                                )
-                                submitter { eventFlow.tryEmit(Submit(UserInput(text, "Bart"))) }
-                            }
-                            is LoginSuccess -> LaunchedEffect(key1 = Unit) {
-                                startActivity(
-                                    intentFactory(
-                                        context,
-                                        presenterState.userId
-                                    )
-                                )
-                            }
-                        }
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "login") {
+                    composable("login") {
+                        val injectorFactory: InjectorFactory<HellowWorldManualInjector> =
+                            authOptionalInjectorFactory()
+
+                        val viewModelProvider =
+                            ViewModelProvider(it, InjectorViewModelFactory(injectorFactory))
+
+                        val injector =
+                            viewModelProvider.get(InjectorViewModel::class.java).injector as HellowWorldManualInjector
+                        val presenter: LoginPresenter = injector.presenter()
+
+                        val model: LoginModel = presenter.present(events = eventFlow)
+                        Screen(model,eventFlow )
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    @Composable
+    fun submitter(onClick: () -> Unit) {
+        Button(
+            onClick = onClick,
+        ) {
+            Text("Login")
+        }
+    }
+
+    @Composable
+    fun Screen(model: LoginModel, events: MutableStateFlow<LoginEvent>) {
+        MaterialTheme {
+            Column {
+                when (model) {
+                    is LoginNeeded -> {
+                        // In Compose world
+                        Text("Enter User ID")
+                        var text by remember { mutableStateOf("1") }
+                        TextField(
+                            value = text,
+                            onValueChange = { text = it },
+                            label = { Text("Label") }
+                        )
+                        submitter { events.tryEmit(Submit(UserInput(text, "Bart"))) }
+                    }
+                    is LoginSuccess -> LaunchedEffect(key1 = Unit) {
+                        startActivity(
+                            intentFactory(
+                                requireActivity(),
+                                model.userId
+                            )
+                        )
                     }
                 }
             }
         }
     }
-}
 
-@Composable
-fun submitter(onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-    ) {
-        Text("Login")
-    }
 }
-
 
 sealed interface LoginEvent
 object LoginLaunched : LoginEvent
@@ -150,8 +166,8 @@ object LoginNeeded : LoginModel
 
 interface LoginPresenter : MoleculePresenter<LoginEvent, LoginModel>
 
-@ContributesBinding(LoginPresenter::class)
-class RealLoginPresenter(val userFlow: MutableSharedFlow<UserInput>) :
+@ContributesBinding(AuthOptionalActivityScope::class)
+class RealLoginPresenter @Inject constructor(val userFlow: MutableSharedFlow<UserInput>) :
     LoginPresenter {
     @Composable
     override fun present(events: Flow<LoginEvent>): LoginModel {
@@ -174,4 +190,14 @@ class RealLoginPresenter(val userFlow: MutableSharedFlow<UserInput>) :
 interface MoleculePresenter<Event, Model> {
     @Composable
     fun present(events: Flow<Event>): Model
+}
+
+
+internal class InjectorViewModelFactory<InjectorType : Injector>(
+    private val injectorFactory: InjectorFactory<InjectorType>
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
+        return InjectorViewModel(injectorFactory.createInjector()) as T
+    }
 }

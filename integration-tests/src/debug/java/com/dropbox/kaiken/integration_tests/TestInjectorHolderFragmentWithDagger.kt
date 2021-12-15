@@ -44,10 +44,7 @@ interface Dependencies {
 }
 
 fun DependencyProviderResolver.daggerInjector() =
-    object : InjectorFactory<TestComponent> {
-        override fun createInjector() =
-            buildPhotosInternalComponent(resolveDependencyProvider())
-    }
+    InjectorFactory { buildPhotosInternalComponent(resolveDependencyProvider()) }
 
 private fun buildPhotosInternalComponent(
     dependencies: TestComponent
