@@ -1,7 +1,7 @@
-package com.dropbox.kaiken.sample.advancedsample.app
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.DiSampleUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +14,7 @@ interface AccountStore {
 }
 
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RealAccountStore @Inject constructor() : AccountStore {
 
     private val persistence = mutableSetOf<DiSampleUser>()
@@ -25,7 +26,12 @@ class RealAccountStore @Inject constructor() : AccountStore {
     }
 
     override suspend fun removeUser(userId: String) {
-        TODO("DO THIS")
+        persistence.forEach {
+            if (it.userId == userId) {
+                persistence.remove(it)
+            }
+        }
+        users.emit(persistence)
     }
 
     override fun getAllUsers(): Flow<Set<DiSampleUser>> = users

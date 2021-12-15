@@ -1,13 +1,18 @@
 package com.dropbox.kaiken.skeleton.core
 
+import android.util.Log
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.scoping.cast
+import com.dropbox.kaiken.skeleton.usermanagement.UsersEvent
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -30,8 +35,9 @@ constructor(
     init {
         // TODO Mike figure out if we want another scope to launch from
         applicationServices.cast<CoroutineScopeBindings>().coroutineScopes().mainScope.launch {
-            userServices = (applicationServices as KaikenAppServices).userStore().getUserEvents()
-                .scan(emptyMap<String, KaikenUserServices>()) { prev, next ->
+            val userStore = (applicationServices as KaikenAppServices).userStore()
+            userServices = userStore.getUserEvents()
+                .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
                     val result = mutableMapOf<String, KaikenUserServices>()
                     next.usersRemoved.forEach { user ->
                         prev[user.userId]?.getUserTeardownHelper()?.teardown()

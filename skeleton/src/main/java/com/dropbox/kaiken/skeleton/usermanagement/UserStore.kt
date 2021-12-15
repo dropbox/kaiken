@@ -2,6 +2,7 @@ package com.dropbox.kaiken.skeleton.usermanagement
 
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -25,8 +26,9 @@ interface UserStore {
 
 @ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RealUserStore @Inject constructor(
-    private val users: AllUsersFlow,
+    @JvmSuppressWildcards private val users: Flow<@JvmSuppressWildcards Set<SkeletonUser>>,
 ) : UserStore {
 
     override fun getUserEvents(): Flow<UsersEvent> =
@@ -57,5 +59,3 @@ internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<Skele
 interface SkeletonMapper<T> {
     fun toSkeletonUser(from: T): SkeletonUser
 }
-
-interface AllUsersFlow : Flow<Set<SkeletonUser>>
