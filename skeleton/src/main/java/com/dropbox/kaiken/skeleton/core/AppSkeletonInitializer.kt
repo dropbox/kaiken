@@ -2,6 +2,7 @@ package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
+import com.dropbox.kaiken.skeleton.scoping.cast
 
 class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices) :
     SkeletonScopedServices by appSkeletonDelegate {
@@ -9,7 +10,8 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
     init {
         userServicesProvider = KaikenUserServicesProvider(
             provideAppServices(),
-            userServicesFactory
+            userServicesFactory,
+            provideAppServices().cast<CoroutineScopes>().mainScope, // TODO Mike figure out if we want another scope to launch from
         )
     }
 
