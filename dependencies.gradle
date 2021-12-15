@@ -77,6 +77,8 @@ ext.deps = [
         junit                       : "org.apache.ant:ant-junit:$versions.junit",
         kotlintestjunit             : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
         truth                       : "com.google.truth:truth:$versions.truth",
+        coroutinesTest              : "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2",
+        turbine                     : "app.cash.turbine:turbine:0.7.0",
 
         // Samples
         constraint_layout           : "androidx.constraintlayout:constraintlayout:$versions.constraintLayout",

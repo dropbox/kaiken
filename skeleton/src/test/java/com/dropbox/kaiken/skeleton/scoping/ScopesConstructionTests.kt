@@ -22,7 +22,7 @@ class ScopesConstructionTests {
         val userServices: UserServices =
             skeletonServices.getSkeletonConfig().scopedServicesFactory.createUserServices(
                 appServices,
-                SkeletonUser("1", SkeletonAccessTokenPair("1", "1"), isActiveUser = true)
+                SkeletonUser("1", SkeletonAccessTokenPair("1", "1"))
             )
         val authActivityComponent: AuthRequiredActivityComponent =
             userServices.cast<AuthRequiredActivityComponent.ParentComponent>()

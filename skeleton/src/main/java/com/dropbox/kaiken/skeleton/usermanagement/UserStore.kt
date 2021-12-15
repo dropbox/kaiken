@@ -27,13 +27,13 @@ interface UserStore {
     suspend fun getUserById(userId: String): SkeletonUser?
 }
 
-@ExperimentalCoroutinesApi
 @ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 class RealUserStore @Inject constructor(
     @JvmSuppressWildcards private val users: Flow<@JvmSuppressWildcards Set<SkeletonUser>>,
 ) : UserStore {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserEvents(): Flow<UsersEvent> =
         users
             .scan(UsersEvent(emptySet())) { prev, next ->

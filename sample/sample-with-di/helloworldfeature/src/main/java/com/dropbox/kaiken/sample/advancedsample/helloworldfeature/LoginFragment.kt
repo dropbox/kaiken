@@ -20,7 +20,6 @@ import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityComponent
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityScope
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
