@@ -79,12 +79,9 @@ class BindingModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideSkeletonUserFlow(accountStore: AccountStore, mapper: SkeletonMapper<DiSampleUser>): @JvmSuppressWildcards Flow< @JvmSuppressWildcards Set<SkeletonUser>> {
-        Log.e("TAG", "object ${accountStore.getAllUsers()}")
-        return accountStore.getAllUsers().map {
-            Log.e("TAG", "mapping set of $it")
-            it.map {
-                Log.e("TAG", "mapping $it")
-                mapper.toSkeletonUser(it)
+        return accountStore.getAllUsers().map { sampleUsers ->
+            sampleUsers.map { diSampleUser ->
+                mapper.toSkeletonUser(diSampleUser)
             }.toSet()
         }
     }

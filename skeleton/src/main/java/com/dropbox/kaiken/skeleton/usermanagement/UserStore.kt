@@ -16,11 +16,14 @@ import javax.inject.Inject
  */
 interface UserStore {
     /**
-     * Provides a flow of the [UsersEvent].  Observe this for changes related to users added, removed, and active users updated.
+     * Provides a flow of the [UsersEvent].  Observe this for changes related to users added and removed.
      *
      */
     fun getUserEvents(): Flow<UsersEvent>
 
+    /**
+     * Provides an individual user based on the ID
+     */
     suspend fun getUserById(userId: String): SkeletonUser?
 }
 
@@ -37,7 +40,7 @@ class RealUserStore @Inject constructor(
                 val usersRemoved = prev.users.minusById(next)
                 val usersAdded = next.minusById(prev.users)
 
-                UsersEvent(next, usersAdded, usersRemoved, "")
+                UsersEvent(next, usersAdded, usersRemoved)
             }
             .drop(1)
 
