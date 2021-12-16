@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.squareup.anvil'
-apply plugin: 'app.cash.molecule'
+//apply plugin: 'app.cash.molecule'
 
 dependencies {
     implementation deps.androidx_fragment
