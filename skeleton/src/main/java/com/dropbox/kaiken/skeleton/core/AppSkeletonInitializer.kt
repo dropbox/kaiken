@@ -8,11 +8,11 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
     SkeletonScopedServices by appSkeletonDelegate {
 
     init {
-        userServicesProvider = with(provideAppServices()) {
+        userServicesProvider = with(provideAppServices() as KaikenAppServices) {
             KaikenUserServicesProvider(
                 this,
                 userServicesFactory,
-                (this as KaikenAppServices).userStore().getUserEvents(),
+                userStore().getUserEvents(),
                 cast<CoroutineScopes>().mainScope, // TODO Mike figure out if we want another scope to launch from
             )
         }
