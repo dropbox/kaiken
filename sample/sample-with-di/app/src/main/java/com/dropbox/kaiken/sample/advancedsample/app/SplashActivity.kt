@@ -11,6 +11,7 @@ import com.dropbox.kaiken.scoping.AuthOptionalActivity
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
@@ -39,11 +40,11 @@ fun getLaunchIntent(
     putViewingUserSelector(ViewingUserSelector.fromUserId(userId))
 }
 
-@ContributesTo(AppScope::class)
+@ContributesTo(AuthOptionalScreenScope::class)
 @Module
 class IntentFactoryModule {
     @Provides
-    @SingleIn(AppScope::class)
+    @SingleIn(AuthOptionalScreenScope::class)
     fun intentFactory(): @JvmSuppressWildcards (Context, String) -> Intent =
         { context: Context, userId: String -> getLaunchIntent(context, userId) }
 }

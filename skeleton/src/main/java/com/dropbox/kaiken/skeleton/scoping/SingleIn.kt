@@ -3,7 +3,6 @@ package com.dropbox.kaiken.skeleton.scoping
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
@@ -33,6 +32,7 @@ abstract class UserScope private constructor()
 abstract class AuthRequiredActivityScope private constructor()
 abstract class AuthOptionalActivityScope private constructor()
 abstract class AuthOptionalScreenScope private constructor()
+abstract class AuthRequiredScreenScope private constructor()
 
 inline fun <reified T> Any.cast(): T = this as T
 
@@ -102,7 +102,6 @@ interface AuthOptionalActivityComponent : Injector {
 }
 
 
-
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
     scope = AuthOptionalScreenScope::class,
@@ -111,27 +110,47 @@ interface AuthOptionalActivityComponent : Injector {
 @SingleIn(AuthOptionalScreenScope::class)
 interface AuthOptionalScreenComponent : Injector {
     @ContributesTo(AuthOptionalActivityScope::class)
-    interface ScreenParentComponent {
+    interface ScreenParentComponent:Injector {
         fun createAuthOptionalScreenComponent(): AuthOptionalScreenComponent
     }
 }
 
+@OptIn(ExperimentalAnvilApi::class)
+@ContributesSubcomponent(
+    scope =AuthRequiredScreenScope::class,
+    parentScope = AuthRequiredActivityScope::class
+)
+@SingleIn(AuthRequiredScreenScope::class)
+interface AuthRequiredScreenComponent : Injector {
+    @ContributesTo(AuthRequiredActivityComponent::class)
+    interface ScreenParentComponent {
+        fun createAuthRequiredScreenComponent(): AuthRequiredScreenComponent
+    }
+}
 
-inline fun  <reified T:Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
+
+inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
     InjectorFactory { (resolveDependencyProvider() as AuthOptionalActivityComponent.ParentComponent).createAuthOptionalComponent() as T }
 
-inline fun  <reified T:Injector> DependencyProviderResolver.authInjector() =
+inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
     InjectorFactory { (resolveDependencyProvider() as AuthRequiredActivityComponent.ParentComponent).createAuthRequiredComponent() as T }
 
-abstract class AuthAwareInjectorHolder<T:Injector>: Fragment(), AuthAwareFragment, InjectorHolder<T>
+abstract class AuthAwareInjectorHolder<T : Injector> : Fragment(), AuthAwareFragment,
+    InjectorHolder<T>
 
-abstract class AuthOptionalInjectorHolder<T:Injector>: Fragment(), AuthOptionalFragment, InjectorHolder<T>
+abstract class AuthOptionalInjectorHolder<T : Injector> : Fragment(), AuthOptionalFragment,
+    InjectorHolder<T>
 
-abstract class AuthRequiredInjectorHolder<T:Injector>: Fragment(), AuthRequiredFragment, InjectorHolder<T>
+abstract class AuthRequiredInjectorHolder<T : Injector> : Fragment(), AuthRequiredFragment,
+    InjectorHolder<T>
 
-inline fun  <reified T:Injector> InjectorHolder<T>.authOptionalScreenComponent():AuthOptionalScreenComponent =
-locateInjector().cast<AuthOptionalScreenComponent.ScreenParentComponent>()
-.createAuthOptionalScreenComponent()
+inline fun <reified T : AuthOptionalActivityComponent> AuthAwareInjectorHolder<T>.authOptionalScreenComponent(): AuthOptionalScreenComponent =
+    locateInjector().cast<AuthOptionalScreenComponent.ScreenParentComponent>()
+        .createAuthOptionalScreenComponent()
+
+inline fun <reified T : Injector> InjectorHolder<T>.authRequiredScreenComponent(): AuthRequiredScreenComponent =
+    locateInjector().cast<AuthRequiredScreenComponent.ScreenParentComponent>()
+        .createAuthRequiredScreenComponent()
 
 class InjectorViewModelFactory<InjectorType : Injector>(
     private val injectorFactory: InjectorFactory<InjectorType>
@@ -141,3 +160,4 @@ class InjectorViewModelFactory<InjectorType : Injector>(
         return InjectorViewModel(injectorFactory.createInjector()) as T
     }
 }
+
