@@ -9,6 +9,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -36,7 +38,6 @@ class KaikenUserServicesProvider(
                     val result = prev.toMutableMap()
                     println(next.toString())
                     next.usersRemoved.forEach { user ->
-                        println(user.toString())
                         result.remove(user.userId)?.getUserTeardownHelper()?.teardown()
                     }
 
@@ -49,18 +50,20 @@ class KaikenUserServicesProvider(
                     result
                 }
                 .drop(1)
-                .collect {
+                .onEach {
                     userServices = it
-                    mutex.unlock()
+                    if (mutex.isLocked) {
+                        mutex.unlock()
+                    }
                 }
+                .collect()
         }
     }
 
-    override fun provideUserServicesOf(userId: String): UserServices? {
-        return runBlocking {
+    override fun provideUserServicesOf(userId: String): UserServices? =
+        runBlocking {
             provideUserServices(userId)
         }
-    }
 
     suspend fun provideUserServices(userId: String): UserServices? =
         mutex.withLock {

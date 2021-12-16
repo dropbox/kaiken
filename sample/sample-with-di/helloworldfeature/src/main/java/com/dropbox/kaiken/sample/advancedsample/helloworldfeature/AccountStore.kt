@@ -17,19 +17,17 @@ interface AccountStore {
 @SingleIn(AppScope::class)
 class RealAccountStore @Inject constructor() : AccountStore {
 
-    private val persistence = mutableSetOf<DiSampleUser>()
+    private var persistence = setOf<DiSampleUser>()
     private val users = MutableStateFlow<Set<DiSampleUser>>(emptySet())
 
     override suspend fun addUser(user: DiSampleUser) {
-        persistence.add(user)
+        persistence = persistence.plus(user)
         users.emit(persistence)
     }
 
     override suspend fun removeUser(userId: String) {
-        persistence.forEach {
-            if (it.userId == userId) {
-                persistence.remove(it)
-            }
+        persistence.firstOrNull { it.userId == userId }?.let {
+            persistence = persistence.minus(it)
         }
         users.emit(persistence)
     }
