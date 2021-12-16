@@ -5,7 +5,7 @@ package com.dropbox.kaiken.scoping
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 private const val BUNDLE_KEY =
     "com.dropbox.kaiken.skeleton.scoping.VIEWING_USER_SELECTOR_BUNDLE_KEY"

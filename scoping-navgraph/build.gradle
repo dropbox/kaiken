@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'kotlin-parcelize'
 
 dependencies {
     implementation project(":scoping")
@@ -19,14 +20,6 @@ dependencies {
     androidTestImplementation deps.truth
     androidTestImplementation project(':testing')
 
-}
-
-apply plugin: 'kotlin-android-extensions'
-
-// To use the @Parcelize annotation
-// https://blog.jetbrains.com/kotlin/2017/08/kotlin-1-1-4-is-out/
-androidExtensions {
-    experimental = true
 }
 
 android {
