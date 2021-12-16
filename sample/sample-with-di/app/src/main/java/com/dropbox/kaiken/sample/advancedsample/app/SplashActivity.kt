@@ -13,10 +13,10 @@ import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import kotlinx.android.synthetic.main.mainactivity.bottomNavigationView
 
 class SplashActivity : AppCompatActivity(), AuthOptionalActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity(), AuthOptionalActivity {
         val navController = navHostFragment.navController
 
         // Setup bottom navigation with navigation controller
-        bottomNavigationView.setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
 }
 
@@ -60,6 +60,6 @@ class LoggedInActivity : AppCompatActivity(), AuthRequiredActivity {
         val navController = navHostFragment.navController
 
         // Setup bottom navigation with navigation controller
-        bottomNavigationView.setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
 }
