@@ -13,7 +13,7 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
                 this,
                 userServicesFactory,
                 userStore().getUserEvents(),
-                cast<CoroutineScopes>().mainScope, // TODO Mike figure out if we want another scope to launch from
+                cast<CoroutineScopeBindings>().coroutineScopes().mainScope, // TODO Mike figure out if we want another scope to launch from
             )
         }
     }

@@ -9,7 +9,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -27,28 +26,33 @@ class KaikenUserServicesProvider(
     userEvents: Flow<UsersEvent>,
     coroutineScope: CoroutineScope,
 ) : SkeletonUserServicesProvider {
-    private lateinit var userServices: Flow<Map<String, KaikenUserServices>>
+    private var userServices: Map<String, KaikenUserServices> = emptyMap()
     private val mutex = Mutex(true)
 
     init {
         coroutineScope.launch {
-            userServices = userEvents
+            userEvents
                 .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
-                    val result = mutableMapOf<String, KaikenUserServices>()
+                    val result = prev.toMutableMap()
+                    println(next.toString())
                     next.usersRemoved.forEach { user ->
-                        prev[user.userId]?.getUserTeardownHelper()?.teardown()
+                        println(user.toString())
+                        result.remove(user.userId)?.getUserTeardownHelper()?.teardown()
                     }
 
                     next.usersAdded.forEach { user ->
-                        val services = userServicesFactory(applicationServices, user) as KaikenUserServices
-                        result[user.userId] = services
+                        result[user.userId] =
+                            userServicesFactory(applicationServices, user) as KaikenUserServices
                     }
 
+                    println(result)
                     result
                 }
                 .drop(1)
-            mutex.unlock()
-            userServices.collect()
+                .collect {
+                    userServices = it
+                    mutex.unlock()
+                }
         }
     }
 
@@ -60,6 +64,6 @@ class KaikenUserServicesProvider(
 
     suspend fun provideUserServices(userId: String): UserServices? =
         mutex.withLock {
-            userServices.first()[userId]
+            userServices[userId]
         }
 }

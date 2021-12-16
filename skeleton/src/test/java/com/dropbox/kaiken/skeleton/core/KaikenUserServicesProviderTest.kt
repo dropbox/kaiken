@@ -40,10 +40,12 @@ class KaikenUserServicesProviderTest {
     @Test
     fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = runBlockingTest {
         // GIVEN
+        var userFactoryCounter = 0
         val fakeUserServices = DummyUserServices()
         userFactory = { appServices, skeletonUser ->
             assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
             assertThat(skeletonUser).isEqualTo(FAKE_USER)
+            userFactoryCounter += 1
             fakeUserServices
         }
         userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
@@ -54,6 +56,7 @@ class KaikenUserServicesProviderTest {
 
         // THEN
         assertThat(actual).isEqualTo(fakeUserServices)
+        assertThat(userFactoryCounter).isEqualTo(1)
     }
 
     @Test
@@ -69,8 +72,37 @@ class KaikenUserServicesProviderTest {
         assertThat(actual).isNull()
     }
 
+    @Test
+    fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() = runBlockingTest {
+        // GIVEN
+        var teardownCounter = 0
+        val fakeUserTeardownHelper = object : DummyUserTeardownHelper() {
+            override fun teardown() {
+                teardownCounter += 1
+            }
+        }
+        val fakeUserServices = object : DummyUserServices() {
+            override fun getUserTeardownHelper(): UserTeardownHelper = fakeUserTeardownHelper
+        }
+        userFactory = { appServices, skeletonUser ->
+            assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
+            assertThat(skeletonUser).isEqualTo(FAKE_USER)
+            fakeUserServices
+        }
+
+        val servicesProvider = createKaikenUserServicesProviderTest()
+
+        // WHEN
+        userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
+        userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
+
+        // THEN
+        assertThat(teardownCounter).isEqualTo(1)
+        assertThat(servicesProvider.provideUserServices(FAKE_ID)).isNull()
+    }
+
     companion object {
-        private const val FAKE_ID = "fakeId"
+        private const val FAKE_ID = "fakeIdOne"
         private const val FAKE_TOKEN = "fakeToken"
 
         private val FAKE_USER = SkeletonUser(FAKE_ID, SkeletonOauth2(FAKE_TOKEN))
@@ -83,8 +115,14 @@ class DummyAppServices : AppServices {
     }
 }
 
-class DummyUserServices : KaikenUserServices {
+open class DummyUserServices : KaikenUserServices {
     override fun getUserTeardownHelper(): UserTeardownHelper {
+        TODO("Not yet implemented")
+    }
+}
+
+open class DummyUserTeardownHelper : UserTeardownHelper {
+    override fun teardown() {
         TODO("Not yet implemented")
     }
 }
