@@ -8,27 +8,17 @@ import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.SkeletonScope
 import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.dropbox.kaiken.skeleton.scoping.cast
-import com.dropbox.kaiken.skeleton.usermanagement.UserManager
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.flow.MutableSharedFlow
-import javax.inject.Inject
 
 class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
 
     override fun getSdkSpec(): SdkSpec =
         DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
-
-    @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
-
-    @Inject
-    lateinit var userManager: UserManager
 
     override fun onCreate() {
         super.onCreate()

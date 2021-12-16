@@ -43,5 +43,4 @@ class SkeletonOauth2(
 class SkeletonUser(
     val userId: String,
     val accessToken: SkeletonAccessToken,
-    val isActiveUser: Boolean
 )

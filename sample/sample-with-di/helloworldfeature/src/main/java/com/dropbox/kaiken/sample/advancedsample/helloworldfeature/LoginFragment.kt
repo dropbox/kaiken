@@ -15,13 +15,11 @@ import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.skeleton.core.SkeletonOauth2
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityComponent
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalActivityScope
-import com.dropbox.kaiken.skeleton.usermanagement.UserManager
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,10 +44,7 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
     lateinit var intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
 
     @Inject
-    lateinit var userManager: UserManager
-
-    @Inject
-    lateinit var userFlow: @JvmSuppressWildcards MutableSharedFlow<UserInput>
+    lateinit var accountStore: AccountStore
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,14 +57,14 @@ class LoginFragment : Fragment(), AuthAwareFragment, InjectorHolder<HellowWorldM
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.login_fragment, null)
+        val view = inflater.inflate(R.layout.login_fragment, container, false)
 
         val username = view.findViewById<TextView>(R.id.username)
 
         view.findViewById<Button>(R.id.button).setOnClickListener {
             val newActiveUserId = username.text.toString()
             MainScope().launch {
-                userFlow.emit(UserInput(newActiveUserId, "Bart Simpson"))
+                accountStore.addUser(DiSampleUser(newActiveUserId, SkeletonOauth2("fakeToken"), "Bartholomew JoJo Simpson"))
                 view.context.startActivity(intentFactory(view.context, newActiveUserId))
             }
         }

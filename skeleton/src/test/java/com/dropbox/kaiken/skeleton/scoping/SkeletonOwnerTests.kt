@@ -18,7 +18,7 @@ class SkeletonOwnerTests {
         assertThat(appServices).isInstanceOf(AppComponent::class.java)
         val userServicesFactory = skeleton.userServicesFactory
         val userServices: UserServices = userServicesFactory(
-            appServices, SkeletonUser("1", SkeletonAccessTokenPair("1", "1"), isActiveUser = true)
+            appServices, SkeletonUser("1", SkeletonAccessTokenPair("1", "1"))
         )
         assertThat(userServices).isNotNull()
     }

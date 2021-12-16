@@ -3,7 +3,7 @@ package com.dropbox.kaiken.skeleton.core
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.usermanagement.UserManager
+import com.dropbox.kaiken.skeleton.usermanagement.UserStore
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @ContributesTo(AppScope::class)
 interface KaikenAppServices : AppServices {
-    fun userManager(): UserManager
+    fun userStore(): UserStore
 }
 
 @ContributesTo(AppScope::class)

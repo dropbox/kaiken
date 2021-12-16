@@ -2,15 +2,20 @@ package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
+import com.dropbox.kaiken.skeleton.scoping.cast
 
 class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices) :
     SkeletonScopedServices by appSkeletonDelegate {
 
     init {
-        userServicesProvider = KaikenUserServicesProvider(
-            provideAppServices(),
-            userServicesFactory
-        )
+        userServicesProvider = with(provideAppServices() as KaikenAppServices) {
+            KaikenUserServicesProvider(
+                this,
+                userServicesFactory,
+                userStore().getUserEvents(),
+                cast<CoroutineScopeBindings>().coroutineScopes().mainScope, // TODO Mike figure out if we want another scope to launch from
+            )
+        }
     }
 
     companion object {
