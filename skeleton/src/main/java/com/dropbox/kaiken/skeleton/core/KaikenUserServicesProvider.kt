@@ -4,6 +4,7 @@ import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.usermanagement.UsersEvent
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -19,11 +20,11 @@ import kotlinx.coroutines.sync.withLock
  * Skeleton implementation of [SkeletonUserServicesProvider] that registers itself with a [UserStore].
  *
  */
-@OptIn(InternalCoroutinesApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-class KaikenUserServicesProvider
-constructor(
+@OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class KaikenUserServicesProvider(
     private val applicationServices: AppServices,
     private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
+    userEvents: Flow<UsersEvent>,
     coroutineScope: CoroutineScope,
 ) : SkeletonUserServicesProvider {
     private lateinit var userServices: Flow<Map<String, KaikenUserServices>>
@@ -31,7 +32,7 @@ constructor(
 
     init {
         coroutineScope.launch {
-            userServices = (applicationServices as KaikenAppServices).userStore().getUserEvents()
+            userServices = userEvents
                 .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
                     val result = mutableMapOf<String, KaikenUserServices>()
                     next.usersRemoved.forEach { user ->
@@ -39,7 +40,7 @@ constructor(
                     }
 
                     next.usersAdded.forEach { user ->
-                        val services = userServicesFactory(applicationServices, SkeletonUser(user.userId, user.accessToken)) as KaikenUserServices
+                        val services = userServicesFactory(applicationServices, user) as KaikenUserServices
                         result[user.userId] = services
                     }
 
