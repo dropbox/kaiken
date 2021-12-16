@@ -7,6 +7,7 @@ import com.dropbox.kaiken.skeleton.usermanagement.UserStore
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import javax.inject.Inject
@@ -30,6 +31,7 @@ interface CoroutineScopeBindings {
 class RealCoroutineScopes @Inject constructor() : CoroutineScopes {
     override val mainScope: CoroutineScope
         get() = MainScope()
+    @OptIn(DelicateCoroutinesApi::class)
     override val globalScope: CoroutineScope
         get() = GlobalScope
 }
