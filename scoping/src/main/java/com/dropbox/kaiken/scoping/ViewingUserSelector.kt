@@ -15,6 +15,7 @@ private const val BUNDLE_KEY =
  * fragment.
  */
 @Parcelize
+@SuppressWarnings("ParcelCreator") // https://youtrack.jetbrains.com/issue/KT-19300
 data class ViewingUserSelector(internal val userId: String) : Parcelable {
     companion object {
         @JvmStatic
