@@ -29,6 +29,7 @@ dependencies {
     kaptTest deps.dagger2_compiler}
 
 android {
+
     packagingOptions {
         exclude 'META-INF/annotations.kotlin_module'
     }

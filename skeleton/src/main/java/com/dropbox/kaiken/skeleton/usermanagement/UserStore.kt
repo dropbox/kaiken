@@ -51,7 +51,7 @@ class RealUserStore @Inject constructor(
 
 internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<SkeletonUser> {
     val result = toMutableSet()
-    forEach { item ->
+    onEach { item ->
         if (elements.any { item.userId == it.userId }) {
             result.remove(item)
         }
