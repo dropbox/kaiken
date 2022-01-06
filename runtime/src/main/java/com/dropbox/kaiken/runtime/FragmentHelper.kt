@@ -8,7 +8,7 @@ fun <InjectorType : Injector> Fragment.findInjector(): InjectorType {
     val injectorHolder = findInjectorHolder<InjectorType>()
         ?: throw InjectorNotFoundException(
             "Fragment ${this.javaClass} does not implement InjectorHolder" +
-                " and neither its parent activity"
+                    " and neither its parent activity"
         )
 
     return injectorHolder.locateInjector()
@@ -19,6 +19,9 @@ fun <InjectorType : Injector> Fragment.findInjectorHolder(): InjectorHolder<Inje
     return when {
         this is InjectorHolder<*> -> {
             this as InjectorHolder<InjectorType>
+        }
+        this.parentFragment != null -> {
+            parentFragment?.findInjectorHolder()
         }
         activity is InjectorHolder<*> -> {
             activity as InjectorHolder<InjectorType>

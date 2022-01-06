@@ -3,6 +3,7 @@ package com.dropbox.kaiken.sample.advancedsample.app
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -20,6 +21,9 @@ import kotlinx.android.synthetic.main.mainactivity.bottomNavigationView
 
 class SplashActivity : AppCompatActivity(), AuthOptionalActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setContent{
+
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainactivity)
         if (finishIfInvalidAuth()) return
