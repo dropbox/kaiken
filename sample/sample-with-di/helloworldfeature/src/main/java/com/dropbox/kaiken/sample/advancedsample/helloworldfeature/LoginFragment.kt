@@ -22,16 +22,6 @@ interface LoginScreenComponent : Injector {
     fun intentFactory(): @JvmSuppressWildcards (Context, String) -> Intent
 }
 
-class LoginFragment : AuthAwareComposeFragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        return setContent { LoginRouter() }
-    }
-}
-
 @Composable
 fun LoginRouter() {
     val navController = rememberNavController()
