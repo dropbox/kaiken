@@ -1,20 +1,22 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.Injector
+import com.dropbox.kaiken.scoping.ViewingUserSelector
+import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
+import dagger.Module
+import dagger.Provides
 import kotlinx.coroutines.launch
 
 @ContributesTo(AuthOptionalScreenScope::class)

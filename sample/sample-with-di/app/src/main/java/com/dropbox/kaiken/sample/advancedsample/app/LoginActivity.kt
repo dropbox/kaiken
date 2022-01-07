@@ -1,15 +1,12 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LocalDResolver
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.AuthOptionalComposeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginRouter
-import com.dropbox.kaiken.scoping.AuthOptionalActivity
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setAuthOptionalContent
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
@@ -19,21 +16,10 @@ import dagger.Module
 import dagger.Provides
 
 
-abstract class AuthOptionalComposeActivity : AppCompatActivity(), AuthOptionalActivity
-
-fun AuthOptionalComposeActivity.setAuthOptionalContent(content: @Composable () -> Unit) {
-    setContent {
-        CompositionLocalProvider(LocalDResolver provides this) {
-            content()
-        }
-    }
-}
-
 class LoginActivity : AuthOptionalComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        if(finishIfInvalidAuth()) return
+        if (finishIfInvalidAuth()) return
         setAuthOptionalContent {
             LoginRouter()
         }
@@ -55,4 +41,3 @@ class IntentFactoryModule {
     fun intentFactory(): @JvmSuppressWildcards (Context, String) -> Intent =
         { context: Context, userId: String -> getLaunchIntent(context, userId) }
 }
-

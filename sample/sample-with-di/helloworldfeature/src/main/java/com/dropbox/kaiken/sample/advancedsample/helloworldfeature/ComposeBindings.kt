@@ -1,5 +1,7 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -188,6 +190,25 @@ fun AuthOptionalComposeFragment.setContent(content: @Composable () -> Unit): Com
     }
 }
 
+
+fun AuthOptionalComposeActivity.setAuthOptionalContent(content: @Composable () -> Unit) {
+    setContent {
+        CompositionLocalProvider(LocalDResolver provides this) {
+            content()
+        }
+    }
+}
+
+fun AuthRequiredComposeActivity.setAuthRequiredContent(content: @Composable () -> Unit) {
+    setContent {
+        CompositionLocalProvider(LocalDResolver provides this) {
+            content()
+        }
+    }
+}
+
 abstract class AuthAwareComposeFragment : AuthAwareFragment, Fragment()
 abstract class AuthRequiredComposeFragment : AuthRequiredFragment, Fragment()
 abstract class AuthOptionalComposeFragment : AuthOptionalFragment, Fragment()
+abstract class AuthOptionalComposeActivity : AppCompatActivity(), AuthOptionalActivity
+abstract class AuthRequiredComposeActivity : AppCompatActivity(), AuthRequiredActivity
