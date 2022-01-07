@@ -241,16 +241,16 @@ abstract class Presenter<Event, Model>(
 ) : BasePresenter {
     val model: MutableState<Model> = mutableStateOf(initialState)
 
-    abstract val actionHandler: suspend (value: Event) -> Unit
-
     val events: MutableSharedFlow<Event> =
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     suspend fun start() {
         events.collect {
-            actionHandler(it)
+            eventHandler(it)
         }
     }
+
+    abstract suspend fun eventHandler(event:Event)
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {

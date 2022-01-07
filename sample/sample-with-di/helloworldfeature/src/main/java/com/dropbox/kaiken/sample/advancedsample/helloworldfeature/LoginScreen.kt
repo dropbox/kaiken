@@ -41,16 +41,15 @@ abstract class LoginPresenter :
 class RealLoginPresenter @Inject constructor(
     val userFlow: MutableSharedFlow<UserInput>, //user flow is a flow to a user service/dao
 ) : LoginPresenter() {
-    override val actionHandler: suspend (value: LoginEvent) -> Unit = { event ->
+    override suspend fun eventHandler(event: LoginEvent) {
         when (event) {
             is Submit -> {
                 userFlow.emit(event.userInput)
-                model.value= LoginSuccess(userId = event.userInput.userId)
+                model.value = LoginSuccess(userId = event.userInput.userId)
             }
         }
     }
 }
-
 
 @Composable
 fun LoginScreen(
@@ -83,7 +82,6 @@ private fun loggedInActivityLauncher(
         context.startActivity(intentFactory(context, model.userId))
     }
 }
-
 
 @Composable
 fun loginView(onSubmit: (LoginPresenter.Submit) -> Unit, onForgotPassword: () -> Unit) {

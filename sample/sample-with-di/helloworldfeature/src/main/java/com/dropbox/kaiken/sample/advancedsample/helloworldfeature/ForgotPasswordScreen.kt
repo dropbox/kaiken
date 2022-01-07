@@ -42,13 +42,14 @@ class RealForgotPresenter @Inject constructor(
     val passwordApi: PasswordApi,
 ) : ForgotPasswordPresenter() {
 
-    override val actionHandler: suspend (value: ForgotEvent) -> Unit = { event ->
+    override suspend fun eventHandler(event: ForgotEvent) {
         when (event) {
             is ForgotSubmit -> {
                 onSubmit(event)
             }
         }
     }
+
 
     suspend fun onSubmit(event: ForgotSubmit) {
         CoroutineScope(Dispatchers.IO).launch {
