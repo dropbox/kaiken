@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
@@ -9,15 +8,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.Injector
-import com.dropbox.kaiken.scoping.ViewingUserSelector
-import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
-import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
-import kotlinx.coroutines.launch
 
 @ContributesTo(AuthOptionalScreenScope::class)
 interface LoginScreenComponent : Injector {
@@ -29,10 +22,9 @@ fun LoginRouter() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "login") {
         authAwareComposable("login") { backstackEntry, presenter: LoginPresenter ->
-            val screenScope = rememberCoroutineScope()
             LoginScreen(
                 presenter.model.value,
-                { submit: LoginPresenter.Submit -> screenScope.launch { presenter.onSubmit(submit) } },
+                { submit: LoginPresenter.Submit -> presenter.events.tryEmit(submit) },
                 this.cast<LoginScreenComponent>().intentFactory()
             ) { navController.navigate("forgot_password") }
         }
@@ -40,7 +32,7 @@ fun LoginRouter() {
             val screenScope = rememberCoroutineScope()
             ForgotPasswordScreen(
                 presenter.model.value
-            ) { submit: ForgotSubmit -> screenScope.launch { presenter.onSubmit(submit) } }
+            ) { submit: ForgotPasswordPresenter.ForgotSubmit -> presenter.events.tryEmit(submit) }
         }
     }
 }
@@ -55,7 +47,7 @@ fun previewLoginScreen() {
 @Preview
 @Composable
 fun previewForgotPasswordScreen() {
-    ForgotPasswordScreen(model = Initial) {}
+    ForgotPasswordScreen(model = ForgotPasswordPresenter.Initial) {}
 }
 
 

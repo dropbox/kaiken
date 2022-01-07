@@ -6,7 +6,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,60 +17,70 @@ import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed interface ForgotEvent
-class ForgotSubmit(val email: String) : ForgotEvent
 
-sealed interface ForgotModel
-object Initial : ForgotModel
-object ForgotLoading : ForgotModel
+abstract class ForgotPasswordPresenter :
+    Presenter<ForgotPasswordPresenter.ForgotEvent, ForgotPasswordPresenter.ForgotModel>(Initial) {
 
-class PasswordReset(val display: String) : ForgotModel
+    sealed interface ForgotEvent
+    class ForgotSubmit(val email: String) : ForgotEvent
 
+    sealed interface ForgotModel
+    object Initial : ForgotModel
+    object ForgotLoading : ForgotModel
 
-interface ForgotPasswordPresenter : BasePresenter {
-    suspend fun onSubmit(event: ForgotSubmit)
-    val model: MutableState<ForgotModel>
+    class PasswordReset(val display: String) : ForgotModel
+
 }
 
 @SingleIn(AuthOptionalScreenScope::class)
 @ContributesMultibinding(AuthOptionalScreenScope::class, boundType = BasePresenter::class)
 class RealForgotPresenter @Inject constructor(
     val passwordApi: PasswordApi,
-) : ForgotPasswordPresenter {
-    override val model: MutableState<ForgotModel> = mutableStateOf(Initial)
-    override suspend fun onSubmit(event: ForgotSubmit) {
+) : ForgotPasswordPresenter() {
+
+    override val actionHandler: suspend (value: ForgotEvent) -> Unit = { event ->
+        when (event) {
+            is ForgotSubmit -> {
+                onSubmit(event)
+            }
+        }
+    }
+
+    suspend fun onSubmit(event: ForgotSubmit) {
         CoroutineScope(Dispatchers.IO).launch {
             passwordApi.callApi(event.email)
+            delay(5000)
             model.value = PasswordReset("check your password")
         }
-        ForgotLoading
+        model.value = ForgotLoading
     }
 }
 
 
 @Composable
 fun ForgotPasswordScreen(
-    model: ForgotModel,
-    onForgotSubmit: (ForgotSubmit) -> Unit
+    model: ForgotPasswordPresenter.ForgotModel,
+    onForgotSubmit: (ForgotPasswordPresenter.ForgotSubmit) -> Unit
 ) {
     MaterialTheme {
         Column {
             when (model) {
-                is Initial -> {
+                is ForgotPasswordPresenter.Initial -> {
                     var text by remember { mutableStateOf("1") }
                     TextField(
                         value = text,
                         onValueChange = { text = it },
                         label = { Text("USERID to retrieve password") })
-                    Button(onClick = { onForgotSubmit(ForgotSubmit(text)) }) {
+                    Button(onClick = { onForgotSubmit(ForgotPasswordPresenter.ForgotSubmit(text)) }) {
                         Text("Forgot Password")
                     }
                 }
-                is ForgotLoading -> Text("Sending you new password to email")
-                is PasswordReset -> Text("New Password Sent to User Email")
+                is ForgotPasswordPresenter.ForgotLoading -> Text("Sending you new password to email")
+                is ForgotPasswordPresenter.PasswordReset -> Text("New Password Sent to User Email")
             }
         }
     }

@@ -4,6 +4,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +34,9 @@ import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenComponent
 import com.dropbox.kaiken.skeleton.scoping.InjectorViewModelFactory
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
 
 @Composable
 inline fun <reified T : Injector> ViewModelStoreOwner.retain(
@@ -85,6 +91,10 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authRequiredComposable(
             val presenter: T =
                 retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                     .first()
+            //if new entry after rotation, call run again
+            LaunchedEffect(presenter,entry){
+                presenter.cast<Presenter<*,*>>().start()
+            }
             retained.content(entry, presenter)
         }
     }
@@ -106,6 +116,10 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authOptionalComposable(
             val presenter: T =
                 retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                     .first()
+            //if new entry after rotation, call run again
+            LaunchedEffect(presenter,entry){
+                presenter.cast<Presenter<*,*>>().start()
+            }
             retained.content(entry, presenter)
         }
     }
@@ -128,6 +142,10 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
                 val presenter: T =
                     retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                         .first()
+                //if new entry after rotation, call run again
+                LaunchedEffect(presenter,entry){
+                    presenter.cast<Presenter<*,*>>().start()
+                }
                 retained.content(entry, presenter)
             }
         } else if (LocalContext.current is AuthOptionalActivity) {
@@ -139,6 +157,10 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
                 val presenter: T =
                     retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                         .first()
+                //if new entry after rotation, call run again
+                LaunchedEffect(presenter,entry){
+                    presenter.cast<Presenter<*,*>>().start()
+                }
                 retained.content(entry, presenter)
             }
         }
@@ -212,3 +234,26 @@ abstract class AuthRequiredComposeFragment : AuthRequiredFragment, Fragment()
 abstract class AuthOptionalComposeFragment : AuthOptionalFragment, Fragment()
 abstract class AuthOptionalComposeActivity : AppCompatActivity(), AuthOptionalActivity
 abstract class AuthRequiredComposeActivity : AppCompatActivity(), AuthRequiredActivity
+
+
+abstract class Presenter<Event, Model>(
+    initialState: Model,
+) : BasePresenter {
+    val model: MutableState<Model> = mutableStateOf(initialState)
+
+    abstract val actionHandler: suspend (value: Event) -> Unit
+
+    val events: MutableSharedFlow<Event> =
+        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    suspend fun start() {
+        events.collect {
+            actionHandler(it)
+        }
+    }
+
+    @ContributesTo(AuthOptionalScreenScope::class)
+    interface PresenterProvider : Injector {
+        fun presenters(): Set<BasePresenter>
+    }
+}

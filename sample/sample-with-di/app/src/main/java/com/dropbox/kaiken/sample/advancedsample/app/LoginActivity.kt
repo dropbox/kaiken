@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
