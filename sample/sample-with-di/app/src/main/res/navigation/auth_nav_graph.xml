@@ -4,20 +4,8 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/homeFragmentAuth">
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/homeFragment"-->
-    <!--        android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldFragment"-->
-    <!--        android:label="HomeFragment" />-->
     <fragment
         android:id="@+id/homeFragmentAuth"
         android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldFragmentAuthed"
         android:label="HomeFragment" />
-    <!--    <fragment-->
-    <!--        android:id="@+id/loginFragment"-->
-    <!--        android:name="com.dropbox.android.sample.ui.room.RoomFragment"-->
-    <!--        android:label="RoomFragment" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/streamFragment"-->
-    <!--        android:name="com.dropbox.android.sample.ui.stream.StreamFragment"-->
-    <!--        android:label="StreamFragment" />-->
 </navigation>
