@@ -10,27 +10,58 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
+import com.squareup.anvil.annotations.ContributesMultibinding
+import kotlinx.coroutines.flow.MutableSharedFlow
+import javax.inject.Inject
+
+interface LoginPresenter : BasePresenter {
+    sealed interface LoginEvent
+    data class Submit(val userInput: UserInput) : LoginEvent
+
+    sealed interface LoginModel
+    data class LoginSuccess(val userId: String) : LoginModel
+    object LoginNeeded : LoginModel
+    suspend fun onSubmit(event: Submit)
+    val model: MutableState<LoginModel>
+}
+
+@SingleIn(AuthOptionalScreenScope::class)
+@ContributesMultibinding(AuthOptionalScreenScope::class, boundType = BasePresenter::class)
+class RealLoginPresenter @Inject constructor(
+    val userFlow: MutableSharedFlow<UserInput>, //user flow is a flow to a user service/dao
+) : LoginPresenter {
+
+    override val model: MutableState<LoginPresenter.LoginModel> = mutableStateOf(LoginPresenter.LoginNeeded)
+    override suspend fun onSubmit(event: LoginPresenter.Submit) {
+        userFlow.emit(event.userInput) //api
+        model.value = LoginPresenter.LoginSuccess(userId = event.userInput.userId)
+    }
+}
+
 
 @Composable
 //Stateless to impress Ryan
 fun LoginScreen(
-    model: LoginModel,
-    onSubmit: (Submit) -> Unit,
+    model: LoginPresenter.LoginModel,
+    onSubmit: (LoginPresenter.Submit) -> Unit,
     intentFactory: @JvmSuppressWildcards (Context, String) -> Intent,
     onClickForgotPassword: () -> Unit
 ) {
     MaterialTheme {
         Column {
             when (model) {
-                is LoginNeeded -> loginView(onSubmit, onClickForgotPassword)
-                is LoginSuccess -> loggedInActivityLauncher(model, intentFactory)
+                is LoginPresenter.LoginNeeded -> loginView(onSubmit, onClickForgotPassword)
+                is LoginPresenter.LoginSuccess -> loggedInActivityLauncher(model, intentFactory)
             }
         }
     }
@@ -38,7 +69,7 @@ fun LoginScreen(
 
 @Composable
 private fun loggedInActivityLauncher(
-    model: LoginSuccess,
+    model: LoginPresenter.LoginSuccess,
     intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
 ) {
     val context = LocalContext.current
@@ -49,12 +80,12 @@ private fun loggedInActivityLauncher(
 
 
 @Composable
-fun loginView(onSubmit: (Submit) -> Unit, onForgotPassword: () -> Unit) {
+fun loginView(onSubmit: (LoginPresenter.Submit) -> Unit, onForgotPassword: () -> Unit) {
     // In Compose world
     Text("Enter User ID")
     var text by remember { mutableStateOf("1") }
     TextField(value = text, onValueChange = { text = it }, label = { Text("Label") })
-    submitter { onSubmit(Submit(UserInput(text, "Bart"))) }
+    submitter { onSubmit(LoginPresenter.Submit(UserInput(text, "Bart"))) }
     Text("Forgot Password", modifier = Modifier.clickable { onForgotPassword() })
 }
 
@@ -65,28 +96,3 @@ fun submitter(onClick: () -> Unit) {
     }
 }
 
-
-@Composable
-fun ForgotPasswordScreen(
-    model: ForgotModel,
-    onForgotSubmit: (ForgotSubmit) -> Unit
-) {
-    MaterialTheme {
-        Column {
-            when (model) {
-                is Initial -> {
-                    var text by remember { mutableStateOf("1") }
-                    TextField(
-                        value = text,
-                        onValueChange = { text = it },
-                        label = { Text("USERID to retrieve password") })
-                    Button(onClick = { onForgotSubmit(ForgotSubmit(text)) }) {
-                        Text("Forgot Password")
-                    }
-                }
-                is ForgotLoading -> Text("Sending you new password to email")
-                is PasswordReset -> Text("New Password Sent to User Email")
-            }
-        }
-    }
-}
