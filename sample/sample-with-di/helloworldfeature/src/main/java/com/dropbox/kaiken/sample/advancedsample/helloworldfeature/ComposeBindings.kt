@@ -117,7 +117,7 @@ inline fun <reified T : Presenter<*, *>> NavGraphBuilder.authRequiredComposable(
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
 
-inline fun <reified T : Presenter<*, *>> NavGraphBuilder.authOptionalComposable(
+inline fun <reified T : BasePresenter> NavGraphBuilder.authOptionalComposable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
@@ -132,7 +132,6 @@ inline fun <reified T : Presenter<*, *>> NavGraphBuilder.authOptionalComposable(
             val presenter: T =
                 retained.cast<Presenter.PresenterProvider>().presenters().filterIsInstance<T>()
                     .first()
-            LaunchedEffect(presenter) { presenter.run() }
             retained.content(entry, presenter)
         }
     }
@@ -144,22 +143,24 @@ abstract class Presenter<Event, Model>(
 ) {
     val model: MutableState<Model> = mutableStateOf(initialState)
 
-   abstract val actionHandler: suspend (value: Event) -> Model
+   abstract val actionHandler: suspend (value: Event) -> Unit
 
     val events: MutableSharedFlow<Event> =
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     suspend fun run() {
         events.collect {
-            model.value = actionHandler(it)
+         actionHandler(it)
         }
     }
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {
-        fun presenters(): Set<Presenter<*, *>>
+        fun presenters(): Set<BasePresenter>
     }
 }
+
+interface BasePresenter
 
 fun AuthAwareFragment2.setContent(content: @Composable () -> Unit): ComposeView {
     val myThis = this

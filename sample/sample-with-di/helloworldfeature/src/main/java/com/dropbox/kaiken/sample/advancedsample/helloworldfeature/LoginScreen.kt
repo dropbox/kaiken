@@ -17,20 +17,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Composable
 //Stateless to impress Ryan
 fun LoginScreen(
     model: LoginModel,
-    events: MutableSharedFlow<LoginEvent>,
+    onSubmit: (Submit) -> Unit,
     intentFactory: @JvmSuppressWildcards (Context, String) -> Intent,
-    onClick: () -> Unit
+    onClickForgotPassword: () -> Unit
 ) {
     MaterialTheme {
         Column {
             when (model) {
-                is LoginNeeded -> loginView(events,onClick)
+                is LoginNeeded -> loginView(onSubmit, onClickForgotPassword)
                 is LoginSuccess -> loggedInActivityLauncher(model, intentFactory)
             }
         }
@@ -42,21 +41,21 @@ private fun loggedInActivityLauncher(
     model: LoginSuccess,
     intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
 ) {
-   val context= LocalContext.current
+    val context = LocalContext.current
     LaunchedEffect(key1 = Unit) {
-      context.startActivity(intentFactory(context, model.userId))
+        context.startActivity(intentFactory(context, model.userId))
     }
 }
 
 
 @Composable
-fun loginView(events: MutableSharedFlow<LoginEvent>, onClick: () -> Unit) {
+fun loginView(onSubmit: (Submit) -> Unit, onForgotPassword: () -> Unit) {
     // In Compose world
     Text("Enter User ID")
     var text by remember { mutableStateOf("1") }
     TextField(value = text, onValueChange = { text = it }, label = { Text("Label") })
-    submitter { events.tryEmit(Submit(UserInput(text, "Bart"))) }
-    Text("Forgot Password", modifier = Modifier.clickable { onClick() } )
+    submitter { onSubmit(Submit(UserInput(text, "Bart"))) }
+    Text("Forgot Password", modifier = Modifier.clickable { onForgotPassword() })
 }
 
 @Composable
@@ -67,22 +66,26 @@ fun submitter(onClick: () -> Unit) {
 }
 
 
-
 @Composable
 fun ForgotPasswordScreen(
     model: ForgotModel,
-    events: MutableSharedFlow<ForgotEvent>) {
+    onForgotSubmit: (ForgotSubmit) -> Unit
+) {
     MaterialTheme {
         Column {
             when (model) {
                 is Initial -> {
                     var text by remember { mutableStateOf("1") }
-                    TextField(value = text, onValueChange = { text = it }, label = { Text("Label") })
-                    Button(onClick = { events.tryEmit(ForgotSubmit(text)) }) {
-                        Text("Login")
+                    TextField(
+                        value = text,
+                        onValueChange = { text = it },
+                        label = { Text("USERID to retrieve password") })
+                    Button(onClick = { onForgotSubmit(ForgotSubmit(text)) }) {
+                        Text("Forgot Password")
                     }
                 }
                 is ForgotLoading -> Text("Sending you new password to email")
+                is PasswordReset -> Text("New Password Sent to User Email")
             }
         }
     }
