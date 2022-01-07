@@ -29,7 +29,7 @@ fun AuthOptionalComposeActivity.setAuthOptionalContent(content: @Composable () -
     }
 }
 
-class SplashActivity : AuthOptionalComposeActivity() {
+class LoginActivity : AuthOptionalComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
