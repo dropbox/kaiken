@@ -3,7 +3,6 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -21,15 +20,14 @@ interface LoginScreenComponent : Injector {
 fun LoginRouter() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "login") {
-        authAwareComposable("login") { backstackEntry, presenter: LoginPresenter ->
+        authAwareComposable("login") { _, presenter: LoginPresenter ->
             LoginScreen(
                 presenter.model.value,
                 { submit: LoginPresenter.Submit -> presenter.events.tryEmit(submit) },
                 this.cast<LoginScreenComponent>().intentFactory()
             ) { navController.navigate("forgot_password") }
         }
-        authAwareComposable("forgot_password") { backstackEntry, presenter: ForgotPasswordPresenter ->
-            val screenScope = rememberCoroutineScope()
+        authAwareComposable("forgot_password") { _, presenter: ForgotPasswordPresenter ->
             ForgotPasswordScreen(
                 presenter.model.value
             ) { submit: ForgotPasswordPresenter.ForgotSubmit -> presenter.events.tryEmit(submit) }
@@ -40,7 +38,7 @@ fun LoginRouter() {
 @Preview
 @Composable
 fun previewLoginScreen() {
-    val intentFactory: @JvmSuppressWildcards (Context, String) -> Intent = { s, c -> Intent() }
+    val intentFactory: @JvmSuppressWildcards (Context, String) -> Intent = { _, _ -> Intent() }
     LoginScreen(model = LoginPresenter.LoginNeeded, onSubmit = {}, intentFactory = intentFactory) {}
 }
 
@@ -49,5 +47,3 @@ fun previewLoginScreen() {
 fun previewForgotPasswordScreen() {
     ForgotPasswordScreen(model = ForgotPasswordPresenter.Initial) {}
 }
-
-

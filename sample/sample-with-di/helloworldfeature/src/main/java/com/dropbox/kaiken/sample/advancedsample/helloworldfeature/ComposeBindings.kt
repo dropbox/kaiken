@@ -46,7 +46,6 @@ inline fun <reified T : Injector> ViewModelStoreOwner.retain(
     return viewModelProvider.get(InjectorViewModel::class.java).injector as T
 }
 
-
 fun AuthRequiredScreenComponent.ScreenParentComponent.authRequiredScreenComponent(): AuthRequiredScreenComponent =
     this.createAuthRequiredScreenComponent()
 
@@ -56,16 +55,16 @@ fun AuthOptionalScreenComponent.ScreenParentComponent.authOptionalScreenComponen
 val LocalComponent = staticCompositionLocalOf<Injector> {
     error(
         "CompositionLocal Component not present, " +
-                "you need to wrap your composable in " +
-                "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
+            "you need to wrap your composable in " +
+            "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
     )
 }
 
 val LocalDResolver = staticCompositionLocalOf<DependencyProviderResolver> {
     error(
         "CompositionLocal Component not present, " +
-                "you need to call [AuthAwareFragment2.setContent] " +
-                "or similar prior to creating the nav graph "
+            "you need to call [AuthAwareFragment2.setContent] " +
+            "or similar prior to creating the nav graph "
     )
 }
 
@@ -91,9 +90,9 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authRequiredComposable(
             val presenter: T =
                 retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                     .first()
-            //if new entry after rotation, call run again
-            LaunchedEffect(presenter,entry){
-                presenter.cast<Presenter<*,*>>().start()
+            // if new entry after rotation, call run again
+            LaunchedEffect(presenter, entry) {
+                presenter.cast<Presenter<*, *>>().start()
             }
             retained.content(entry, presenter)
         }
@@ -116,9 +115,9 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authOptionalComposable(
             val presenter: T =
                 retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                     .first()
-            //if new entry after rotation, call run again
-            LaunchedEffect(presenter,entry){
-                presenter.cast<Presenter<*,*>>().start()
+            // if new entry after rotation, call run again
+            LaunchedEffect(presenter, entry) {
+                presenter.cast<Presenter<*, *>>().start()
             }
             retained.content(entry, presenter)
         }
@@ -142,9 +141,9 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
                 val presenter: T =
                     retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                         .first()
-                //if new entry after rotation, call run again
-                LaunchedEffect(presenter,entry){
-                    presenter.cast<Presenter<*,*>>().start()
+                // if new entry after rotation, call run again
+                LaunchedEffect(presenter, entry) {
+                    presenter.cast<Presenter<*, *>>().start()
                 }
                 retained.content(entry, presenter)
             }
@@ -157,9 +156,9 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
                 val presenter: T =
                     retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
                         .first()
-                //if new entry after rotation, call run again
-                LaunchedEffect(presenter,entry){
-                    presenter.cast<Presenter<*,*>>().start()
+                // if new entry after rotation, call run again
+                LaunchedEffect(presenter, entry) {
+                    presenter.cast<Presenter<*, *>>().start()
                 }
                 retained.content(entry, presenter)
             }
@@ -167,7 +166,6 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
     }
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
-
 
 @ContributesTo(AuthOptionalScreenScope::class)
 interface PresenterProvider : Injector {
@@ -212,7 +210,6 @@ fun AuthOptionalComposeFragment.setContent(content: @Composable () -> Unit): Com
     }
 }
 
-
 fun AuthOptionalComposeActivity.setAuthOptionalContent(content: @Composable () -> Unit) {
     setContent {
         CompositionLocalProvider(LocalDResolver provides this) {
@@ -235,7 +232,6 @@ abstract class AuthOptionalComposeFragment : AuthOptionalFragment, Fragment()
 abstract class AuthOptionalComposeActivity : AppCompatActivity(), AuthOptionalActivity
 abstract class AuthRequiredComposeActivity : AppCompatActivity(), AuthRequiredActivity
 
-
 abstract class Presenter<Event, Model>(
     initialState: Model,
 ) : BasePresenter {
@@ -250,7 +246,7 @@ abstract class Presenter<Event, Model>(
         }
     }
 
-    abstract suspend fun eventHandler(event:Event)
+    abstract suspend fun eventHandler(event: Event)
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {

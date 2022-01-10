@@ -101,7 +101,6 @@ interface AuthOptionalComponent : Injector {
     }
 }
 
-
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
     scope = AuthOptionalScreenScope::class,
@@ -110,24 +109,23 @@ interface AuthOptionalComponent : Injector {
 @SingleIn(AuthOptionalScreenScope::class)
 interface AuthOptionalScreenComponent : Injector {
     @ContributesTo(AppScope::class)
-    interface ScreenParentComponent:Injector {
+    interface ScreenParentComponent : Injector {
         fun createAuthOptionalScreenComponent(): AuthOptionalScreenComponent
     }
 }
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope =AuthRequiredScreenScope::class,
+    scope = AuthRequiredScreenScope::class,
     parentScope = UserScope::class
 )
 @SingleIn(AuthRequiredScreenScope::class)
 interface AuthRequiredScreenComponent : Injector {
     @ContributesTo(UserScope::class)
-    interface ScreenParentComponent:Injector {
+    interface ScreenParentComponent : Injector {
         fun createAuthRequiredScreenComponent(): AuthRequiredScreenComponent
     }
 }
-
 
 inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
     InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
@@ -135,17 +133,20 @@ inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjecto
 inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
     InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
 
-abstract class AuthAwareInjectorHolder<T : Injector> : Fragment(), AuthAwareFragment,
+abstract class AuthAwareInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthAwareFragment,
     InjectorHolder<T>
 
-abstract class AuthOptionalInjectorHolder<T : Injector> : Fragment(), AuthOptionalFragment,
+abstract class AuthOptionalInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthOptionalFragment,
     InjectorHolder<T>
 
-abstract class AuthRequiredInjectorHolder<T : Injector> : Fragment(), AuthRequiredFragment,
+abstract class AuthRequiredInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthRequiredFragment,
     InjectorHolder<T>
-
-
-
 
 class InjectorViewModelFactory<InjectorType : Injector>(
     private val injectorFactory: InjectorFactory<InjectorType>
@@ -155,4 +156,3 @@ class InjectorViewModelFactory<InjectorType : Injector>(
         return InjectorViewModel(injectorFactory.createInjector()) as T
     }
 }
-

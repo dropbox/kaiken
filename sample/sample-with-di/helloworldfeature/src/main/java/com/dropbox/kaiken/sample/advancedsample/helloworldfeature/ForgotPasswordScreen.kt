@@ -21,7 +21,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 abstract class ForgotPasswordPresenter :
     Presenter<ForgotPasswordPresenter.ForgotEvent, ForgotPasswordPresenter.ForgotModel>(Initial) {
 
@@ -33,7 +32,6 @@ abstract class ForgotPasswordPresenter :
     object ForgotLoading : ForgotModel
 
     class PasswordReset(val display: String) : ForgotModel
-
 }
 
 @SingleIn(AuthOptionalScreenScope::class)
@@ -50,7 +48,6 @@ class RealForgotPresenter @Inject constructor(
         }
     }
 
-
     suspend fun onSubmit(event: ForgotSubmit) {
         CoroutineScope(Dispatchers.IO).launch {
             passwordApi.callApi(event.email)
@@ -60,7 +57,6 @@ class RealForgotPresenter @Inject constructor(
         model.value = ForgotLoading
     }
 }
-
 
 @Composable
 fun ForgotPasswordScreen(
@@ -75,7 +71,8 @@ fun ForgotPasswordScreen(
                     TextField(
                         value = text,
                         onValueChange = { text = it },
-                        label = { Text("USERID to retrieve password") })
+                        label = { Text("USERID to retrieve password") }
+                    )
                     Button(onClick = { onForgotSubmit(ForgotPasswordPresenter.ForgotSubmit(text)) }) {
                         Text("Forgot Password")
                     }

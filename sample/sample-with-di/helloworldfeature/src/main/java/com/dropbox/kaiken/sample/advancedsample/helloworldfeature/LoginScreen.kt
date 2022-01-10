@@ -39,7 +39,7 @@ abstract class LoginPresenter :
     boundType = BasePresenter::class
 )
 class RealLoginPresenter @Inject constructor(
-    val userFlow: MutableSharedFlow<UserInput>, //user flow is a flow to a user service/dao
+    val userFlow: MutableSharedFlow<UserInput>, // user flow is a flow to a user service/dao
 ) : LoginPresenter() {
     override suspend fun eventHandler(event: LoginEvent) {
         when (event) {
@@ -99,4 +99,3 @@ fun submitter(onClick: () -> Unit) {
         Text("Login")
     }
 }
-
