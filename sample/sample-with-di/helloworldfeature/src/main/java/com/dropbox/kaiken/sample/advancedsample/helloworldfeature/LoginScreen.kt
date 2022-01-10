@@ -2,7 +2,6 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
@@ -25,8 +24,6 @@ import javax.inject.Inject
 
 class UserInput(val userId: String)
 abstract class LoginPresenter :
-
-
     Presenter<LoginPresenter.LoginEvent, LoginPresenter.LoginModel>(LoginNeeded) {
     sealed interface LoginEvent
     data class Submit(val userInput: UserInput) : LoginEvent
@@ -47,7 +44,7 @@ class RealLoginPresenter @Inject constructor(
     override suspend fun eventHandler(event: LoginEvent) {
         when (event) {
             is Submit -> {
-                //in a real flow we would call api and get an access token
+                // in a real flow we would call api and get an access token
                 accountStore.addUser(
                     DiSampleUser(
                         event.userInput.userId,
