@@ -5,8 +5,6 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.squareup.anvil'
 }
-apply plugin: 'app.cash.molecule'
-
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
