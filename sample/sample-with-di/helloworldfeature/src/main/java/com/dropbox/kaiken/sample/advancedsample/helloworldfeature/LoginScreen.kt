@@ -2,6 +2,7 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
@@ -16,14 +17,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.dropbox.kaiken.skeleton.core.SkeletonOauth2
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.usermanagement.auth.UserInput
 import com.squareup.anvil.annotations.ContributesMultibinding
-import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
+class UserInput(val userId: String)
 abstract class LoginPresenter :
+
+
     Presenter<LoginPresenter.LoginEvent, LoginPresenter.LoginModel>(LoginNeeded) {
     sealed interface LoginEvent
     data class Submit(val userInput: UserInput) : LoginEvent
@@ -39,12 +42,19 @@ abstract class LoginPresenter :
     boundType = BasePresenter::class
 )
 class RealLoginPresenter @Inject constructor(
-    val userFlow: MutableSharedFlow<UserInput>, // user flow is a flow to a user service/dao
+    val accountStore: AccountStore
 ) : LoginPresenter() {
     override suspend fun eventHandler(event: LoginEvent) {
         when (event) {
             is Submit -> {
-                userFlow.emit(event.userInput)
+                //in a real flow we would call api and get an access token
+                accountStore.addUser(
+                    DiSampleUser(
+                        event.userInput.userId,
+                        SkeletonOauth2("flebityfive"),
+                        "Bart Always Bart"
+                    )
+                )
                 model.value = LoginSuccess(userId = event.userInput.userId)
             }
         }
@@ -89,7 +99,7 @@ fun loginView(onSubmit: (LoginPresenter.Submit) -> Unit, onForgotPassword: () ->
     Text("Enter User ID")
     var text by remember { mutableStateOf("1") }
     TextField(value = text, onValueChange = { text = it }, label = { Text("Label") })
-    submitter { onSubmit(LoginPresenter.Submit(UserInput(text, "Bart"))) }
+    submitter { onSubmit(LoginPresenter.Submit(UserInput(text))) }
     Text("Forgot Password", modifier = Modifier.clickable { onForgotPassword() })
 }
 

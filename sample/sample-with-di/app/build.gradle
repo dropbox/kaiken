@@ -51,7 +51,7 @@ android {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
     kotlinOptions {
-        jvmTarget = "1.11"
+        jvmTarget = "11"
         freeCompilerArgs += [
                 '-Xopt-in=kotlin.Experimental',
         ]
@@ -67,6 +67,7 @@ dependencies {
 
 
     implementation project(":scoping")
+    implementation project(":skeleton")
     implementation project(":scoping-navgraph")
     implementation project(":sample:sample-with-di:helloworldfeature")
 

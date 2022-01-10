@@ -11,7 +11,7 @@ dependencies {
 
     implementation project(":scoping")
     implementation project(":annotations")
-    api project(":skeleton")
+    implementation project(":skeleton")
     implementation deps.coroutines
 
     api project(":runtime")
@@ -42,8 +42,8 @@ android {
     }
     // Set both the Java and Kotlin compilers to target Java 8.
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = "11"
