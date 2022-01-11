@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
+@Suppress("DEPRECATION")
 class RealUserStoreTest {
     private val users = MutableStateFlow(emptySet<SkeletonUser>())
 
@@ -31,6 +32,7 @@ class RealUserStoreTest {
     }
 
     @Test
+    @SuppressWarnings
     fun `GIVEN user store WHEN get user events and one user added THEN emit one user`() = runBlockingTest {
         // GIVEN
         val userStore = createUserStore()

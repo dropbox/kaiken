@@ -13,9 +13,11 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
+@Suppress("DEPRECATION")
 class KaikenUserServicesProviderTest {
     private val userEvents = MutableStateFlow(UsersEvent(emptySet()))
 
+    @SuppressWarnings
     private var coroutineScope = TestCoroutineScope()
     private var appServices: AppServices = DummyAppServices()
 
@@ -26,6 +28,7 @@ class KaikenUserServicesProviderTest {
     private fun createKaikenUserServicesProviderTest(): KaikenUserServicesProvider = KaikenUserServicesProvider(appServices, userFactory, userEvents, coroutineScope = coroutineScope)
 
     @Test
+    @SuppressWarnings
     fun `GIVEN kaiken user services WHEN no users and provide services THEN return null`() = runBlockingTest {
         // GIVEN
         val servicesProvider = createKaikenUserServicesProviderTest()
@@ -38,6 +41,7 @@ class KaikenUserServicesProviderTest {
     }
 
     @Test
+    @SuppressWarnings
     fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = runBlockingTest {
         // GIVEN
         var userFactoryCounter = 0
@@ -60,6 +64,7 @@ class KaikenUserServicesProviderTest {
     }
 
     @Test
+    @SuppressWarnings
     fun `GIVEN kaiken user services WHEN user removed and none exist THEN return null`() = runBlockingTest {
         // GIVEN
         userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
@@ -73,6 +78,7 @@ class KaikenUserServicesProviderTest {
     }
 
     @Test
+    @SuppressWarnings
     fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() = runBlockingTest {
         // GIVEN
         var teardownCounter = 0

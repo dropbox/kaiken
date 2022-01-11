@@ -1,7 +1,17 @@
 package com.dropbox.kaiken.skeleton.scoping
 
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.dropbox.kaiken.Injector
+import com.dropbox.kaiken.runtime.InjectorFactory
+import com.dropbox.kaiken.runtime.InjectorHolder
+import com.dropbox.kaiken.runtime.InjectorViewModel
 import com.dropbox.kaiken.scoping.AppServices
+import com.dropbox.kaiken.scoping.AuthAwareFragment
+import com.dropbox.kaiken.scoping.AuthOptionalFragment
+import com.dropbox.kaiken.scoping.AuthRequiredFragment
+import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.scoping.UserServices
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
@@ -19,8 +29,10 @@ annotation class SingleIn(val clazz: KClass<*>)
 abstract class SkeletonScope private constructor()
 abstract class AppScope private constructor()
 abstract class UserScope private constructor()
-abstract class AuthRequiredActivityScope private constructor()
-abstract class AuthOptionalActivityScope private constructor()
+abstract class AuthRequiredScope private constructor()
+abstract class AuthOptionalScope private constructor()
+abstract class AuthOptionalScreenScope private constructor()
+abstract class AuthRequiredScreenScope private constructor()
 
 inline fun <reified T> Any.cast(): T = this as T
 
@@ -62,29 +74,85 @@ interface UserParentComponent {
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope = AuthRequiredActivityScope::class,
+    scope = AuthRequiredScope::class,
     parentScope = UserScope::class
 )
-@SingleIn(AuthRequiredActivityScope::class)
-interface AuthRequiredActivityComponent {
+@SingleIn(AuthRequiredScope::class)
+interface AuthRequiredComponent {
 
     @ContributesTo(UserScope::class)
     interface ParentComponent {
         @OptIn(ExperimentalAnvilApi::class)
 
-        fun createAuthRequiredComponent(): AuthRequiredActivityComponent
+        fun createAuthRequiredComponent(): AuthRequiredComponent
     }
 }
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope = AuthOptionalActivityScope::class,
+    scope = AuthOptionalScope::class,
     parentScope = AppScope::class
 )
-@SingleIn(AuthOptionalActivityScope::class)
-interface AuthOptionalActivityComponent : Injector {
+@SingleIn(AuthOptionalScope::class)
+interface AuthOptionalComponent : Injector {
     @ContributesTo(AppScope::class)
     interface ParentComponent {
-        fun createAuthOptionalComponent(): AuthOptionalActivityComponent
+        fun createAuthOptionalComponent(): AuthOptionalComponent
+    }
+}
+
+@OptIn(ExperimentalAnvilApi::class)
+@ContributesSubcomponent(
+    scope = AuthOptionalScreenScope::class,
+    parentScope = AppScope::class
+)
+@SingleIn(AuthOptionalScreenScope::class)
+interface AuthOptionalScreenComponent : Injector {
+    @ContributesTo(AppScope::class)
+    interface ScreenParentComponent : Injector {
+        fun createAuthOptionalScreenComponent(): AuthOptionalScreenComponent
+    }
+}
+
+@OptIn(ExperimentalAnvilApi::class)
+@ContributesSubcomponent(
+    scope = AuthRequiredScreenScope::class,
+    parentScope = UserScope::class
+)
+@SingleIn(AuthRequiredScreenScope::class)
+interface AuthRequiredScreenComponent : Injector {
+    @ContributesTo(UserScope::class)
+    interface ScreenParentComponent : Injector {
+        fun createAuthRequiredScreenComponent(): AuthRequiredScreenComponent
+    }
+}
+
+inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
+    InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
+
+inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
+    InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
+
+abstract class AuthAwareInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthAwareFragment,
+    InjectorHolder<T>
+
+abstract class AuthOptionalInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthOptionalFragment,
+    InjectorHolder<T>
+
+abstract class AuthRequiredInjectorHolder<T : Injector> :
+    Fragment(),
+    AuthRequiredFragment,
+    InjectorHolder<T>
+
+class InjectorViewModelFactory<InjectorType : Injector>(
+    private val injectorFactory: InjectorFactory<InjectorType>
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
+        return InjectorViewModel(injectorFactory.createInjector()) as T
     }
 }
