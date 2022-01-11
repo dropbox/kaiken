@@ -24,17 +24,17 @@ class ScopesConstructionTests {
                 appServices,
                 SkeletonUser("1", SkeletonAccessTokenPair("1", "1"))
             )
-        val authActivityComponent: AuthRequiredActivityComponent =
-            userServices.cast<AuthRequiredActivityComponent.ParentComponent>()
+        val authComponent: AuthRequiredComponent =
+            userServices.cast<AuthRequiredComponent.ParentComponent>()
                 .createAuthRequiredComponent()
-        val noAuthActivityComponent: AuthOptionalActivityComponent =
-            appServices.cast<AuthOptionalActivityComponent.ParentComponent>()
+        val noAuthComponent: AuthOptionalComponent =
+            appServices.cast<AuthOptionalComponent.ParentComponent>()
                 .createAuthOptionalComponent()
         assertThat(
-            authActivityComponent.cast<UserTeardownHelperProvider>().userTeardownHelper()
+            authComponent.cast<UserTeardownHelperProvider>().userTeardownHelper()
         ).isInstanceOf(UserTeardownHelper::class.java)
         assertThat(
-            noAuthActivityComponent.cast<AppTeardownHelperProvider>().appTeardownHelper()
+            noAuthComponent.cast<AppTeardownHelperProvider>().appTeardownHelper()
         ).isInstanceOf(AppTeardownHelper::class.java)
     }
 }

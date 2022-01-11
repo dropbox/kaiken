@@ -23,7 +23,8 @@ jobs:
       - name: Set up our JDK environment
         uses: actions/setup-java@v1.4.3
         with:
-          java-version: 1.8
+            distribution: 'zulu'
+            java-version: '11'
 
       - name: Upload Artifacts
         run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-daemon --no-parallel
@@ -61,12 +62,13 @@ jobs:
     - name: Set up our JDK environment
       uses: actions/setup-java@v1.4.3
       with:
-        java-version: 1.8
+        distribution: 'zulu'
+        java-version: '11'
     - name: Run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
             api-level: 29
-            script: ./gradlew clean cleanBuildCache check connectedCheck --stacktrace --rerun-tasks
+            script: ./gradlew clean check connectedCheck --stacktrace --rerun-tasks
       env:
         API_LEVEL: ${{ matrix.api-level }}
     - name: Upload code coverage

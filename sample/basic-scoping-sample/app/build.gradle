@@ -9,7 +9,7 @@ android {
     buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "com.dropbox.kaiken.sample"
-        minSdkVersion 19
+        minSdkVersion 21
         compileSdkVersion versions.compileSdk
         targetSdkVersion versions.targetSdk
         versionCode 1

@@ -38,14 +38,24 @@ public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_drop
 	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AppComponent_AppParentComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponent_ParentComponentKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalComponent_ParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponent_ParentComponentKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponent_ScreenParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponent_ScreenParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponent_ScreenParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredComponent_ParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponent_ScreenParentComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponent_ScreenParentComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponent_ScreenParentComponent_scope ()Lkotlin/reflect/KClass;
 }
 
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_UserParentComponentKt {
@@ -58,14 +68,24 @@ public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/C
 	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AppComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponentKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalActivityComponent_scope ()Lkotlin/reflect/KClass;
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponentKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredActivityComponent_scope ()Lkotlin/reflect/KClass;
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthOptionalScreenComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponentKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponent_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_scoping_AuthRequiredScreenComponent_scope ()Lkotlin/reflect/KClass;
 }
 
 public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_UserComponentKt {
@@ -89,6 +109,7 @@ public final class com/dropbox/kaiken/skeleton/core/AppSkeletonInitializer : com
 	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
 	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
 	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
 }
@@ -108,6 +129,7 @@ public final class com/dropbox/kaiken/skeleton/core/AppSkeletonScopedServices : 
 	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
 	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
 	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
 }
@@ -149,6 +171,7 @@ public abstract interface class com/dropbox/kaiken/skeleton/core/KaikenUserServi
 public final class com/dropbox/kaiken/skeleton/core/KaikenUserServicesProvider : com/dropbox/kaiken/skeleton/core/SkeletonUserServicesProvider {
 	public fun <init> (Lcom/dropbox/kaiken/scoping/AppServices;Lkotlin/jvm/functions/Function2;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineScope;)V
 	public final fun provideUserServices (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
 }
 
@@ -215,6 +238,7 @@ public abstract class com/dropbox/kaiken/skeleton/core/SkeletonOwnerApplication 
 	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
 	public fun onCreate ()V
 	public fun provideAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
+	public fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun provideUserServicesOf (Ljava/lang/String;)Lcom/dropbox/kaiken/scoping/UserServices;
 	public fun setScopedServices (Lcom/dropbox/kaiken/skeleton/core/AppSkeletonScopedServices;)V
 	public fun setUserServicesProvider (Lcom/dropbox/kaiken/scoping/UserServicesProvider;)V
@@ -258,24 +282,73 @@ public abstract interface class com/dropbox/kaiken/skeleton/scoping/AppComponent
 public abstract class com/dropbox/kaiken/skeleton/scoping/AppScope {
 }
 
-public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalActivityComponent : com/dropbox/kaiken/Injector {
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthAwareInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthAwareFragment {
+	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getViewingUserSelector ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
+	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalActivityComponent$ParentComponent {
-	public abstract fun createAuthOptionalComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthOptionalActivityComponent;
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalComponent : com/dropbox/kaiken/Injector {
 }
 
-public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalActivityScope {
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalComponent$ParentComponent {
+	public abstract fun createAuthOptionalComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthOptionalComponent;
 }
 
-public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredActivityComponent {
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthOptionalFragment {
+	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getAuthRequired ()Z
+	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredActivityComponent$ParentComponent {
-	public abstract fun createAuthRequiredComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthRequiredActivityComponent;
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalScope {
 }
 
-public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredActivityScope {
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalScreenComponent : com/dropbox/kaiken/Injector {
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalScreenComponent$ScreenParentComponent : com/dropbox/kaiken/Injector {
+	public abstract fun createAuthOptionalScreenComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthOptionalScreenComponent;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalScreenScope {
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredComponent {
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredComponent$ParentComponent {
+	public abstract fun createAuthRequiredComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthRequiredComponent;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthRequiredFragment {
+	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getAuthRequired ()Z
+	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredScope {
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredScreenComponent : com/dropbox/kaiken/Injector {
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequiredScreenComponent$ScreenParentComponent : com/dropbox/kaiken/Injector {
+	public abstract fun createAuthRequiredScreenComponent ()Lcom/dropbox/kaiken/skeleton/scoping/AuthRequiredScreenComponent;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredScreenScope {
+}
+
+public final class com/dropbox/kaiken/skeleton/scoping/InjectorViewModelFactory : androidx/lifecycle/ViewModelProvider$Factory {
+	public fun <init> (Lcom/dropbox/kaiken/runtime/InjectorFactory;)V
+	public fun create (Ljava/lang/Class;)Landroidx/lifecycle/ViewModel;
 }
 
 public abstract interface annotation class com/dropbox/kaiken/skeleton/scoping/SingleIn : java/lang/annotation/Annotation {
@@ -283,6 +356,8 @@ public abstract interface annotation class com/dropbox/kaiken/skeleton/scoping/S
 }
 
 public final class com/dropbox/kaiken/skeleton/scoping/SingleInKt {
+	public static final synthetic fun authInjector (Lcom/dropbox/kaiken/scoping/DependencyProviderResolver;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
+	public static final synthetic fun authOptionalInjectorFactory (Lcom/dropbox/kaiken/scoping/DependencyProviderResolver;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
 	public static final synthetic fun cast (Ljava/lang/Object;)Ljava/lang/Object;
 }
 

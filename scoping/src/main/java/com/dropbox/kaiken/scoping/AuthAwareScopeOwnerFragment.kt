@@ -31,7 +31,6 @@ interface AuthAwareScopeOwnerFragment : DependencyProviderResolver {
      *
      * [finishIfInvalidAuth] must be called before calling this method.
      */
-    @JvmDefault
     override fun <T> resolveDependencyProvider(): T =
         locateAuthHelper().resolveDependencyProvider()
 
@@ -47,7 +46,6 @@ interface AuthAwareScopeOwnerFragment : DependencyProviderResolver {
      *
      * @return whether or not the activity has been finished.
      */
-    @JvmDefault
     override fun finishIfInvalidAuth(): Boolean {
         val authHelper = locateAuthHelper()
 

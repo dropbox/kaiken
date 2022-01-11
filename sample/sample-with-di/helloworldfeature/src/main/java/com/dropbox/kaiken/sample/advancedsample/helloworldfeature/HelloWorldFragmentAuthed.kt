@@ -13,17 +13,17 @@ import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivityComponent
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredActivityScope
+import com.dropbox.kaiken.skeleton.scoping.AuthRequiredComponent
+import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.squareup.anvil.annotations.ContributesTo
 import javax.inject.Inject
 
 fun DependencyProviderResolver.daggerInjectorAuth() =
-    InjectorFactory { (resolveDependencyProvider() as AuthRequiredActivityComponent.ParentComponent).createAuthRequiredComponent() as HellowWorldAuthedManualInjector }
+    InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as HellowWorldAuthedManualInjector }
 
-@ContributesTo(AuthRequiredActivityScope::class)
+@ContributesTo(AuthRequiredScope::class)
 interface HellowWorldAuthedManualInjector :
     Injector {
     fun inject(fragment: HelloWorldFragmentAuthed)

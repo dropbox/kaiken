@@ -5,7 +5,8 @@
         <activity
             android:name="com.dropbox.kaiken.integration_tests.TestSimpleActivity"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"
-            android:exported="false"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name="com.dropbox.kaiken.integration_tests.TestInjectorHolderActivity"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"

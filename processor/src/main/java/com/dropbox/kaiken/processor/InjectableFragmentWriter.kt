@@ -76,7 +76,6 @@ internal fun generateFragmentFileSpec(
     pack: String,
     interfaceName: String,
     fragmentType: TypeName,
-    shouldGenerateAuthAww: Boolean,
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
     val interfaceSpec = generateInjectInterfaceSpec(interfaceName, fragmentType)

@@ -20,6 +20,9 @@ fun <InjectorType : Injector> Fragment.findInjectorHolder(): InjectorHolder<Inje
         this is InjectorHolder<*> -> {
             this as InjectorHolder<InjectorType>
         }
+        this.parentFragment != null -> {
+            parentFragment?.findInjectorHolder()
+        }
         activity is InjectorHolder<*> -> {
             activity as InjectorHolder<InjectorType>
         }
