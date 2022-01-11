@@ -39,7 +39,7 @@ ext.versions = [
         truth                       : '1.0',
 
         // Samples
-        constraintLayout            : '2.0.4',
+        constraintLayout            : '2.1.2',
         javaxInject                 : '1',
         dagger2Version              : '2.39.1',
 ]
