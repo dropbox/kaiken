@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dropbox.kaiken.sample_with_di.app.R
 import com.dropbox.kaiken.scoping.AuthRequiredActivity
-import kotlinx.android.synthetic.main.authactivity.bottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LoggedInActivity : AppCompatActivity(), AuthRequiredActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +19,6 @@ class LoggedInActivity : AppCompatActivity(), AuthRequiredActivity {
         val navController = navHostFragment.navController
 
         // Setup bottom navigation with navigation controller
-        bottomNavigationView.setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
 }
