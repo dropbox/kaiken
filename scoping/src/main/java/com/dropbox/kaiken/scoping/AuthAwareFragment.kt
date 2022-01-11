@@ -41,6 +41,7 @@ interface AuthAwareFragment : DependencyProviderResolver {
      *
      * @throws IllegalArgumentException if the parent activity is not [AuthAwareScopeOwnerActivity].
      */
+    @JvmDefault
     fun getViewingUserSelector(): ViewingUserSelector? =
         requireAuthAwareActivity().getViewingUserSelector()
 
@@ -58,6 +59,7 @@ interface AuthAwareFragment : DependencyProviderResolver {
      *
      * @return whether or not the activity has been finished.
      */
+    @JvmDefault
     override fun finishIfInvalidAuth(): Boolean {
         val parentFragment = parentFragmentAsDependencyResolver()
 
@@ -72,6 +74,7 @@ interface AuthAwareFragment : DependencyProviderResolver {
      * Implementation of [resolveDependencyProvider] that fetches the dependencies from its
      * parent fragment if any or from its parent activity.
      */
+    @JvmDefault
     override fun <T> resolveDependencyProvider(): T {
         val parentFragment = parentFragmentAsDependencyResolver()
 

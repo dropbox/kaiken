@@ -15,6 +15,7 @@ interface UserServicesProvider {
      * Returns the user services for a given viewing user selector or`null` if they are not
      * available.
      */
+    @JvmDefault
     fun provideUserServicesOf(viewingUserSelector: ViewingUserSelector): UserServices? =
         provideUserServicesOf(viewingUserSelector.userId)
 }

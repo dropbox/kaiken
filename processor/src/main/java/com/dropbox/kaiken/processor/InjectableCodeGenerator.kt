@@ -32,7 +32,7 @@ class InjectableCodeGenerator : CodeGenerator {
         ACTIVITY, FRAGMENT, INVALID
     }
 
-    @OptIn(KotlinPoetJavaPoetPreview::class)
+    @KotlinPoetJavaPoetPreview
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
@@ -81,7 +81,8 @@ class InjectableCodeGenerator : CodeGenerator {
                 generateFragmentFileSpec(
                     packageName,
                     "${className.simpleName}Injector",
-                    className
+                    className,
+                    true
                 )
             createGeneratedFile(
                 codeGenDir = codeGenDir,
