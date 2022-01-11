@@ -41,7 +41,7 @@ ext.versions = [
         // Samples
         constraintLayout            : '2.0.4',
         javaxInject                 : '1',
-        dagger2Version              : '2.39.1',
+        dagger2Version              : '2.40.5',
 ]
 
 ext.deps = [
