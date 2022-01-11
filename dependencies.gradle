@@ -57,7 +57,7 @@ ext.deps = [
         navgraph                    : "androidx.navigation:navigation-fragment-ktx:$versions.navGraph",
         nav_ui                      : "androidx.navigation:navigation-ui-ktx:$versions.navGraph",
         lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
-        material                    : "com.google.android.material:material:1.2.1",
+        material                    : "com.google.android.material:material:1.4.0",
 
         // Annotation Processing
         autoservice_annotations     : "com.google.auto.service:auto-service-annotations:$versions.autoservice",
