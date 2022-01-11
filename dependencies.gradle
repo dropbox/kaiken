@@ -34,7 +34,7 @@ ext.versions = [
         // Testing
         androidxTestCore            : '1.4.0',
         androidxTestExtJunit        : '1.1.1',
-        espresso                    : '3.1.0',
+        espresso                    : '3.4.0',
         junit                       : '1.8.4',
         truth                       : '1.0',
 
