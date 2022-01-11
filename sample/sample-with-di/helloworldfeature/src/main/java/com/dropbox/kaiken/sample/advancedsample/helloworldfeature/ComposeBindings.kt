@@ -2,7 +2,6 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +22,6 @@ import androidx.navigation.compose.composable
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorViewModel
-import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.AuthAwareScopeOwnerActivity
 import com.dropbox.kaiken.scoping.AuthOptionalActivity
 import com.dropbox.kaiken.scoping.AuthOptionalFragment
@@ -39,6 +37,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
+import javax.inject.Provider
 
 @Composable
 inline fun <reified T : Injector> ViewModelStoreOwner.retain(
@@ -57,16 +56,16 @@ fun AuthOptionalScreenComponent.ScreenParentComponent.authOptionalScreenComponen
 val LocalComponent = staticCompositionLocalOf<Injector> {
     error(
         "CompositionLocal Component not present, " +
-            "you need to wrap your composable in " +
-            "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
+                "you need to wrap your composable in " +
+                "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
     )
 }
 
 val LocalDResolver = staticCompositionLocalOf<DependencyProviderResolver> {
     error(
         "CompositionLocal Component not present, " +
-            "you need to call [AuthAwareFragment2.setContent] " +
-            "or similar prior to creating the nav graph "
+                "you need to call [AuthAwareFragment2.setContent] " +
+                "or similar prior to creating the nav graph "
     )
 }
 
@@ -134,29 +133,30 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
 }
 
 @Composable
-inline fun <reified T : BasePresenter, reified V:Injector> retainComponentAndSetContent(
+inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndSetContent(
     retained: V,
     entry: NavBackStackEntry,
     crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
 ) {
     CompositionLocalProvider(LocalComponent provides retained) {
-        val presenter: T =
-            retained.cast<PresenterProvider>().presenters().filterIsInstance<T>()
+        val presenter: Provider<T> =
+            retained.cast<Presenter.PresenterProvider>().presenters().filterIsInstance<Provider<T>>()
                 .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
             presenter.cast<Presenter<*, *>>().start()
         }
-        retained.content(entry, presenter)
+        retained.content(entry, presenter.get())
     }
 }
 
-@ContributesTo(AuthOptionalScreenScope::class)
-interface PresenterProvider : Injector {
-    fun presenters(): Set<BasePresenter>
-}
+abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, ComponentActivity()
+abstract class AuthOptionalComposeActivity : AuthOptionalActivity, AuthAwareScopedComposeActivity()
+abstract class AuthRequiredComposeActivity : AuthRequiredActivity, AuthAwareScopedComposeActivity()
 
-interface BasePresenter
+abstract class AuthAwareComposeFragment : DependencyProviderResolver, Fragment()
+abstract class AuthRequiredComposeFragment : AuthRequiredFragment, AuthAwareComposeFragment()
+abstract class AuthOptionalComposeFragment : AuthOptionalFragment, AuthAwareComposeFragment()
 
 fun AuthAwareComposeFragment.setContent(content: @Composable () -> Unit): ComposeView {
     val myThis = this
@@ -178,13 +178,7 @@ fun AuthAwareScopedComposeActivity.setContent(content: @Composable () -> Unit) {
     }
 }
 
-abstract class AuthAwareScopedComposeActivity:AuthAwareScopeOwnerActivity, ComponentActivity()
-abstract class AuthOptionalComposeActivity : AuthOptionalActivity, AuthAwareScopedComposeActivity()
-abstract class AuthRequiredComposeActivity : AuthRequiredActivity, AuthAwareScopedComposeActivity()
-
-abstract class AuthAwareComposeFragment : DependencyProviderResolver, Fragment()
-abstract class AuthRequiredComposeFragment : AuthRequiredFragment, AuthAwareComposeFragment()
-abstract class AuthOptionalComposeFragment : AuthOptionalFragment, AuthAwareComposeFragment()
+interface BasePresenter
 
 abstract class Presenter<Event, Model>(
     initialState: Model,
@@ -201,4 +195,9 @@ abstract class Presenter<Event, Model>(
     }
 
     abstract suspend fun eventHandler(event: Event)
+
+    @ContributesTo(AuthOptionalScreenScope::class)
+    interface PresenterProvider : Injector {
+        fun presenters(): Set<Provider<BasePresenter>>
+    }
 }
