@@ -59,7 +59,7 @@ allprojects {
         kotlinOptions {
             allWarningsAsErrors = true
             jvmTarget = '11'
-            freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=compatibility']
+            freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=all']
         }
     }
 }
