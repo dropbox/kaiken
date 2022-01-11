@@ -57,7 +57,6 @@ allprojects {
         targetCompatibility = JavaVersion.VERSION_1_8
 
         kotlinOptions {
-            allWarningsAsErrors = true
             jvmTarget = '11'
             freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", '-Xjvm-default=compatibility']
         }
