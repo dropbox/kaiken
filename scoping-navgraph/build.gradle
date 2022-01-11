@@ -21,14 +21,6 @@ dependencies {
 
 }
 
-apply plugin: 'kotlin-android-extensions'
-
-// To use the @Parcelize annotation
-// https://blog.jetbrains.com/kotlin/2017/08/kotlin-1-1-4-is-out/
-androidExtensions {
-    experimental = true
-}
-
 android {
     packagingOptions {
         exclude 'META-INF/annotations.kotlin_module'

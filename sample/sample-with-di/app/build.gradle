@@ -2,9 +2,11 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
     id 'com.squareup.anvil'
 }
+
+apply plugin: 'com.squareup.anvil'
+
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
