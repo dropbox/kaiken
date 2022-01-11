@@ -284,7 +284,10 @@ public abstract class com/dropbox/kaiken/skeleton/scoping/AppScope {
 
 public abstract class com/dropbox/kaiken/skeleton/scoping/AuthAwareInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthAwareFragment {
 	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getViewingUserSelector ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
 public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptionalComponent : com/dropbox/kaiken/Injector {
@@ -296,7 +299,10 @@ public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthOptional
 
 public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthOptionalFragment {
 	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getAuthRequired ()Z
 	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
 public abstract class com/dropbox/kaiken/skeleton/scoping/AuthOptionalScope {
@@ -321,7 +327,10 @@ public abstract interface class com/dropbox/kaiken/skeleton/scoping/AuthRequired
 
 public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthRequiredFragment {
 	public fun <init> ()V
+	public fun finishIfInvalidAuth ()Z
+	public fun getAuthRequired ()Z
 	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
+	public fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
 public abstract class com/dropbox/kaiken/skeleton/scoping/AuthRequiredScope {
