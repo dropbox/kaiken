@@ -52,9 +52,9 @@ class RealForgotPresenter @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             passwordApi.callApi(event.email)
             delay(5000)
-            model.value = PasswordReset("check your password")
+            model = PasswordReset("check your password")
         }
-        model.value = ForgotLoading
+        model = ForgotLoading
     }
 }
 

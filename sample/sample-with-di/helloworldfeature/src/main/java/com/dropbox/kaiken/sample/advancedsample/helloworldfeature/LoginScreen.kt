@@ -52,7 +52,7 @@ class RealLoginPresenter @Inject constructor(
                         "Bart Always Bart"
                     )
                 )
-                model.value = LoginSuccess(userId = event.userInput.userId)
+                model = LoginSuccess(userId = event.userInput.userId)
             }
         }
     }
@@ -73,6 +73,7 @@ fun LoginScreen(
                 }
                 is LoginPresenter.LoginSuccess -> {
                     loggedInActivityLauncher(model, intentFactory)
+                    loginView(onSubmit, onClickForgotPassword)
                 }
             }
         }

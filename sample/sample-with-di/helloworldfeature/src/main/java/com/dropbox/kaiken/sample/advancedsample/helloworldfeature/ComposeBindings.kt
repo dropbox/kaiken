@@ -5,8 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -37,9 +38,7 @@ import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
-import javax.inject.Provider
 
-@Composable
 inline fun <reified T : Injector> ViewModelStoreOwner.retain(
     injectorFactory: InjectorFactory<T>
 ): T {
@@ -56,16 +55,16 @@ fun AuthOptionalScreenComponent.ScreenParentComponent.authOptionalScreenComponen
 val LocalComponent = staticCompositionLocalOf<Injector> {
     error(
         "CompositionLocal Component not present, " +
-                "you need to wrap your composable in " +
-                "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
+            "you need to wrap your composable in " +
+            "AuthOptionalLocalProvider or AuthRequiredLocalProvider"
     )
 }
 
 val LocalDResolver = staticCompositionLocalOf<DependencyProviderResolver> {
     error(
         "CompositionLocal Component not present, " +
-                "you need to call [AuthAwareFragment2.setContent] " +
-                "or similar prior to creating the nav graph "
+            "you need to call [AuthAwareFragment2.setContent] " +
+            "or similar prior to creating the nav graph "
     )
 }
 
@@ -104,7 +103,6 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authOptionalComposable(
 
         val retained = entry.retain { injector.authOptionalScreenComponent() }
         retainComponentAndSetContent(retained, entry, content)
-
     }
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
@@ -139,14 +137,15 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
     crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
 ) {
     CompositionLocalProvider(LocalComponent provides retained) {
-        val presenter: Provider<T> =
-            retained.cast<Presenter.PresenterProvider>().presenters().filterIsInstance<Provider<T>>()
+        val presenter: T =
+            retained.cast<Presenter.PresenterProvider>().presenters()
+                .filterIsInstance<T>()
                 .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
             presenter.cast<Presenter<*, *>>().start()
         }
-        retained.content(entry, presenter.get())
+        retained.content(entry, presenter)
     }
 }
 
@@ -183,7 +182,7 @@ interface BasePresenter
 abstract class Presenter<Event, Model>(
     initialState: Model,
 ) : BasePresenter {
-    val model: MutableState<Model> = mutableStateOf(initialState)
+    var model: Model by mutableStateOf(initialState)
 
     val events: MutableSharedFlow<Event> =
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -198,6 +197,6 @@ abstract class Presenter<Event, Model>(
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {
-        fun presenters(): Set<Provider<BasePresenter>>
+        fun presenters(): Set<BasePresenter>
     }
 }

@@ -22,14 +22,14 @@ fun LoginRouter() {
     NavHost(navController = navController, startDestination = "login") {
         authAwareComposable("login") { _, presenter: LoginPresenter ->
             LoginScreen(
-                presenter.model.value,
+                presenter.model,
                 { submit: LoginPresenter.Submit -> presenter.events.tryEmit(submit) },
                 this.cast<LoginScreenComponent>().intentFactory()
             ) { navController.navigate("forgot_password") }
         }
         authAwareComposable("forgot_password") { _, presenter: ForgotPasswordPresenter ->
             ForgotPasswordScreen(
-                presenter.model.value
+                presenter.model
             ) { submit: ForgotPasswordPresenter.ForgotSubmit -> presenter.events.tryEmit(submit) }
         }
     }
