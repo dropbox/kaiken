@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.AuthOptionalComposeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginRouter
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setAuthOptionalContent
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setContent
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
@@ -18,7 +18,7 @@ class LoginActivity : AuthOptionalComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (finishIfInvalidAuth()) return
-        setAuthOptionalContent {
+        setContent {
             LoginRouter()
         }
     }
