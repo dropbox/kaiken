@@ -15,6 +15,7 @@ interface AuthAwareScopeOwnerActivity : DependencyProviderResolver, ViewModelSto
 
     val authRequired: Boolean
 
+    @JvmDefault
     fun getViewingUserSelector(): ViewingUserSelector? =
         locateAuthHelper().viewingUserSelector
 
@@ -23,6 +24,7 @@ interface AuthAwareScopeOwnerActivity : DependencyProviderResolver, ViewModelSto
      *
      * [finishIfInvalidAuth] must be called before calling this method.
      */
+    @JvmDefault
     override fun <T> resolveDependencyProvider(): T =
         locateAuthHelper().resolveDependencyProvider()
 
@@ -37,6 +39,7 @@ interface AuthAwareScopeOwnerActivity : DependencyProviderResolver, ViewModelSto
      *
      * @return whether or not the activity has been finished.
      */
+    @JvmDefault
     override fun finishIfInvalidAuth(): Boolean {
         val activity = (this as ComponentActivity)
         val authHelper = locateAuthHelper()

@@ -7,6 +7,7 @@ package com.dropbox.kaiken.scoping
  * to be an [AuthAwareScopeOwnerActivity].
  */
 interface AuthRequiredFragment : AuthAwareScopeOwnerFragment {
+    @JvmDefault
     override val authRequired: Boolean
         get() = true
 }

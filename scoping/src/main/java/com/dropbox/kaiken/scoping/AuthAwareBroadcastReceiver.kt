@@ -16,6 +16,7 @@ interface AuthAwareBroadcastReceiver {
      *
      * Should be called from [BroadcastReceiver#onReceive].
      */
+    @JvmDefault
     fun <T> onReceiveResolveDependencyProvider(context: Context, intent: Intent): T? {
         val scopedServicesProvider = this.locateScopedServicesProvider(context)
         val viewingUserSelector = intent.getViewingUserSelector()
