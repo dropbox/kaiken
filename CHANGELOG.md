@@ -1,4 +1,9 @@
 # Change Log
+
+## Version 2.0.3 *(2022-01-12)
+- compose sample in LoginFragment.kt (#113)
+- Reactive Scoped Services ([#112](https://github.com/dropbox/kaiken/pull/112))
+
 ## Version 2.0.2 *(2021-12-06)*
 - No code changes, improved release process and need to test it
 
