@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -171,7 +172,12 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedCompone
     }
 }
 
-abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, ComponentActivity()
+abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (finishIfInvalidAuth()) return
+    }
+}
 abstract class AuthOptionalComposeActivity : AuthOptionalActivity, AuthAwareScopedComposeActivity()
 abstract class AuthRequiredComposeActivity : AuthRequiredActivity, AuthAwareScopedComposeActivity()
 

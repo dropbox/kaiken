@@ -22,10 +22,15 @@ import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 
 
+// * Navigate to a lot of different activities
+// * Screen that has a lot of properties on model that get modified
+// * Screen that loads data on entry and needs a spinner
+// * Screen with a complex list of things
+// *
+
 class HomeActivity: AuthRequiredComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (finishIfInvalidAuth()) return
         setContent {
             HomeRouter()
         }

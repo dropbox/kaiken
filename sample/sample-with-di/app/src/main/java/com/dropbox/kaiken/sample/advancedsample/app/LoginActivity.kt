@@ -18,7 +18,6 @@ import dagger.Provides
 class LoginActivity : AuthOptionalComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (finishIfInvalidAuth()) return
         setContent {
             LoginRouter()
         }
