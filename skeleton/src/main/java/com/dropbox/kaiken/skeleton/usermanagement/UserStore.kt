@@ -1,5 +1,12 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
+import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.MemoryPolicy
+import com.dropbox.android.external.store4.Store
+import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
+import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.kaiken.skeleton.core.CoroutineScopes
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
@@ -7,9 +14,12 @@ import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 /**
  * Manages the set of authenticated users for an app.
@@ -30,12 +40,27 @@ interface UserStore {
 @ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 class RealUserStore @Inject constructor(
-    @JvmSuppressWildcards private val users: Flow<@JvmSuppressWildcards Set<SkeletonUser>>,
+    private val userMapper: UserMapper,
+    scope: CoroutineScopes
 ) : UserStore {
+
+    @OptIn(ExperimentalTime::class)
+    private val store: Store<Unit, Set<SkeletonUser>> = StoreBuilder.from(
+        Fetcher.ofFlow { _: Unit -> userMapper.users() }
+    )
+        .cachePolicy(
+            MemoryPolicy.builder<Unit, Set<SkeletonUser>>()
+                .setMaxSize(1)
+                .build()
+        )
+        .scope(scope.globalScope)
+        .build()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserEvents(): Flow<UsersEvent> =
-        users
+        store.stream(StoreRequest.fresh(Unit))
+            .filter { it is StoreResponse.Data }
+            .map { it.requireData() }
             .scan(UsersEvent(emptySet())) { prev, next ->
                 val usersRemoved = prev.users.minusById(next)
                 val usersAdded = next.minusById(prev.users)
@@ -45,7 +70,7 @@ class RealUserStore @Inject constructor(
             .drop(1)
 
     override suspend fun getUserById(userId: String): SkeletonUser? {
-        return users.first().firstOrNull { it.userId == userId }
+        return getUserEvents().first().users.firstOrNull { it.userId == userId }
     }
 }
 
@@ -59,6 +84,4 @@ internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<Skele
     return result
 }
 
-interface SkeletonMapper<T> {
-    fun toSkeletonUser(from: T): SkeletonUser
-}
+

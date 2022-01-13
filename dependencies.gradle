@@ -50,6 +50,7 @@ ext.deps = [
         coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
         coroutinesAndroid           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0",
         javaxInject                 : "javax.inject:javax.inject:$versions.javaxInject",
+        store                       : "com.dropbox.mobile.store:store4:4.0.4-KT15",
 
         // UI Libraries
         androidx_fragment           : "androidx.fragment:fragment:$versions.androidxFragment",

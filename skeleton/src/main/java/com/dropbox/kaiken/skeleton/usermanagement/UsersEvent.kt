@@ -9,7 +9,7 @@ data class UsersEvent(
     /**
      * Current users authenticated with the app
      */
-    internal val users: Set<SkeletonUser>,
+    val users: Set<SkeletonUser>,
     /**
      * Any users which have been added since the last state
      */
