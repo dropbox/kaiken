@@ -111,7 +111,6 @@ interface AuthOptionalScreenComponent : Injector {
     parentScope = UserScope::class
 )
 @SingleIn(AuthRequiredScreenScope::class)
-@MergeComponent(AuthOptionalScreenScope::class)
 interface AuthRequiredScreenComponent : Injector {
     @ContributesTo(UserScope::class)
     interface ScreenParentComponent : Injector {

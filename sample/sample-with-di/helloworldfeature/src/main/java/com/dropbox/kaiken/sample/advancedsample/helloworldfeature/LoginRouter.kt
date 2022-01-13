@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.dropbox.common.inject.AuthOptionalScreenScope
@@ -27,6 +28,7 @@ fun LoginRouter() {
                 { userId: String ->
                     val intentFactory = this.cast<LoginScreenComponent>().intentFactory()
                     navController.context.startActivity(intentFactory(navController.context, userId))
+
                 }
             ) { navController.navigate("forgot_password") }
         }

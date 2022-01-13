@@ -3,11 +3,9 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel>(Loading) {
