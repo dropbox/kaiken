@@ -47,7 +47,7 @@ ext.versions = [
 ext.deps = [
         // Other
         kotlinStdLib                : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
-        coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
+        coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0",
         coroutinesAndroid           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0",
         javaxInject                 : "javax.inject:javax.inject:$versions.javaxInject",
 
