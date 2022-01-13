@@ -18,6 +18,8 @@
         </activity>
 
         <activity android:name="com.dropbox.kaiken.sample.advancedsample.app.LoggedInActivity"></activity>
+
+        <activity android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HomeActivity"></activity>
     </application>
 
 </manifest>

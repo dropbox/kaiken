@@ -24,7 +24,10 @@ fun LoginRouter() {
             LoginScreen(
                 presenter.model,
                 { submit: LoginPresenter.Submit -> presenter.events.tryEmit(submit) },
-                this.cast<LoginScreenComponent>().intentFactory()
+                { userId: String ->
+                    val intentFactory = this.cast<LoginScreenComponent>().intentFactory()
+                    navController.context.startActivity(intentFactory(navController.context, userId))
+                }
             ) { navController.navigate("forgot_password") }
         }
         authAwareComposable("forgot_password") { _, presenter: ForgotPasswordPresenter ->
@@ -38,8 +41,7 @@ fun LoginRouter() {
 @Preview
 @Composable
 fun previewLoginScreen() {
-    val intentFactory: @JvmSuppressWildcards (Context, String) -> Intent = { _, _ -> Intent() }
-    LoginScreen(model = LoginPresenter.LoginNeeded, onSubmit = {}, intentFactory = intentFactory) {}
+    LoginScreen(model = LoginPresenter.LoginNeeded, onSubmit = {}, onLoggedInSuccess = {}) {}
 }
 
 @Preview

@@ -29,11 +29,14 @@ import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenComponent
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenComponent
+import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenScope
 import com.dropbox.kaiken.skeleton.scoping.InjectorViewModelFactory
 import com.dropbox.kaiken.skeleton.scoping.cast
+import com.squareup.anvil.annotations.ContributesMultibinding
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -86,7 +89,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authRequiredComposable(
             LocalDResolver.current.resolveDependencyProvider()
 
         val retained = entry.retain { injector.authRequiredScreenComponent() }
-        retainComponentAndSetContent(retained, entry, content)
+        retainAuthedComponentAndSetContent(retained, entry, content)
     }
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
@@ -119,7 +122,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
             val injector: AuthRequiredScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
             val retained = entry.retain { injector.authRequiredScreenComponent() }
-            retainComponentAndSetContent(retained, entry, content)
+            retainAuthedComponentAndSetContent(retained, entry, content)
         } else if (LocalContext.current is AuthOptionalActivity) {
             val injector: AuthOptionalScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
@@ -141,6 +144,25 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
             retained.cast<Presenter.PresenterProvider>().presenters()
                 .filterIsInstance<T>()
                 .first()
+        // if new entry after rotation, call run again
+        LaunchedEffect(presenter, entry) {
+            presenter.cast<Presenter<*, *>>().start()
+        }
+        retained.content(entry, presenter)
+    }
+}
+
+@Composable
+inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedComponentAndSetContent(
+        retained: V,
+        entry: NavBackStackEntry,
+        crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
+) {
+    CompositionLocalProvider(LocalComponent provides retained) {
+        val presenter: T =
+                retained.cast<Presenter.AuthedPresenterProvider>().presenters()
+                        .filterIsInstance<T>()
+                        .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
             presenter.cast<Presenter<*, *>>().start()
@@ -197,6 +219,11 @@ abstract class Presenter<Event, Model>(
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {
+        fun presenters(): Set<BasePresenter>
+    }
+
+    @ContributesTo(AuthRequiredScreenScope::class)
+    interface AuthedPresenterProvider : Injector {
         fun presenters(): Set<BasePresenter>
     }
 }
