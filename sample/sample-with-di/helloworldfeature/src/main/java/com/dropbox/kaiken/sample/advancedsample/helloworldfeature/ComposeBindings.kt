@@ -21,6 +21,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.dropbox.common.inject.AuthOptionalScreenScope
+import com.dropbox.common.inject.AuthRequiredScreenScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorViewModel
@@ -86,7 +87,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authRequiredComposable(
             LocalDResolver.current.resolveDependencyProvider()
 
         val retained = entry.retain { injector.authRequiredScreenComponent() }
-        retainComponentAndSetContent(retained, entry, content)
+        retainAuthedComponentAndSetContent(retained, entry, content)
     }
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
@@ -119,7 +120,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
             val injector: AuthRequiredScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
             val retained = entry.retain { injector.authRequiredScreenComponent() }
-            retainComponentAndSetContent(retained, entry, content)
+            retainAuthedComponentAndSetContent(retained, entry, content)
         } else if (LocalContext.current is AuthOptionalActivity) {
             val injector: AuthOptionalScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
@@ -141,6 +142,25 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
             retained.cast<Presenter.PresenterProvider>().presenters()
                 .filterIsInstance<T>()
                 .first()
+        // if new entry after rotation, call run again
+        LaunchedEffect(presenter, entry) {
+            presenter.cast<Presenter<*, *>>().start()
+        }
+        retained.content(entry, presenter)
+    }
+}
+
+@Composable
+inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedComponentAndSetContent(
+        retained: V,
+        entry: NavBackStackEntry,
+        crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
+) {
+    CompositionLocalProvider(LocalComponent provides retained) {
+        val presenter: T =
+                retained.cast<Presenter.AuthedPresenterProvider>().presenters()
+                        .filterIsInstance<T>()
+                        .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
             presenter.cast<Presenter<*, *>>().start()
@@ -197,6 +217,11 @@ abstract class Presenter<Event, Model>(
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {
+        fun presenters(): Set<BasePresenter>
+    }
+
+    @ContributesTo(AuthRequiredScreenScope::class)
+    interface AuthedPresenterProvider : Injector {
         fun presenters(): Set<BasePresenter>
     }
 }

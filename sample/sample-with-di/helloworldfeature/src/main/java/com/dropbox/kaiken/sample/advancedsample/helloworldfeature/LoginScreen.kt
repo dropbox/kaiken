@@ -62,7 +62,7 @@ class RealLoginPresenter @Inject constructor(
 fun LoginScreen(
     model: LoginPresenter.LoginModel,
     onSubmit: (LoginPresenter.Submit) -> Unit,
-    intentFactory: @JvmSuppressWildcards (Context, String) -> Intent,
+    onLoggedInSuccess: (String) -> Unit,
     onClickForgotPassword: () -> Unit
 ) {
     MaterialTheme {
@@ -72,22 +72,10 @@ fun LoginScreen(
                     loginView(onSubmit, onClickForgotPassword)
                 }
                 is LoginPresenter.LoginSuccess -> {
-                    loggedInActivityLauncher(model, intentFactory)
-                    loginView(onSubmit, onClickForgotPassword)
+                    onLoggedInSuccess(model.userId)
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun loggedInActivityLauncher(
-    model: LoginPresenter.LoginSuccess,
-    intentFactory: @JvmSuppressWildcards (Context, String) -> Intent
-) {
-    val context = LocalContext.current
-    LaunchedEffect(key1 = Unit) {
-        context.startActivity(intentFactory(context, model.userId))
     }
 }
 

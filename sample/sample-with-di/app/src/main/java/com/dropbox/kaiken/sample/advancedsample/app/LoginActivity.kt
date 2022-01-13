@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.AuthOptionalComposeActivity
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HomeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginRouter
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setContent
 import com.dropbox.kaiken.scoping.ViewingUserSelector
@@ -27,7 +28,7 @@ class LoginActivity : AuthOptionalComposeActivity() {
 fun getLaunchIntent(
     context: Context,
     userId: String,
-): Intent = Intent(context, LoggedInActivity::class.java).apply {
+): Intent = Intent(context, HomeActivity::class.java).apply {
     putViewingUserSelector(ViewingUserSelector.fromUserId(userId))
 }
 
