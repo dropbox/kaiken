@@ -5,7 +5,7 @@ import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.usermanagement.SkeletonMapper
-import com.dropbox.kaiken.skeleton.usermanagement.UserMapper
+import com.dropbox.kaiken.skeleton.usermanagement.UserSupplier
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ class RealSkeletonUserMapper : SkeletonMapper<DiSampleUser> {
     }
 }
 
-class RealUserMapper @Inject constructor(private val accountStore: AccountStore, private val mapper: SkeletonMapper<DiSampleUser>) : UserMapper {
+class RealUserSupplier @Inject constructor(private val accountStore: AccountStore, private val mapper: SkeletonMapper<DiSampleUser>) : UserSupplier {
     override fun users(): Flow<Set<SkeletonUser>> =
         accountStore.getAllUsers().map { sampleUsers ->
             sampleUsers.map { diSampleUser ->
@@ -41,7 +41,7 @@ class BindingModule {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideUserMapper(accountStore: AccountStore, mapper: SkeletonMapper<DiSampleUser>): UserMapper {
-        return RealUserMapper(accountStore, mapper)
+    fun provideUserMapper(accountStore: AccountStore, mapper: SkeletonMapper<DiSampleUser>): UserSupplier {
+        return RealUserSupplier(accountStore, mapper)
     }
 }

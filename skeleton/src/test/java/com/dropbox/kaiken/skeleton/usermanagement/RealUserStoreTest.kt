@@ -17,7 +17,7 @@ import org.junit.Test
 class RealUserStoreTest {
 
     private val users = MutableStateFlow(emptySet<SkeletonUser>())
-    private var userMapper = DummyUserMapper(users)
+    private var userMapper = DummyUserSupplier(users)
     private fun createUserStore(scope: CoroutineScope): UserStore = RealUserStore(
         userMapper,
         object :
@@ -137,6 +137,6 @@ class RealUserStoreTest {
     }
 }
 
-open class DummyUserMapper constructor(private val users: Flow<Set<SkeletonUser>>) : UserMapper {
+open class DummyUserSupplier constructor(private val users: Flow<Set<SkeletonUser>>) : UserSupplier {
     override fun users(): Flow<Set<SkeletonUser>> = users
 }

@@ -40,13 +40,13 @@ interface UserStore {
 @ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 class RealUserStore @Inject constructor(
-    private val userMapper: UserMapper,
+    private val userSupplier: UserSupplier,
     scope: CoroutineScopes
 ) : UserStore {
 
     @OptIn(ExperimentalTime::class)
     private val store: Store<Unit, Set<SkeletonUser>> = StoreBuilder.from(
-        Fetcher.ofFlow { _: Unit -> userMapper.users() }
+        Fetcher.ofFlow { _: Unit -> userSupplier.users() }
     )
         .cachePolicy(
             MemoryPolicy.builder<Unit, Set<SkeletonUser>>()
@@ -58,7 +58,7 @@ class RealUserStore @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserEvents(): Flow<UsersEvent> =
-        store.stream(StoreRequest.fresh(Unit))
+        store.stream(StoreRequest.cached(key = Unit, refresh = true))
             .filter { it is StoreResponse.Data }
             .map { it.requireData() }
             .scan(UsersEvent(emptySet())) { prev, next ->
@@ -83,5 +83,3 @@ internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<Skele
     }
     return result
 }
-
-
