@@ -207,7 +207,7 @@ fun AuthAwareScopedComposeActivity.setContent(content: @Composable () -> Unit) {
 
 interface BasePresenter
 
-abstract class Presenter<Event, Model>(
+abstract class Presenter<Event, Model> (
     initialState: Model,
 ) : BasePresenter {
     var model: Model by mutableStateOf(initialState)

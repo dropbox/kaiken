@@ -1,6 +1,7 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.AppScope
