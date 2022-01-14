@@ -26,7 +26,20 @@ import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 // * Screen that has a lot of properties on model that get modified
 // * Screen that loads data on entry and needs a spinner
 // * Screen with a complex list of things
-// *
+// * Something that needs dependencies at a lower level but not at the higher level
+
+// Asks:
+// * How to do navigation and passing objects between screens
+//   * Usually with identifiers querying local entries etc.
+//   * If there's a case where we want to pass a model that's not persisted
+// * How we deal with transient state
+// * How do we handle deeplinks into a compose activity (deep-link will be auth optional to redirect to login)
+// * Theming dark mode
+// * Managing backstack while traversing different activities with different NavGraphs
+// * Verify Receivers, Services, make sure they play well as intended
+// * Activity Transitions (if there's anything new with Compose)
+//  * Potentially cannot transition
+
 
 class HomeActivity: AuthRequiredComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,11 +82,15 @@ fun HomeRouter() {
             }
     ) {
         NavHost(navController = navController, startDestination = "home") {
-            authAwareComposable(Tab.Home.route) { _, presenter: HomePresenter ->
-                HomeScreen(presenter.model)
+            authRequiredComposable(Tab.Home.route) { _, presenter: HomePresenter ->
+                HomeScreen(presenter.model,
+                        { presenter.events.tryEmit(HomePresenter.LoadSomething) }
+                )
             }
-            authAwareComposable(Tab.Settings.route) { _, presenter: HomePresenter ->
-                HomeScreen(presenter.model)
+            authRequiredComposable(Tab.Settings.route) { _, presenter: HomePresenter ->
+                HomeScreen(presenter.model,
+                        { presenter.events.tryEmit(HomePresenter.LoadSomething) }
+                )
             }
         }
     }

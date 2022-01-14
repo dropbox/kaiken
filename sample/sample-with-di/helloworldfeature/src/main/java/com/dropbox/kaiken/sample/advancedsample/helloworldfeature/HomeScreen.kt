@@ -1,40 +1,77 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel>(Loading) {
+abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel>(HomeModel(true)) {
     sealed interface HomeEvent
-    object Loaded: HomeEvent
+    object LoadSomething: HomeEvent
 
-    sealed interface HomeModel
-    object Loading: HomeModel
-    data class UserLoaded(val userId: String, val count: Int): HomeModel
+
+    data class HomeModel(
+            val loading: Boolean,
+            val userId: String = "",
+            val userList: List<String> = listOf())
 }
+
+
 
 @SingleIn(AuthRequiredScreenScope::class)
 @ContributesMultibinding(
         AuthRequiredScreenScope::class,
         boundType = BasePresenter::class
 )
-class RealHomePresenter @Inject constructor() : HomePresenter() {
+class RealHomePresenter @Inject constructor(val userApi: UserApi, val profile: UserProfile) : HomePresenter() {
+    init {
+        model = model.copy(loading = false, userId = profile.name)
+    }
+
     override suspend fun eventHandler(event: HomeEvent) {
         when (event) {
-            is Loaded -> { }
+            is LoadSomething -> {
+                model = model.copy(loading = true)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val list = userApi.getList()
+                    model = model.copy(loading = false, userList = list)
+                }
+            }
         }
     }
 }
 
 @Composable
 fun HomeScreen(
-        model: HomePresenter.HomeModel
+        model: HomePresenter.HomeModel,
+        handleLoadSomething: () -> Boolean,
 ) {
     MaterialTheme {
-        Text(model.toString())
+        if (!model.loading) {
+            Column() {
+                Text("Welcome ${model.userId}")
+                if(model.userList.isNotEmpty()) {
+                    Text("List is here now.")
+                }
+
+                Button(
+                        onClick = { handleLoadSomething() }
+                ) {
+                    Text("Load Something")
+                }
+            }
+        } else {
+            CircularProgressIndicator()
+        }
     }
 }
