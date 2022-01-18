@@ -1,6 +1,12 @@
 # Change Log
 
 ## Version 2.0.3 *(2022-01-12)
+- revert to 1.8 (#129)
+- revert kotlin (#126)
+- Fixes issue with JvmDefault (#125)
+- Update to latest parcelize (#114
+
+## Version 2.0.3 *(2022-01-12)
 - compose sample in LoginFragment.kt (#113)
 - Reactive Scoped Services ([#112](https://github.com/dropbox/kaiken/pull/112))
 
