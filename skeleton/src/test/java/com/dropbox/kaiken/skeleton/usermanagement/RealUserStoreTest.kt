@@ -1,10 +1,13 @@
 package com.dropbox.kaiken.skeleton.usermanagement
 
 import app.cash.turbine.test
+import com.dropbox.kaiken.skeleton.core.CoroutineScopes
 import com.dropbox.kaiken.skeleton.core.SkeletonOauth2
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
@@ -12,14 +15,24 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 @Suppress("DEPRECATION")
 class RealUserStoreTest {
-    private val users = MutableStateFlow(emptySet<SkeletonUser>())
 
-    private fun createUserStore(): UserStore = RealUserStore(users)
+    private val users = MutableStateFlow(emptySet<SkeletonUser>())
+    private var userMapper = DummyUserSupplier(users)
+    private fun createUserStore(scope: CoroutineScope): UserStore = RealUserStore(
+        userMapper,
+        object :
+            CoroutineScopes {
+            override val mainScope: CoroutineScope
+                get() = TODO("Not yet implemented")
+            override val globalScope: CoroutineScope
+                get() = scope
+        }
+    )
 
     @Test
-    fun `GIVEN WHEN THEN`() = runBlockingTest {
+    fun `GIVEN user store WHEN get initial set THEN empty set returned`() = runBlockingTest {
         // GIVEN
-        val userStore = createUserStore()
+        val userStore = createUserStore(this)
 
         // WHEN
         val events = userStore.getUserEvents()
@@ -35,7 +48,7 @@ class RealUserStoreTest {
     @SuppressWarnings
     fun `GIVEN user store WHEN get user events and one user added THEN emit one user`() = runBlockingTest {
         // GIVEN
-        val userStore = createUserStore()
+        val userStore = createUserStore(this)
 
         // WHEN
         val events = userStore.getUserEvents()
@@ -60,7 +73,7 @@ class RealUserStoreTest {
     @Test
     fun `GIVEN user store WHEN get user events and emit and remove user THEN emit one user`() = runBlockingTest {
         // GIVEN
-        val userStore = createUserStore()
+        val userStore = createUserStore(this)
 
         // WHEN
         val events = userStore.getUserEvents()
@@ -86,7 +99,7 @@ class RealUserStoreTest {
     @Test
     fun `GIVEN user store WHEN get user events and add and remove user THEN emit two user events`() = runBlockingTest {
         // GIVEN
-        val userStore = createUserStore()
+        val userStore = createUserStore(this)
 
         // WHEN
         val events = userStore.getUserEvents()
@@ -122,4 +135,8 @@ class RealUserStoreTest {
         val FAKE_USER_ONE = SkeletonUser(FAKE_USER_ID_ONE, FAKE_OAUTH_TOKEN)
         val FAKE_USER_TWO = SkeletonUser(FAKE_USER_ID_TWO, FAKE_OAUTH_TOKEN)
     }
+}
+
+open class DummyUserSupplier constructor(private val users: Flow<Set<SkeletonUser>>) : UserSupplier {
+    override fun users(): Flow<Set<SkeletonUser>> = users
 }

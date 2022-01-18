@@ -9,8 +9,9 @@ dependencies {
     implementation deps.appcompat
     implementation deps.constraint_layout
     implementation deps.javax_inject
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+     implementation deps.coroutinesAndroid
     implementation deps.coroutines
+    implementation deps.store
 
     implementation project(":scoping")
     implementation project(":annotations")

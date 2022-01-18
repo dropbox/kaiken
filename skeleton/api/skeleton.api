@@ -366,17 +366,17 @@ public abstract class com/dropbox/kaiken/skeleton/scoping/UserScope {
 }
 
 public final class com/dropbox/kaiken/skeleton/usermanagement/RealUserStore : com/dropbox/kaiken/skeleton/usermanagement/UserStore {
-	public fun <init> (Lkotlinx/coroutines/flow/Flow;)V
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/usermanagement/UserSupplier;Lcom/dropbox/kaiken/skeleton/core/CoroutineScopes;)V
 	public fun getUserById (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserEvents ()Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class com/dropbox/kaiken/skeleton/usermanagement/RealUserStore_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore_Factory;
 	public fun get ()Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore;
 	public synthetic fun get ()Ljava/lang/Object;
-	public static fun newInstance (Lkotlinx/coroutines/flow/Flow;)Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore;
+	public static fun newInstance (Lcom/dropbox/kaiken/skeleton/usermanagement/UserSupplier;Lcom/dropbox/kaiken/skeleton/core/CoroutineScopes;)Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore;
 }
 
 public abstract interface class com/dropbox/kaiken/skeleton/usermanagement/SkeletonMapper {
@@ -392,16 +392,20 @@ public final class com/dropbox/kaiken/skeleton/usermanagement/UserStoreKt {
 	public static final fun minusById (Ljava/util/Set;Ljava/util/Set;)Ljava/util/Set;
 }
 
+public abstract interface class com/dropbox/kaiken/skeleton/usermanagement/UserSupplier {
+	public abstract fun users ()Lkotlinx/coroutines/flow/Flow;
+}
+
 public final class com/dropbox/kaiken/skeleton/usermanagement/UsersEvent {
 	public fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)V
 	public synthetic fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1$skeleton_release ()Ljava/util/Set;
+	public final fun component1 ()Ljava/util/Set;
 	public final fun component2 ()Ljava/util/Set;
 	public final fun component3 ()Ljava/util/Set;
 	public final fun copy (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;)Lcom/dropbox/kaiken/skeleton/usermanagement/UsersEvent;
 	public static synthetic fun copy$default (Lcom/dropbox/kaiken/skeleton/usermanagement/UsersEvent;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ILjava/lang/Object;)Lcom/dropbox/kaiken/skeleton/usermanagement/UsersEvent;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getUsers$skeleton_release ()Ljava/util/Set;
+	public final fun getUsers ()Ljava/util/Set;
 	public final fun getUsersAdded ()Ljava/util/Set;
 	public final fun getUsersRemoved ()Ljava/util/Set;
 	public fun hashCode ()I
