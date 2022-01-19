@@ -1,26 +1,21 @@
-public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenConfigKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfig_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfig_scope ()Lkotlin/reflect/KClass;
-}
-
-public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_RealCoroutineScopesKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_core_RealCoroutineScopes_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_RealCoroutineScopes_scope ()Lkotlin/reflect/KClass;
-}
-
-public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/usermanagement/Com_dropbox_kaiken_skeleton_usermanagement_RealUserStoreKt {
-	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_RealUserStore_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_RealUserStore_scope ()Lkotlin/reflect/KClass;
-}
-
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_CoroutineScopeBindingsKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutineScopeBindings_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutineScopeBindings_scope ()Lkotlin/reflect/KClass;
 }
 
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_CoroutinesBindingKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutinesBinding_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutinesBinding_scope ()Lkotlin/reflect/KClass;
+}
+
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenAppServicesKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenAppServices_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenAppServices_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenConfigBindingKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfigBinding_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfigBinding_scope ()Lkotlin/reflect/KClass;
 }
 
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenUserServicesKt {
@@ -61,6 +56,11 @@ public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_drop
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_UserParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_scoping_UserParentComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_scoping_UserParentComponent_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/usermanagement/Com_dropbox_kaiken_skeleton_usermanagement_StoreBindingKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_scope ()Lkotlin/reflect/KClass;
 }
 
 public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/scoping/Com_dropbox_kaiken_skeleton_scoping_AppComponentKt {
@@ -146,6 +146,11 @@ public abstract interface class com/dropbox/kaiken/skeleton/core/CoroutineScopes
 	public abstract fun getMainScope ()Lkotlinx/coroutines/CoroutineScope;
 }
 
+public abstract class com/dropbox/kaiken/skeleton/core/CoroutinesBinding {
+	public fun <init> ()V
+	public abstract fun bindCoroutineBinding (Lcom/dropbox/kaiken/skeleton/core/RealCoroutineScopes;)Lcom/dropbox/kaiken/skeleton/core/CoroutineScopes;
+}
+
 public abstract interface class com/dropbox/kaiken/skeleton/core/KaikenAppServices : com/dropbox/kaiken/scoping/AppServices {
 	public abstract fun userStore ()Lcom/dropbox/kaiken/skeleton/usermanagement/UserStore;
 }
@@ -153,6 +158,11 @@ public abstract interface class com/dropbox/kaiken/skeleton/core/KaikenAppServic
 public final class com/dropbox/kaiken/skeleton/core/KaikenConfig : com/dropbox/kaiken/skeleton/core/SkeletonConfig {
 	public fun <init> ()V
 	public fun getScopedServicesFactory ()Lcom/dropbox/kaiken/skeleton/core/AppSpecificScopedServicesFactory;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/core/KaikenConfigBinding {
+	public fun <init> ()V
+	public abstract fun bindKaikenConfigBinding (Lcom/dropbox/kaiken/skeleton/core/KaikenConfig;)Lcom/dropbox/kaiken/skeleton/core/SkeletonConfig;
 }
 
 public final class com/dropbox/kaiken/skeleton/core/KaikenConfig_Factory : dagger/internal/Factory {
@@ -381,6 +391,11 @@ public final class com/dropbox/kaiken/skeleton/usermanagement/RealUserStore_Fact
 
 public abstract interface class com/dropbox/kaiken/skeleton/usermanagement/SkeletonMapper {
 	public abstract fun toSkeletonUser (Ljava/lang/Object;)Lcom/dropbox/kaiken/skeleton/core/SkeletonUser;
+}
+
+public abstract class com/dropbox/kaiken/skeleton/usermanagement/StoreBinding {
+	public fun <init> ()V
+	public abstract fun bindUserStore (Lcom/dropbox/kaiken/skeleton/usermanagement/RealUserStore;)Lcom/dropbox/kaiken/skeleton/usermanagement/UserStore;
 }
 
 public abstract interface class com/dropbox/kaiken/skeleton/usermanagement/UserStore {

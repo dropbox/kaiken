@@ -10,7 +10,9 @@ import com.dropbox.kaiken.skeleton.core.CoroutineScopes
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.squareup.anvil.annotations.ContributesBinding
+import com.squareup.anvil.annotations.ContributesTo
+import dagger.Binds
+import dagger.Module
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.drop
@@ -37,8 +39,6 @@ interface UserStore {
     suspend fun getUserById(userId: String): SkeletonUser?
 }
 
-@ContributesBinding(AppScope::class)
-@SingleIn(AppScope::class)
 class RealUserStore @Inject constructor(
     private val userSupplier: UserSupplier,
     scope: CoroutineScopes
@@ -82,4 +82,12 @@ internal fun Set<SkeletonUser>.minusById(elements: Set<SkeletonUser>): Set<Skele
         }
     }
     return result
+}
+
+@ContributesTo(AppScope::class)
+@Module
+abstract class StoreBinding {
+    @SingleIn(AppScope::class)
+    @Binds
+    abstract fun bindUserStore(real: RealUserStore): UserStore
 }

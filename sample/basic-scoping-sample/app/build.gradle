@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "com.dropbox.kaiken.sample"
         minSdkVersion 21
