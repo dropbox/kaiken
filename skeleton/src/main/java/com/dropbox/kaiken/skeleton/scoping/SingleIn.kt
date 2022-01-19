@@ -17,22 +17,9 @@ import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import dagger.BindsInstance
-import javax.inject.Scope
-import kotlin.reflect.KClass
 
 @OptIn(ExperimentalAnvilApi::class)
 
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class SingleIn(val clazz: KClass<*>)
-
-abstract class SkeletonScope private constructor()
-abstract class AppScope private constructor()
-abstract class UserScope private constructor()
-abstract class AuthRequiredScope private constructor()
-abstract class AuthOptionalScope private constructor()
-abstract class AuthOptionalScreenScope private constructor()
-abstract class AuthRequiredScreenScope private constructor()
 
 inline fun <reified T> Any.cast(): T = this as T
 
