@@ -1,6 +1,9 @@
 # Change Log
 
-## Version 2.0.3 *(2022-01-12)
+## Version 2.0.5 (2022-01-19)
+- Create bindings for modules - https://github.com/dropbox/kaiken/pull/134
+
+## Version 2.0.4 *(2022-01-18)
 - revert to 1.8 (#129)
 - revert kotlin (#126)
 - Fixes issue with JvmDefault (#125)
