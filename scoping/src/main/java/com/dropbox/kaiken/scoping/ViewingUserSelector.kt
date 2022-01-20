@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-private const val BUNDLE_KEY =
-        "com.dropbox.kaiken.skeleton.scoping.VIEWING_USER_SELECTOR_BUNDLE_KEY"
+private const val BUNDLE_KEY = "com.dropbox.kaiken.skeleton.scoping.VIEWING_USER_SELECTOR_BUNDLE_KEY"
 
 private const val DEEP_LINK_EXTRAS = "android-support-nav:controller:deepLinkExtras"
 
@@ -48,8 +47,7 @@ fun Intent.putViewingUserSelector(userSelector: ViewingUserSelector) {
 fun Intent.hasViewingUserSelector() = this.hasExtra(BUNDLE_KEY)
 
 fun Intent.getViewingUserSelector(): ViewingUserSelector? {
-    return extras?.getViewingUserSelector()
-            ?: return getDeepLinkViewingUserSelector()
+    return extras?.getViewingUserSelector() ?: return getDeepLinkViewingUserSelector()
 }
 
 private fun Intent.getDeepLinkViewingUserSelector(): ViewingUserSelector? {
