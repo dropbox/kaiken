@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.skeleton.core.SkeletonAccessToken
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
-import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.usermanagement.SkeletonMapper
 import com.dropbox.kaiken.skeleton.usermanagement.UserSupplier

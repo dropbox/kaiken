@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.core.SkeletonOauth2
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
 import javax.inject.Inject

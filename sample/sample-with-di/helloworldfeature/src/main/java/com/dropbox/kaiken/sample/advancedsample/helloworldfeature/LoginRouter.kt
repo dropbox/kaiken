@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.Injector
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
 

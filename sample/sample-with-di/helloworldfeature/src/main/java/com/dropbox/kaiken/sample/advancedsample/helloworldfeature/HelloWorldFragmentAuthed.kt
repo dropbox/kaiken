@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.dropbox.common.inject.AuthRequiredScope
+import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
@@ -14,9 +16,7 @@ import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.scoping.AuthRequiredComponent
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.squareup.anvil.annotations.ContributesTo
 import javax.inject.Inject
 

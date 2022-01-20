@@ -3,12 +3,12 @@ package com.dropbox.kaiken.sample.advancedsample.app
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.AuthOptionalComposeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginRouter
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setContent
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module

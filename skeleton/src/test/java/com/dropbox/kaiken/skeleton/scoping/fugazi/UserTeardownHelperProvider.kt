@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.skeleton.scoping.fugazi
 
+import com.dropbox.common.inject.AuthRequiredScope
 import com.dropbox.kaiken.scoping.UserTeardownHelper
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScope
 import com.squareup.anvil.annotations.ContributesTo
 
 @ContributesTo(AuthRequiredScope::class)

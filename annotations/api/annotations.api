@@ -1,3 +1,24 @@
+public abstract class com/dropbox/common/inject/AppScope {
+}
+
+public abstract class com/dropbox/common/inject/AuthOptionalScope {
+}
+
+public abstract class com/dropbox/common/inject/AuthOptionalScreenScope {
+}
+
+public abstract class com/dropbox/common/inject/AuthRequiredScope {
+}
+
+public abstract class com/dropbox/common/inject/AuthRequiredScreenScope {
+}
+
+public abstract class com/dropbox/common/inject/SkeletonScope {
+}
+
+public abstract class com/dropbox/common/inject/UserScope {
+}
+
 public abstract interface class com/dropbox/kaiken/Injector {
 }
 
@@ -5,5 +26,9 @@ public abstract interface annotation class com/dropbox/kaiken/annotation/Injecta
 }
 
 public abstract interface annotation class com/dropbox/kaiken/annotation/InternalKaikenApi : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class com/dropbox/kaiken/skeleton/scoping/SingleIn : java/lang/annotation/Annotation {
+	public abstract fun clazz ()Ljava/lang/Class;
 }
 
