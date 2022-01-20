@@ -1,12 +1,12 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
+import com.dropbox.common.inject.AppScope
+import com.dropbox.common.inject.SkeletonScope
+import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
-import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.SkeletonScope
-import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent

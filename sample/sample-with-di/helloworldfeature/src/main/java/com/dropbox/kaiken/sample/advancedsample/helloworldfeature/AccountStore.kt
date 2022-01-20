@@ -1,6 +1,6 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
-import com.dropbox.kaiken.skeleton.scoping.AppScope
+import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow

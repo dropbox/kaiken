@@ -1,11 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
-
-import javax.inject.Scope
-import kotlin.reflect.KClass
-
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class SingleIn(val clazz: KClass<*>)
+package com.dropbox.common.inject
 
 abstract class SkeletonScope private constructor()
 abstract class AppScope private constructor()

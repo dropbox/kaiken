@@ -3,6 +3,13 @@ package com.dropbox.kaiken.skeleton.scoping
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.dropbox.common.inject.AppScope
+import com.dropbox.common.inject.AuthOptionalScope
+import com.dropbox.common.inject.AuthOptionalScreenScope
+import com.dropbox.common.inject.AuthRequiredScope
+import com.dropbox.common.inject.AuthRequiredScreenScope
+import com.dropbox.common.inject.SkeletonScope
+import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
@@ -19,7 +26,6 @@ import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import dagger.BindsInstance
 
 @OptIn(ExperimentalAnvilApi::class)
-
 
 inline fun <reified T> Any.cast(): T = this as T
 

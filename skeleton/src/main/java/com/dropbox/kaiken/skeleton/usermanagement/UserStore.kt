@@ -6,9 +6,9 @@ import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
+import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.skeleton.core.CoroutineScopes
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
-import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds

@@ -1,8 +1,8 @@
 package com.dropbox.kaiken.skeleton.scoping.fugazi
 
+import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.skeleton.core.CoroutineScopes
 import com.dropbox.kaiken.skeleton.core.CoroutinesBinding
-import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds

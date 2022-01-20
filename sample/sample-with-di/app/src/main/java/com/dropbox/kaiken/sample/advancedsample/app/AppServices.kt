@@ -1,11 +1,11 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
+import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealTimeMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
 import com.dropbox.kaiken.scoping.AppTeardownHelper
-import com.dropbox.kaiken.skeleton.scoping.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo

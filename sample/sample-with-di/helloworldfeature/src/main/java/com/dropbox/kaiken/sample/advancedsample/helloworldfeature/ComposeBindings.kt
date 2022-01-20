@@ -20,6 +20,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorViewModel
@@ -30,7 +31,6 @@ import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenComponent
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenComponent
 import com.dropbox.kaiken.skeleton.scoping.InjectorViewModelFactory
 import com.dropbox.kaiken.skeleton.scoping.cast

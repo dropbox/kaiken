@@ -10,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.dropbox.kaiken.skeleton.scoping.AppScope
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenScope
+import com.dropbox.common.inject.AppScope
+import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesMultibinding

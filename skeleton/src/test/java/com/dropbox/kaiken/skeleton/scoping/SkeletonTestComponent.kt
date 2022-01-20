@@ -1,5 +1,7 @@
 package com.dropbox.kaiken.skeleton.scoping
 
+import com.dropbox.common.inject.AppScope
+import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.usermanagement.DummyUserSupplier
 import com.dropbox.kaiken.skeleton.usermanagement.UserSupplier
