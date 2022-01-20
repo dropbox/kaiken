@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 2.0.6 (2022-01-20)
+- Fix an issue with Kotlin 1.6 versions - https://github.com/dropbox/kaiken/pull/138
+- Allow ViewSelector to work with Deep Linking - https://github.com/dropbox/kaiken/pull/139
+- Move SingleIn and other annotations into correct module - https://github.com/dropbox/kaiken/pull/137
+
 ## Version 2.0.5 (2022-01-19)
 - Create bindings for modules - https://github.com/dropbox/kaiken/pull/134
 
