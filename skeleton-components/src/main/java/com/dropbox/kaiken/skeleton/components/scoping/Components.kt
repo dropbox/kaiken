@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.skeleton.scoping
+package com.dropbox.kaiken.skeleton.components.scoping
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -20,14 +20,11 @@ import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import dagger.BindsInstance
-
-@OptIn(ExperimentalAnvilApi::class)
-
-inline fun <reified T> Any.cast(): T = this as T
 
 @ContributesSubcomponent(
     scope = AppScope::class,
