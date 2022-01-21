@@ -5,6 +5,7 @@ include ':runtime'
 include ':scoping'
 include ':scoping-navgraph'
 include ':skeleton'
+include ':skeleton-components'
 include ':testing'
 
 // Samples

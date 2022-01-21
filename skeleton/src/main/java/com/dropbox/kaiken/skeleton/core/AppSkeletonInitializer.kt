@@ -21,15 +21,7 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
     companion object {
         internal lateinit var appSkeleton: AppSkeletonInitializer
 
-        /**
-         * WARNING
-         *
-         * As tempting as it may be. DO NOT ever increase the visibility of this method. No one should be able to
-         * initialize except the Skeleton itself.
-         *
-         * WARNING
-         */
-        internal fun init(
+        fun init(
             component: SdkSpec,
         ): AppSkeletonInitializer {
             check(!this::appSkeleton.isInitialized)

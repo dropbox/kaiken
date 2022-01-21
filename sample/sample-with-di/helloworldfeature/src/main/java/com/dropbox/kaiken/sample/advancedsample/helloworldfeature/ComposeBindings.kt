@@ -30,9 +30,9 @@ import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
-import com.dropbox.kaiken.skeleton.scoping.AuthOptionalScreenComponent
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenComponent
-import com.dropbox.kaiken.skeleton.scoping.InjectorViewModelFactory
+import com.dropbox.kaiken.skeleton.components.scoping.AuthOptionalScreenComponent
+import com.dropbox.kaiken.skeleton.components.scoping.AuthRequiredScreenComponent
+import com.dropbox.kaiken.skeleton.components.scoping.InjectorViewModelFactory
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
 import kotlinx.coroutines.channels.BufferOverflow
