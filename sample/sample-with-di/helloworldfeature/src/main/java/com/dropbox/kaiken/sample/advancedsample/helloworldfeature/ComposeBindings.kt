@@ -145,7 +145,7 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
                 .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
-            presenter.cast<Presenter<*, *>>().start()
+            presenter.cast<Presenter<*, *, *>>().start()
         }
         retained.content(entry, presenter)
     }
@@ -164,7 +164,7 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedCompone
                         .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
-            presenter.cast<Presenter<*, *>>().start()
+            presenter.cast<Presenter<*, *, *>>().start()
         }
         retained.content(entry, presenter)
     }
@@ -205,13 +205,15 @@ fun AuthAwareScopedComposeActivity.setContent(content: @Composable () -> Unit) {
 
 interface BasePresenter
 
-abstract class Presenter<Event, Model> (
+abstract class Presenter<Event, Model, Effect> (
     initialState: Model,
 ) : BasePresenter {
     var model: Model by mutableStateOf(initialState)
 
     val events: MutableSharedFlow<Event> =
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    val effects: MutableSharedFlow<Effect> = MutableSharedFlow(extraBufferCapacity = 1)
 
     suspend fun start() {
         events.collect {
@@ -220,6 +222,10 @@ abstract class Presenter<Event, Model> (
     }
 
     abstract suspend fun eventHandler(event: Event)
+
+    fun emitEffect(effect: Effect) {
+        effects.tryEmit(effect)
+    }
 
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {

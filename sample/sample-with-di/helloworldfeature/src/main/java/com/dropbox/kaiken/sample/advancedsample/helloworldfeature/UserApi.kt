@@ -1,7 +1,7 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.dropbox.kaiken.skeleton.scoping.UserScope
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -17,7 +17,7 @@ class RealUserApi @Inject constructor(
     val userProfile: UserProfile
 ) : UserApi {
     override suspend fun getList(): List<String> {
-        delay(5000)
+        delay(3000)
         return listOf(userProfile.userId)
     }
 }

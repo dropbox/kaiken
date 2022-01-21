@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 abstract class ForgotPasswordPresenter :
-    Presenter<ForgotPasswordPresenter.ForgotEvent, ForgotPasswordPresenter.ForgotModel>(Initial) {
+    Presenter<ForgotPasswordPresenter.ForgotEvent, ForgotPasswordPresenter.ForgotModel, ForgotPasswordPresenter.ForgotEffect>(Initial) {
 
     sealed interface ForgotEvent
     class ForgotSubmit(val email: String) : ForgotEvent
@@ -30,8 +30,9 @@ abstract class ForgotPasswordPresenter :
     sealed interface ForgotModel
     object Initial : ForgotModel
     object ForgotLoading : ForgotModel
-
     class PasswordReset(val display: String) : ForgotModel
+
+    sealed interface ForgotEffect
 }
 
 @SingleIn(AuthOptionalScreenScope::class)

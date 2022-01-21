@@ -6,16 +6,15 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.dropbox.kaiken.skeleton.scoping.AuthRequiredScreenScope
+import com.dropbox.common.inject.AuthRequiredScreenScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel>(HomeModel(true)) {
+abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel, HomePresenter.HomeEffect>(HomeModel(true)) {
     sealed interface HomeEvent
     object LoadSomething: HomeEvent
 
@@ -24,6 +23,8 @@ abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.
             val loading: Boolean,
             val userId: String = "",
             val userList: List<String> = listOf())
+
+    sealed interface HomeEffect
 }
 
 
@@ -33,7 +34,7 @@ abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.
         AuthRequiredScreenScope::class,
         boundType = BasePresenter::class
 )
-class RealHomePresenter @Inject constructor(val userApi: UserApi, val profile: UserProfile) : HomePresenter() {
+class RealHomePresenter @Inject constructor(val userApi: UserApi, profile: UserProfile) : HomePresenter() {
     init {
         model = model.copy(loading = false, userId = profile.name)
     }
