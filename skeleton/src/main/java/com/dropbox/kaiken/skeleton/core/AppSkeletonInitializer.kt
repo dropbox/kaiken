@@ -21,7 +21,6 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
     companion object {
         internal lateinit var appSkeleton: AppSkeletonInitializer
 
-
         fun init(
             component: SdkSpec,
         ): AppSkeletonInitializer {
