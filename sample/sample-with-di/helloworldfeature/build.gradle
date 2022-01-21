@@ -12,6 +12,7 @@ dependencies {
     implementation project(":scoping")
     implementation project(":annotations")
     implementation project(":skeleton")
+    implementation project(":skeleton-components")
     implementation deps.coroutines
 
     api project(":runtime")

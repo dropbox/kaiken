@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.anvil'
+apply plugin: 'com.vanniktech.maven.publish'
+
+dependencies {
+    implementation deps.androidx_fragment
+    implementation deps.appcompat
+    implementation deps.constraint_layout
+    implementation deps.javax_inject
+    implementation deps.coroutinesAndroid
+    implementation deps.coroutines
+    implementation deps.store
+
+    implementation project(":scoping")
+    implementation project(":annotations")
+    implementation project(":skeleton")
+
+    api project(":runtime")
+
+    implementation deps.dagger2
+    kapt deps.dagger2_compiler
+
+    anvil project(":processor")
+    testImplementation deps.kotlintestjunit
+    testImplementation deps.truth
+    testImplementation project(':testing')
+    testImplementation deps.turbine
+    testImplementation deps.coroutinesTest
+    kaptTest deps.dagger2_compiler}
+
+android {
+
+    packagingOptions {
+        exclude 'META-INF/annotations.kotlin_module'
+    }
+}

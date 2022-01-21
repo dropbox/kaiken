@@ -69,6 +69,7 @@ dependencies {
 
     implementation project(":scoping")
     implementation project(":skeleton")
+    implementation project(":skeleton-components")
     implementation project(":scoping-navgraph")
     implementation project(":sample:sample-with-di:helloworldfeature")
 
