@@ -27,7 +27,7 @@ ext.versions = [
         autoservice                 : '1.0.1',
         incap                       : '0.3',
         javapoet                    : '1.13.0',
-        kotlinpooet                 : '1.5.0',
+        kotlinpooet                 : '1.10.2',
         kotlinpoet_interop         : '1.10.2',
 
         // Testing
