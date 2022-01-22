@@ -4,7 +4,6 @@ import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface UserApi {

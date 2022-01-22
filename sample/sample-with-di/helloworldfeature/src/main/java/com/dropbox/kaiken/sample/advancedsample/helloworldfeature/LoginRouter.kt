@@ -26,7 +26,7 @@ fun LoginRouter() {
         authAwareComposable("login") { entry: NavBackStackEntry, presenter: LoginPresenter ->
             LaunchedEffect(presenter.effects) {
                 presenter.effects.collect {
-                    when(it) {
+                    when (it) {
                         is LoginPresenter.LoginSuccessful -> {
                             val intentFactory = this@authAwareComposable.cast<LoginScreenComponent>().intentFactory()
                             navController.context.startActivity(intentFactory(navController.context, it.userId))

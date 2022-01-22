@@ -24,7 +24,6 @@ import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.ExperimentalAnvilApi
-import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 
 @ContributesSubcomponent(

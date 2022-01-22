@@ -25,41 +25,43 @@ fun HomeRouter() {
     val navController = rememberNavController()
     val tabs = listOf(Tab.Home, Tab.Settings)
     Scaffold(
-            bottomBar = {
-                BottomNavigation {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
+        bottomBar = {
+            BottomNavigation {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
 
-                    tabs.forEach { screen ->
-                        BottomNavigationItem(
-                                icon = { Icon(screen.icon, contentDescription = null) },
-                                label = { Text(stringResource(screen.titleId)) },
-                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                                onClick = {
-                                    navController.navigate(screen.route) {
-                                        // Pop up to the start destination of the graph to
-                                        // avoid building up a large stack of destinations
-                                        // on the back stack as users select items
-                                        popUpTo(navController.graph.findStartDestination().id) {}
-                                        // Avoid multiple copies of the same destination when
-                                        // reselecting the same item
-                                        launchSingleTop = true
-                                    }
-                                }
-                        )
-                    }
+                tabs.forEach { screen ->
+                    BottomNavigationItem(
+                        icon = { Icon(screen.icon, contentDescription = null) },
+                        label = { Text(stringResource(screen.titleId)) },
+                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                popUpTo(navController.graph.findStartDestination().id) {}
+                                // Avoid multiple copies of the same destination when
+                                // reselecting the same item
+                                launchSingleTop = true
+                            }
+                        }
+                    )
                 }
             }
+        }
     ) {
         NavHost(navController = navController, startDestination = "home") {
             authRequiredComposable(Tab.Home.route) { _, presenter: HomePresenter ->
-                HomeScreen(presenter.model,
-                        { presenter.events.tryEmit(HomePresenter.LoadSomething) }
+                HomeScreen(
+                    presenter.model,
+                    { presenter.events.tryEmit(HomePresenter.LoadSomething) }
                 )
             }
             authRequiredComposable(Tab.Settings.route) { _, presenter: HomePresenter ->
-                HomeScreen(presenter.model,
-                        { presenter.events.tryEmit(HomePresenter.LoadSomething) }
+                HomeScreen(
+                    presenter.model,
+                    { presenter.events.tryEmit(HomePresenter.LoadSomething) }
                 )
             }
         }

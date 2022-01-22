@@ -153,15 +153,15 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
 
 @Composable
 inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedComponentAndSetContent(
-        retained: V,
-        entry: NavBackStackEntry,
-        crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
+    retained: V,
+    entry: NavBackStackEntry,
+    crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
 ) {
     CompositionLocalProvider(LocalComponent provides retained) {
         val presenter: T =
-                retained.cast<Presenter.AuthedPresenterProvider>().presenters()
-                        .filterIsInstance<T>()
-                        .first()
+            retained.cast<Presenter.AuthedPresenterProvider>().presenters()
+                .filterIsInstance<T>()
+                .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
             presenter.cast<Presenter<*, *, *>>().start()
@@ -176,6 +176,7 @@ abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, Com
         if (finishIfInvalidAuth()) return
     }
 }
+
 abstract class AuthOptionalComposeActivity : AuthOptionalActivity, AuthAwareScopedComposeActivity()
 abstract class AuthRequiredComposeActivity : AuthRequiredActivity, AuthAwareScopedComposeActivity()
 
@@ -205,7 +206,7 @@ fun AuthAwareScopedComposeActivity.setContent(content: @Composable () -> Unit) {
 
 interface BasePresenter
 
-abstract class Presenter<Event, Model, Effect> (
+abstract class Presenter<Event, Model, Effect>(
     initialState: Model,
 ) : BasePresenter {
     var model: Model by mutableStateOf(initialState)
