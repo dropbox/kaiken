@@ -16,23 +16,21 @@ import javax.inject.Inject
 
 abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.HomeModel, HomePresenter.HomeEffect>(HomeModel(true)) {
     sealed interface HomeEvent
-    object LoadSomething: HomeEvent
-
+    object LoadSomething : HomeEvent
 
     data class HomeModel(
-            val loading: Boolean,
-            val userId: String = "",
-            val userList: List<String> = listOf())
+        val loading: Boolean,
+        val userId: String = "",
+        val userList: List<String> = listOf()
+    )
 
     sealed interface HomeEffect
 }
 
-
-
 @SingleIn(AuthRequiredScreenScope::class)
 @ContributesMultibinding(
-        AuthRequiredScreenScope::class,
-        boundType = BasePresenter::class
+    AuthRequiredScreenScope::class,
+    boundType = BasePresenter::class
 )
 class RealHomePresenter @Inject constructor(val userApi: UserApi, profile: UserProfile) : HomePresenter() {
     init {
@@ -54,19 +52,19 @@ class RealHomePresenter @Inject constructor(val userApi: UserApi, profile: UserP
 
 @Composable
 fun HomeScreen(
-        model: HomePresenter.HomeModel,
-        handleLoadSomething: () -> Boolean,
+    model: HomePresenter.HomeModel,
+    handleLoadSomething: () -> Boolean,
 ) {
     MaterialTheme {
         if (!model.loading) {
             Column() {
                 Text("Welcome ${model.userId}")
-                if(model.userList.isNotEmpty()) {
+                if (model.userList.isNotEmpty()) {
                     Text("List is here now.")
                 }
 
                 Button(
-                        onClick = { handleLoadSomething() }
+                    onClick = { handleLoadSomething() }
                 ) {
                     Text("Load Something")
                 }

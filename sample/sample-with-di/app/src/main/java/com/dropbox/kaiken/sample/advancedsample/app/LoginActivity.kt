@@ -29,7 +29,6 @@ fun getLaunchIntent(
     userId: String,
 ): Intent = Intent(context, HomeActivity::class.java).apply {
     putViewingUserSelector(ViewingUserSelector.fromUserId(userId))
-
 }
 
 @ContributesTo(AuthOptionalScreenScope::class)
