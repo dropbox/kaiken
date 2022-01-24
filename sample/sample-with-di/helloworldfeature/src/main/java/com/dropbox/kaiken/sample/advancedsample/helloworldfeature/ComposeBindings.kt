@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.dropbox.common.inject.AuthOptionalScreenScope
+import com.dropbox.common.inject.AuthRequiredScreenScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorViewModel
@@ -86,7 +88,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authRequiredComposable(
             LocalDResolver.current.resolveDependencyProvider()
 
         val retained = entry.retain { injector.authRequiredScreenComponent() }
-        retainComponentAndSetContent(retained, entry, content)
+        retainAuthedComponentAndSetContent(retained, entry, content)
     }
     composable(route, arguments, deepLinks, kaikenAwareContent)
 }
@@ -119,7 +121,7 @@ inline fun <reified T : BasePresenter> NavGraphBuilder.authAwareComposable(
             val injector: AuthRequiredScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
             val retained = entry.retain { injector.authRequiredScreenComponent() }
-            retainComponentAndSetContent(retained, entry, content)
+            retainAuthedComponentAndSetContent(retained, entry, content)
         } else if (LocalContext.current is AuthOptionalActivity) {
             val injector: AuthOptionalScreenComponent.ScreenParentComponent =
                 LocalDResolver.current.resolveDependencyProvider()
@@ -143,13 +145,38 @@ inline fun <reified T : BasePresenter, reified V : Injector> retainComponentAndS
                 .first()
         // if new entry after rotation, call run again
         LaunchedEffect(presenter, entry) {
-            presenter.cast<Presenter<*, *>>().start()
+            presenter.cast<Presenter<*, *, *>>().start()
         }
         retained.content(entry, presenter)
     }
 }
 
-abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, ComponentActivity()
+@Composable
+inline fun <reified T : BasePresenter, reified V : Injector> retainAuthedComponentAndSetContent(
+    retained: V,
+    entry: NavBackStackEntry,
+    crossinline content: @Composable() (V.(NavBackStackEntry, T) -> Unit)
+) {
+    CompositionLocalProvider(LocalComponent provides retained) {
+        val presenter: T =
+            retained.cast<Presenter.AuthedPresenterProvider>().presenters()
+                .filterIsInstance<T>()
+                .first()
+        // if new entry after rotation, call run again
+        LaunchedEffect(presenter, entry) {
+            presenter.cast<Presenter<*, *, *>>().start()
+        }
+        retained.content(entry, presenter)
+    }
+}
+
+abstract class AuthAwareScopedComposeActivity : AuthAwareScopeOwnerActivity, ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (finishIfInvalidAuth()) return
+    }
+}
+
 abstract class AuthOptionalComposeActivity : AuthOptionalActivity, AuthAwareScopedComposeActivity()
 abstract class AuthRequiredComposeActivity : AuthRequiredActivity, AuthAwareScopedComposeActivity()
 
@@ -179,13 +206,15 @@ fun AuthAwareScopedComposeActivity.setContent(content: @Composable () -> Unit) {
 
 interface BasePresenter
 
-abstract class Presenter<Event, Model>(
+abstract class Presenter<Event, Model, Effect>(
     initialState: Model,
 ) : BasePresenter {
     var model: Model by mutableStateOf(initialState)
 
     val events: MutableSharedFlow<Event> =
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    val effects: MutableSharedFlow<Effect> = MutableSharedFlow(extraBufferCapacity = 1)
 
     suspend fun start() {
         events.collect {
@@ -195,8 +224,17 @@ abstract class Presenter<Event, Model>(
 
     abstract suspend fun eventHandler(event: Event)
 
+    fun emitEffect(effect: Effect) {
+        effects.tryEmit(effect)
+    }
+
     @ContributesTo(AuthOptionalScreenScope::class)
     interface PresenterProvider : Injector {
+        fun presenters(): Set<BasePresenter>
+    }
+
+    @ContributesTo(AuthRequiredScreenScope::class)
+    interface AuthedPresenterProvider : Injector {
         fun presenters(): Set<BasePresenter>
     }
 }

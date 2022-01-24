@@ -4,6 +4,7 @@ import android.app.Application
 import com.dropbox.common.inject.AppScope
 import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.common.inject.UserScope
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
