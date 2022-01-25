@@ -80,13 +80,17 @@ subprojects { Project project ->
             }
         }
     }
-}
 
-subprojects {
     apply plugin: 'com.diffplug.gradle.spotless'
     spotless {
         kotlin {
             target 'src/**/*.kt'
         }
+    }
+}
+
+tasks.register("printVersionName") {
+    doLast {
+        println VERSION_NAME
     }
 }
