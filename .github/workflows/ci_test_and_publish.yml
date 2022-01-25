@@ -36,7 +36,7 @@ jobs:
 
       - name: Retrieve version
         run: |
-          echo "VERSION_NAME=$(cat gradle.properties | grep -w "VERSION_NAME" | cut -d'=' -f2)" >> $GITHUB_ENV
+          echo "VERSION_NAME=$(./gradlew -q printVersionName)" >> $GITHUB_ENV
 
       - name: Publish release
         run: ./gradlew closeAndReleaseRepository --no-daemon --no-parallel
