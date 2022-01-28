@@ -19,7 +19,7 @@
 
         <activity android:name="com.dropbox.kaiken.sample.advancedsample.app.LoggedInActivity"></activity>
 
-        <activity android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HomeActivity"></activity>
+        <activity android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.HomeActivity"></activity>
     </application>
 
 </manifest>
