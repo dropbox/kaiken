@@ -2,6 +2,7 @@ package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_exampl
 
 import android.util.Log
 import androidx.annotation.StringRes
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -33,6 +34,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@ExperimentalAnimationApi
 @Composable
 fun HomeRouter() {
     val navController = rememberNavController()

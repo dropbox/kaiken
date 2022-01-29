@@ -1,5 +1,12 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -64,6 +71,7 @@ class RealFormPresenter @Inject constructor() : FormPresenter() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun FormScreen(
     model: FormPresenter.Model,
@@ -72,6 +80,7 @@ fun FormScreen(
     FormScreenInner(model, handleAnswer)
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun FormScreenInner(
     model: FormPresenter.Model,
@@ -87,11 +96,20 @@ fun FormScreenInner(
                 "A wizard's wizard",
                 style = MaterialTheme.typography.h4,
             )
-            when (model.page) {
-                FormPresenter.Page.NAME -> NameQuestionPage(handleEvent)
-                FormPresenter.Page.QUEST -> QuestQuestionPage(handleEvent)
-                FormPresenter.Page.VELOCITY -> VelocityQuestionPage(handleEvent)
-                FormPresenter.Page.CONFIRM_ANSWERS -> ConfirmPage(model)
+            AnimatedContent(
+                targetState = model.page,
+                transitionSpec = {
+                    (slideIntoContainer(towards = AnimatedContentScope.SlideDirection.Right) + fadeIn() with
+                        slideOutOfContainer(towards = AnimatedContentScope.SlideDirection.Right) + fadeOut())
+                        .using(SizeTransform(clip = false))
+                }
+            ) {
+                when (it) {
+                    FormPresenter.Page.NAME -> NameQuestionPage(handleEvent)
+                    FormPresenter.Page.QUEST -> QuestQuestionPage(handleEvent)
+                    FormPresenter.Page.VELOCITY -> VelocityQuestionPage(handleEvent)
+                    FormPresenter.Page.CONFIRM_ANSWERS -> ConfirmPage(model)
+                }
             }
         }
     }
