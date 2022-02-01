@@ -1,12 +1,7 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentScope
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.SizeTransform
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,27 +23,29 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.BasePresenter
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.Presenter
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
+import com.zachklipp.compose.backstack.Backstack
 import javax.inject.Inject
 
-abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Model, FormPresenter.Effect>(Model(Page.NAME)) {
+abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Model, FormPresenter.Effect>(Model(mutableListOf(Page.NAME))) {
     sealed interface Event
     data class AnswerName(val answer: String) : Event
     data class AnswerQuest(val answer: String) : Event
     data class AnswerVelocity(val answer: String) : Event
+    object PopBackstack : Event
     object Submit : Event
 
     data class Model(
-        val page: Page,
+        val backstack: List<Page>,
         val name: String = "",
         val quest: String = "",
         val airspeedVelocity: String = ""
     )
 
-    enum class Page(val order: Int) {
-        NAME(0),
-        QUEST(1),
-        VELOCITY(2),
-        CONFIRM_ANSWERS(3)
+    enum class Page {
+        NAME,
+        QUEST,
+        VELOCITY,
+        CONFIRM_ANSWERS,
     }
 
     sealed interface Effect
@@ -63,10 +60,12 @@ abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Mode
 class RealFormPresenter @Inject constructor() : FormPresenter() {
     override suspend fun eventHandler(event: Event) {
         when (event) {
-            is AnswerName -> model = model.copy(name = event.answer, page = Page.QUEST)
-            is AnswerQuest -> model = model.copy(quest = event.answer, page = Page.VELOCITY)
-            is AnswerVelocity -> model = model.copy(airspeedVelocity = event.answer, page = Page.CONFIRM_ANSWERS)
-            Submit -> { } // do something
+            is AnswerName -> model = model.copy(name = event.answer, backstack = model.backstack + Page.QUEST)
+            is AnswerQuest -> model = model.copy(quest = event.answer, backstack = model.backstack + Page.VELOCITY)
+            is AnswerVelocity -> model = model.copy(airspeedVelocity = event.answer, backstack = model.backstack + Page.CONFIRM_ANSWERS)
+            is PopBackstack -> model = model.copy(backstack = model.backstack.dropLast(1))
+            Submit -> {
+            } // do something
         }
     }
 }
@@ -84,7 +83,7 @@ fun FormScreen(
 @Composable
 fun FormScreenInner(
     model: FormPresenter.Model,
-    handleEvent: (FormPresenter.Event) -> Boolean,
+    handleEvent: (FormPresenter.Event) -> Boolean
 ) {
     MaterialTheme {
         Column(
@@ -96,14 +95,12 @@ fun FormScreenInner(
                 "A wizard's wizard",
                 style = MaterialTheme.typography.h4,
             )
-            AnimatedContent(
-                targetState = model.page,
-                transitionSpec = {
-                    (slideIntoContainer(towards = AnimatedContentScope.SlideDirection.Right) + fadeIn() with
-                        slideOutOfContainer(towards = AnimatedContentScope.SlideDirection.Right) + fadeOut())
-                        .using(SizeTransform(clip = false))
-                }
-            ) {
+
+            if (model.backstack.size > 1) {
+                BackHandler { handleEvent(FormPresenter.PopBackstack) }
+            }
+
+            Backstack(model.backstack) {
                 when (it) {
                     FormPresenter.Page.NAME -> NameQuestionPage(handleEvent)
                     FormPresenter.Page.QUEST -> QuestQuestionPage(handleEvent)
@@ -193,10 +190,12 @@ fun QuestionTemplate(
 @Preview
 @Composable
 fun ConfirmPagePreview() {
-    ConfirmPage(FormPresenter.Model(
-        FormPresenter.Page.CONFIRM_ANSWERS,
-        "John Doe",
-        "To find the holy grail",
-        "I don't know"
-    ))
+    ConfirmPage(
+        FormPresenter.Model(
+            mutableListOf(FormPresenter.Page.CONFIRM_ANSWERS),
+            "John Doe",
+            "To find the holy grail",
+            "I don't know"
+        )
+    )
 }

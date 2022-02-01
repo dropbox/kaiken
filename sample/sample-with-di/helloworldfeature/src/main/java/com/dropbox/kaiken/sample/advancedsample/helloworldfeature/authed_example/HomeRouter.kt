@@ -15,7 +15,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -25,13 +24,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginPresenter
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginScreenComponent
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authRequiredComposable
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
-import com.dropbox.kaiken.skeleton.scoping.cast
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -57,7 +52,7 @@ fun HomeRouter() {
         }
     }
 
-    Scaffold (
+    Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
             BottomNavigation {

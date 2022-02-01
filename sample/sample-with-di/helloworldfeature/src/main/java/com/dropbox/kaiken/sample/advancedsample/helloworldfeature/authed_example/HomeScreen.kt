@@ -1,20 +1,11 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import com.dropbox.common.inject.AuthRequiredScreenScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.BasePresenter
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.Presenter
@@ -38,7 +29,7 @@ abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.
     )
 
     sealed interface HomeEffect
-    object ListSuccessfulSnackbar: HomeEffect
+    object ListSuccessfulSnackbar : HomeEffect
 }
 
 @SingleIn(AuthRequiredScreenScope::class)
@@ -75,9 +66,9 @@ fun HomeScreen(
 
 @Composable
 fun HomeScreenInner(
-   model: HomePresenter.HomeModel,
-   handleLoadSomething: () -> Boolean,
-   handleSnackbarButtonClicked: (String, String) -> Job
+    model: HomePresenter.HomeModel,
+    handleLoadSomething: () -> Boolean,
+    handleSnackbarButtonClicked: (String, String) -> Job
 ) {
     MaterialTheme {
         if (!model.loading) {
