@@ -31,6 +31,12 @@ fun AuthAwareBroadcastReceiver.locateScopedServicesProvider(
 
 private fun ComponentActivity.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
     val viewingUserSelector = intent.getViewingUserSelector()
+
+    KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)
+        ?.let { override ->
+            return override
+        }
+
     val appServicesProvider = locateScopedServicesProvider()
 
     return locateAuthHelperStore(appServicesProvider, viewingUserSelector, authRequired)
@@ -38,6 +44,12 @@ private fun ComponentActivity.locateAuthHelperStore(authRequired: Boolean): Auth
 
 private fun Fragment.locateAuthHelperStore(authRequired: Boolean): AuthHelperStore {
     val viewingUserSelector = arguments?.getViewingUserSelector()
+
+    KaikenScopingTestUtils.getAuthHelperStoreTestOverride(viewingUserSelector)
+        ?.let { override ->
+            return override
+        }
+
     val context = requireActivity()
     val scopedServicesProvider = context.locateScopedServicesProvider()
 
