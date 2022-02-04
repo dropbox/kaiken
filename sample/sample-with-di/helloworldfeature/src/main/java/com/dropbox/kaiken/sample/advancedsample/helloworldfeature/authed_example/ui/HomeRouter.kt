@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui
 
 import android.util.Log
 import androidx.annotation.StringRes
@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authRequiredComposable
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
@@ -82,25 +84,42 @@ fun HomeRouter() {
     ) {
         NavHost(navController = navController, startDestination = "home") {
             authRequiredComposable(Tab.Home.route) { _, presenter: HomePresenter ->
+                LaunchedEffect(presenter.effects) {
+                    presenter.effects.collect {
+                        when (it) {
+                            is HomePresenter.ShowSnackbar -> {
+                                showSnackbar(it.message, it.action)
+                            }
+                        }
+                    }
+                }
+
                 HomeScreen(
                     presenter.model,
-                    { presenter.events.tryEmit(HomePresenter.LoadSomething) },
-                    showSnackbar
+                    { event: HomePresenter.HomeEvent -> presenter.events.tryEmit(event) }
                 )
             }
 
             authRequiredComposable(Tab.Form.route) { _, presenter: FormPresenter ->
+                LaunchedEffect(presenter.effects) {
+                    presenter.effects.collect {
+                        when (it) {
+                            is FormPresenter.ShowSnackbar -> {
+                                showSnackbar(it.message, it.action)
+                            }
+                        }
+                    }
+                }
                 FormScreen(
                     presenter.model,
-                    { event: FormPresenter.Event -> presenter.events.tryEmit(event) },
+                    { event: FormPresenter.Event -> presenter.events.tryEmit(event) }
                 )
             }
 
             authRequiredComposable(Tab.Settings.route) { _, presenter: HomePresenter ->
                 HomeScreen(
                     presenter.model,
-                    { presenter.events.tryEmit(HomePresenter.LoadSomething) },
-                    showSnackbar
+                    { event: HomePresenter.HomeEvent -> presenter.events.tryEmit(event) }
                 )
             }
         }

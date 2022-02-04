@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.dropbox.common.inject.AuthOptionalScreenScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.AuthOptionalComposeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.LoginRouter
-import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.HomeActivity
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.HomeActivity
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.setContent
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.dropbox.kaiken.scoping.putViewingUserSelector

@@ -17,6 +17,16 @@ dependencies {
     implementation deps.composeBackstack
     implementation deps.navigationCompose
 
+    // Example Feature Deps
+    implementation "com.dropbox.mobile.store:store4:4.0.4-kt15"
+
+    kapt "androidx.room:room-compiler:2.4.1"
+    implementation "androidx.room:room-runtime:2.4.1"
+    implementation "androidx.room:room-ktx:2.4.1"
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
     api project(":runtime")
 
     implementation deps.dagger2
