@@ -2,6 +2,8 @@ package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.initializers.UserServicesInitializerProvider
+import com.dropbox.kaiken.skeleton.scoping.cast
 import com.dropbox.kaiken.skeleton.usermanagement.UsersEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,17 +37,22 @@ class KaikenUserServicesProvider(
             userEvents
                 .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
                     val result = prev.toMutableMap()
-                    println(next.toString())
                     next.usersRemoved.forEach { user ->
-                        result.remove(user.userId)?.getUserTeardownHelper()?.teardown()
+                        result.remove(user.userId)
+                                ?.cast<UserServicesInitializerProvider>()
+                                ?.userServicesInitializers
+                                ?.forEach { userServicesInitializer -> userServicesInitializer.userTeardown(user.userId)  }
                     }
 
                     next.usersAdded.forEach { user ->
-                        result[user.userId] =
-                            userServicesFactory(applicationServices, user) as KaikenUserServices
+                        with (userServicesFactory(applicationServices, user) as KaikenUserServices) {
+                            result[user.userId] = this
+                            cast<UserServicesInitializerProvider>()
+                                    .userServicesInitializers
+                                    .forEach { it.initUser(user.userId) }
+                        }
                     }
 
-                    println(result)
                     result
                 }
                 .drop(1)
