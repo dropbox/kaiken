@@ -6,13 +6,10 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldMess
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProviderUser
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
-import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import javax.inject.Inject
 
 // App Services that are need to instance user services
 @ContributesTo(AppScope::class)
@@ -29,11 +26,3 @@ object UserServicesModule {
         RealWorldMessageProviderUser("Hello ${userProfile.name}!")
 }
 
-// You can implement your own teardown logic here.
-@ContributesBinding(UserScope::class)
-@SingleIn(UserScope::class)
-class AnotherNoOpTeardownHelper @Inject constructor() : UserTeardownHelper {
-    override fun teardown() {
-        // No op
-    }
-}

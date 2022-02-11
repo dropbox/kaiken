@@ -22,17 +22,17 @@ class AppSkeletonScopedServices constructor(
                             .forEach { it.init() }
                 }
 
-        override fun provideAppServices(): AppServices = appServices
+    override fun provideAppServices(): AppServices = appServices
 
-        override val userServicesFactory = { appServices: AppServices, user: SkeletonUser ->
-            component.getSkeletonConfig().scopedServicesFactory.createUserServices(
-                    appServices,
-                    user
-            )
-        }
+    override val userServicesFactory = { appServices: AppServices, user: SkeletonUser ->
+        component.getSkeletonConfig().scopedServicesFactory.createUserServices(
+                appServices,
+                user
+        )
+    }
 
-        override lateinit var userServicesProvider: UserServicesProvider
+    override lateinit var userServicesProvider: UserServicesProvider
 
-        override fun provideUserServicesOf(userId: String): UserServices? =
-                userServicesProvider.provideUserServicesOf(userId)
+    override fun provideUserServicesOf(userId: String): UserServices? =
+            userServicesProvider.provideUserServicesOf(userId)
 }
