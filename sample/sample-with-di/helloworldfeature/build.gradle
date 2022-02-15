@@ -27,6 +27,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
+    androidTestImplementation "androidx.test.ext:junit:1.1.4-alpha03"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.0.5"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.0.5"
+
     api project(":runtime")
 
     implementation deps.dagger2
@@ -43,6 +47,8 @@ dependencies {
 android {
     packagingOptions {
         exclude 'META-INF/annotations.kotlin_module'
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
     }
     buildFeatures {
         // Enables Jetpack Compose for this module

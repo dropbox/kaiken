@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.dropbox.kaiken.sample.advancedsample.app.LoginActivity"
+        <activity
+            android:name="com.dropbox.kaiken.sample.advancedsample.app.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +20,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.dropbox.kaiken.sample.advancedsample.app.LoggedInActivity"></activity>
+        <activity
+            android:name="com.dropbox.kaiken.sample.advancedsample.app.LoggedInActivity"
+            android:exported="true" />
 
-        <activity android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.HomeActivity"></activity>
+        <activity
+            android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.HomeActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

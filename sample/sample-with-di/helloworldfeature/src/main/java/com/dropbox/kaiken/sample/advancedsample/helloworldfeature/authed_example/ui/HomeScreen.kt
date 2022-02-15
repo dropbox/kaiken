@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.dropbox.common.inject.AuthRequiredScreenScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.BasePresenter
@@ -112,11 +113,17 @@ fun HomeScreenInner(
                 }
 
                 if (!model.favorites.isEmpty()) {
-                    YourFavorites(model.favorites, Modifier.weight(1f), handleEvent)
+                    YourFavorites(
+                        model.favorites,
+                        Modifier.weight(1f).testTag("Favorites"),
+                        handleEvent,
+                    )
                 }
             }
         } else {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier.testTag("Loading Spinner")
+            )
             handleEvent(HomePresenter.LoadFavorites)
         }
     }
@@ -144,7 +151,9 @@ fun FavoriteFilmRow(
 
     Row(modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)) {
+        .padding(12.dp)
+        .testTag("Favorite")
+    ) {
         IconButton(
             onClick = { handleEvent(HomePresenter.DeleteFavorite(film.id)) },
         ) {
