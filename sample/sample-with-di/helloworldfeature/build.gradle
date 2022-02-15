@@ -17,6 +17,18 @@ dependencies {
     implementation deps.composeBackstack
     implementation deps.navigationCompose
 
+    // Example Feature Deps
+    kapt deps.roomCompiler
+    implementation deps.store
+    implementation deps.roomRuntime
+    implementation deps.roomKtx
+    implementation deps.retrofit
+    implementation deps.retrofitMoshi
+
+    androidTestImplementation deps.androidx_test_ext_junit
+    androidTestImplementation deps.composeUITest
+    debugImplementation deps.composeUITestManifest
+
     api project(":runtime")
 
     implementation deps.dagger2
@@ -33,6 +45,8 @@ dependencies {
 android {
     packagingOptions {
         exclude 'META-INF/annotations.kotlin_module'
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
     }
     buildFeatures {
         // Enables Jetpack Compose for this module

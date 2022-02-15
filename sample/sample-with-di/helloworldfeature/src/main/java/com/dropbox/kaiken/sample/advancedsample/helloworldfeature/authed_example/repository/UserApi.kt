@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.repository
 
 import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile

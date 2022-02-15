@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_tab_title">Home</string>
+    <string name="favorite_films_tab_title">Favorite Films</string>
     <string name="form_tab_title">Simple Form</string>
     <string name="settings_tab_title">Settings</string>
 </resources>

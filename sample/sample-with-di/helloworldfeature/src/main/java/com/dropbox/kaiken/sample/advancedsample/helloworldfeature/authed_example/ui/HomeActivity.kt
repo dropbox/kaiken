@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui
 
 import android.os.Bundle
 import androidx.compose.animation.ExperimentalAnimationApi
