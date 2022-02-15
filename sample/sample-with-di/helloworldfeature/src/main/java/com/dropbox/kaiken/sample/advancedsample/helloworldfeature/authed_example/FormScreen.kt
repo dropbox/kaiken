@@ -26,13 +26,12 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import com.zachklipp.compose.backstack.Backstack
 import javax.inject.Inject
 
-abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Model, FormPresenter.Effect>(Model(mutableListOf(Page.NAME))) {
+abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Model, FormPresenter.Effect>(Model(listOf(Page.NAME))) {
     sealed interface Event
     data class AnswerName(val answer: String) : Event
     data class AnswerQuest(val answer: String) : Event
     data class AnswerVelocity(val answer: String) : Event
     object PopBackstack : Event
-    object Submit : Event
 
     data class Model(
         val backstack: List<Page>,
@@ -64,8 +63,6 @@ class RealFormPresenter @Inject constructor() : FormPresenter() {
             is AnswerQuest -> model = model.copy(quest = event.answer, backstack = model.backstack + Page.VELOCITY)
             is AnswerVelocity -> model = model.copy(airspeedVelocity = event.answer, backstack = model.backstack + Page.CONFIRM_ANSWERS)
             is PopBackstack -> model = model.copy(backstack = model.backstack.dropLast(1))
-            Submit -> {
-            } // do something
         }
     }
 }
@@ -74,16 +71,7 @@ class RealFormPresenter @Inject constructor() : FormPresenter() {
 @Composable
 fun FormScreen(
     model: FormPresenter.Model,
-    handleAnswer: (FormPresenter.Event) -> Boolean,
-) {
-    FormScreenInner(model, handleAnswer)
-}
-
-@ExperimentalAnimationApi
-@Composable
-fun FormScreenInner(
-    model: FormPresenter.Model,
-    handleEvent: (FormPresenter.Event) -> Boolean
+    handleEvent: (FormPresenter.Event) -> Boolean,
 ) {
     MaterialTheme {
         Column(
@@ -117,8 +105,8 @@ fun NameQuestionPage(
     handleEvent: (FormPresenter.Event) -> Boolean,
 ) {
     QuestionTemplate(
-        "What is your name?",
-        "Submit"
+        question = "What is your name?",
+        buttonText = "Submit",
     ) {
         handleEvent(FormPresenter.AnswerName(it))
     }
@@ -129,8 +117,8 @@ fun QuestQuestionPage(
     handleEvent: (FormPresenter.Event) -> Boolean,
 ) {
     QuestionTemplate(
-        "What is your quest?",
-        "Submit"
+        question = "What is your quest?",
+        buttonText = "Submit",
     ) {
         handleEvent(FormPresenter.AnswerQuest(it))
     }
@@ -141,8 +129,8 @@ fun VelocityQuestionPage(
     handleEvent: (FormPresenter.Event) -> Boolean,
 ) {
     QuestionTemplate(
-        "What is the airspeed velocity of an unladen swallow?",
-        "Submit"
+        question = "What is the airspeed velocity of an unladen swallow?",
+        buttonText = "Submit",
     ) {
         handleEvent(FormPresenter.AnswerVelocity(it))
     }

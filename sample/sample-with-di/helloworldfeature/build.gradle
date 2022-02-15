@@ -14,7 +14,8 @@ dependencies {
     implementation project(":skeleton")
     implementation project(":skeleton-components")
     implementation deps.coroutines
-    implementation "com.zachklipp:compose-backstack:0.9.0+1.0.0-beta07"
+    implementation deps.composeBackstack
+    implementation deps.navigationCompose
 
     api project(":runtime")
 
@@ -27,8 +28,6 @@ dependencies {
     api deps.composeActivity
     api deps.composeMaterial
     api deps.composeTooling
-
-    implementation "androidx.navigation:navigation-compose:2.4.0-beta02"
 }
 
 android {
