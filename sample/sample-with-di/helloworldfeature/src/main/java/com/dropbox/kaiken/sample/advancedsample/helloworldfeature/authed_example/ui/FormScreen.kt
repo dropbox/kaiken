@@ -48,9 +48,6 @@ abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Mode
     data class AnswerName(val answer: String) : Event
     data class AnswerQuest(val answer: String) : Event
     data class AnswerVelocity(val answer: String) : Event
-    data class AddFilm(val title: String) : Event
-    data class AddFavorite(val id: String) : Event
-    object LoadFilms : Event
     object PopBackstack : Event
     object SkipFilms : Event
 
@@ -66,7 +63,6 @@ abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Mode
         NAME,
         QUEST,
         VELOCITY,
-        FILMS,
         CONFIRM_ANSWERS,
     }
 
@@ -79,43 +75,15 @@ abstract class FormPresenter : Presenter<FormPresenter.Event, FormPresenter.Mode
     AuthRequiredScreenScope::class,
     boundType = BasePresenter::class
 )
-class RealFormPresenter @Inject constructor(
-    val ghibliRepository: GhibliRepository,
-    val favoritesRepository: FavoritesRepository
-) : FormPresenter() {
+class RealFormPresenter @Inject constructor() : FormPresenter() {
     override suspend fun eventHandler(event: Event) {
         when (event) {
             is AnswerName -> model = model.copy(name = event.answer, backstack = model.backstack + Page.QUEST)
             is AnswerQuest -> model = model.copy(quest = event.answer, backstack = model.backstack + Page.VELOCITY)
-            is AnswerVelocity -> model = model.copy(airspeedVelocity = event.answer, backstack = model.backstack + Page.FILMS)
+            is AnswerVelocity -> model = model.copy(airspeedVelocity = event.answer, backstack = model.backstack + Page.CONFIRM_ANSWERS)
             is PopBackstack -> model = model.copy(backstack = model.backstack.dropLast(1))
-            is AddFilm -> addFilm(event.title)
-            is AddFavorite -> addFavorite(event.id)
             PopBackstack -> model = model.copy(backstack = model.backstack.dropLast(1))
-            LoadFilms -> loadFilms()
             SkipFilms -> model = model.copy(backstack = model.backstack + Page.CONFIRM_ANSWERS)
-        }
-    }
-
-    private fun loadFilms() {
-        CoroutineScope(Dispatchers.IO).launch {
-            ghibliRepository.fetchFilms().collect {
-                model = model.copy(films = it)
-            }
-        }
-    }
-
-    private suspend fun addFilm(title: String) = withContext(Dispatchers.IO) {
-        ghibliRepository.addFilm(Film("123", title, "", ""))
-        CoroutineScope(Dispatchers.Main).launch {
-            emitEffect(ShowSnackbar("New film added!", "OK"))
-        }
-    }
-
-    private suspend fun addFavorite(id: String) = withContext(Dispatchers.IO) {
-        favoritesRepository.addFavorite(Favorite(id))
-        CoroutineScope(Dispatchers.Main).launch {
-            emitEffect(ShowSnackbar("Favorite added!", "OK"))
         }
     }
 }
@@ -146,7 +114,6 @@ fun FormScreen(
                     FormPresenter.Page.NAME -> NameQuestionPage(model.name, handleEvent)
                     FormPresenter.Page.QUEST -> QuestQuestionPage(model.quest, handleEvent)
                     FormPresenter.Page.VELOCITY -> VelocityQuestionPage(model.airspeedVelocity, handleEvent)
-                    FormPresenter.Page.FILMS -> FilmsPage(model.films, handleEvent)
                     FormPresenter.Page.CONFIRM_ANSWERS -> ConfirmPage(model)
                 }
             }
@@ -193,73 +160,6 @@ fun VelocityQuestionPage(
         defaultValue = velocity,
     ) {
         handleEvent(FormPresenter.AnswerVelocity(it))
-    }
-}
-
-@Composable
-fun FilmsPage(
-    films: List<Film>,
-    handleEvent: (FormPresenter.Event) -> Boolean,
-) {
-    if (films.isEmpty()) {
-        CircularProgressIndicator()
-        handleEvent(FormPresenter.LoadFilms)
-    } else {
-        var newFilmTitle by remember { mutableStateOf("") }
-
-        Column {
-            LazyColumn(Modifier.weight(1f)) {
-                films.forEach {
-                    item { FilmRow(it, handleEvent) }
-                }
-            }
-
-            TextField(value = newFilmTitle, onValueChange = { newFilmTitle = it })
-
-            Row(
-                modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 48.dp),
-            ) {
-                Button(
-                    modifier = Modifier.padding(24.dp, 0.dp),
-                    onClick = { handleEvent(FormPresenter.AddFilm(newFilmTitle)) },
-                ) {
-                    Text("Add Film")
-                }
-
-                Button(
-                    onClick = { handleEvent(FormPresenter.SkipFilms) },
-                ) {
-                    Text("Skip")
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun FilmRow(
-    film: Film,
-    handleEvent: (FormPresenter.Event) -> Boolean
-) {
-    val textModifier = Modifier.padding(12.dp, 0.dp)
-
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp)) {
-        IconButton(
-            onClick = { handleEvent(FormPresenter.AddFavorite(film.id)) },
-        ) {
-            Icon(Icons.Filled.Add, "Add Favorite")
-        }
-        Column {
-            Text(modifier = textModifier, text = film.title)
-            Row {
-                Text(modifier = textModifier, text = film.releaseDate)
-                Text(modifier = textModifier, text = film.description)
-
-            }
-        }
-
     }
 }
 

@@ -18,18 +18,16 @@ dependencies {
     implementation deps.navigationCompose
 
     // Example Feature Deps
-    implementation "com.dropbox.mobile.store:store4:4.0.4-kt15"
+    kapt deps.roomCompiler
+    implementation deps.store
+    implementation deps.roomRuntime
+    implementation deps.roomKtx
+    implementation deps.retrofit
+    implementation deps.retrofitMoshi
 
-    kapt "androidx.room:room-compiler:2.4.1"
-    implementation "androidx.room:room-runtime:2.4.1"
-    implementation "androidx.room:room-ktx:2.4.1"
-
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
-
-    androidTestImplementation "androidx.test.ext:junit:1.1.4-alpha03"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.0.5"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.0.5"
+    androidTestImplementation deps.androidx_test_ext_junit
+    androidTestImplementation deps.composeUITest
+    debugImplementation deps.composeUITestManifest
 
     api project(":runtime")
 
