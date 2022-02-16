@@ -9,18 +9,18 @@ import com.dropbox.kaiken.skeleton.initializers.AppInitializerProvider
 import com.dropbox.kaiken.skeleton.scoping.cast
 
 class AppSkeletonScopedServices constructor(
-    override val component: SdkSpec
+        override val component: SdkSpec
 ) : SkeletonScopedServices {
 
     private val appServices: AppServices = component.getSkeletonConfig()
-                .scopedServicesFactory
-                .createAppServices(
-                        component
-                ).also {
-                    it.cast<AppInitializerProvider>()
-                            .appServicesInitializers
-                            .forEach { it.init() }
-                }
+            .scopedServicesFactory
+            .createAppServices(
+                    component
+            ).also {
+                it.cast<AppInitializerProvider>()
+                        .appServicesInitializers
+                        .forEach { it.init() }
+            }
 
     override fun provideAppServices(): AppServices = appServices
 

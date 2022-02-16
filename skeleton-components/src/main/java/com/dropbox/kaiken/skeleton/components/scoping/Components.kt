@@ -28,7 +28,7 @@ import dagger.BindsInstance
 
 @ContributesSubcomponent(
     scope = AppScope::class,
-    parentScope = SkeletonScope::class
+    parentScope = SkeletonScope::class,
 )
 @SingleIn(AppScope::class)
 @OptIn(ExperimentalAnvilApi::class)

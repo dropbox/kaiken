@@ -41,8 +41,8 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    @Ignore("fix before merging")
-    fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = runBlockingTest {
+    @Ignore("Need to investigate further")
+    fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = coroutineScope.runBlockingTest {
         // GIVEN
         var userFactoryCounter = 0
         val fakeUserServices = DummyUserServices()

@@ -6,7 +6,6 @@ import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
 import javax.inject.Inject
 
-
 @ContributesMultibinding(UserScope::class)
 @SingleIn(UserScope::class)
 class FakeSkeletonUserInitializer @Inject constructor() : UserServicesInitializer {

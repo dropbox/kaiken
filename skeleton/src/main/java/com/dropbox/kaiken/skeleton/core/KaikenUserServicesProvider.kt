@@ -5,6 +5,7 @@ import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.initializers.UserServicesInitializerProvider
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.dropbox.kaiken.skeleton.usermanagement.UsersEvent
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -15,8 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 /**
  * Skeleton implementation of [SkeletonUserServicesProvider] that registers itself with a [UserStore].
@@ -24,19 +23,20 @@ import kotlinx.coroutines.sync.withLock
  */
 @OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
 class KaikenUserServicesProvider(
-    private val applicationServices: AppServices,
-    private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
-    userEvents: Flow<UsersEvent>,
-    coroutineScope: CoroutineScope,
+        private val applicationServices: AppServices,
+        private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
+        userEvents: Flow<UsersEvent>,
+        coroutineScope: CoroutineScope,
 ) : SkeletonUserServicesProvider {
     private var userServices: Map<String, KaikenUserServices> = emptyMap()
-    private val mutex = Mutex(true)
+    private val lock = CompletableDeferred<Unit>()
 
     init {
         coroutineScope.launch {
             userEvents
                 .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
                     val result = prev.toMutableMap()
+
                     next.usersRemoved.forEach { user ->
                         result.remove(user.userId)
                                 ?.cast<UserServicesInitializerProvider>()
@@ -49,7 +49,9 @@ class KaikenUserServicesProvider(
                             result[user.userId] = this
                             cast<UserServicesInitializerProvider>()
                                     .userServicesInitializers
-                                    .forEach { it.initUser(user.userId) }
+                                    .forEach {
+                                        it.initUser(user.userId)
+                                    }
                         }
                     }
 
@@ -58,21 +60,20 @@ class KaikenUserServicesProvider(
                 .drop(1)
                 .onEach {
                     userServices = it
-                    if (mutex.isLocked) {
-                        mutex.unlock()
-                    }
+                    lock.complete(Unit)
                 }
                 .collect()
         }
     }
 
     override fun provideUserServicesOf(userId: String): UserServices? =
-        runBlocking {
-            provideUserServices(userId)
-        }
+            runBlocking {
+                provideUserServices(userId)
+            }
 
-    suspend fun provideUserServices(userId: String): UserServices? =
-        mutex.withLock {
-            userServices[userId]
-        }
+    suspend fun provideUserServices(userId: String): UserServices? {
+        lock.await()
+        return userServices[userId]
+    }
+
 }

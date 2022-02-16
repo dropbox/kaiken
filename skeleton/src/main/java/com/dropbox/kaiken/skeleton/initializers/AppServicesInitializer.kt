@@ -2,9 +2,10 @@ package com.dropbox.kaiken.skeleton.initializers
 
 import com.dropbox.common.inject.AppScope
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.squareup.anvil.annotations.ContributesMultibinding
-import com.squareup.anvil.annotations.ContributesTo
-import javax.inject.Inject
+import dagger.Component
+import dagger.Module
+import dagger.Provides
+import dagger.multibindings.ElementsIntoSet
 
 /**
  * Interface to use when you have a component which you want to be called
@@ -29,16 +30,15 @@ interface AppServicesInitializer {
     fun init()
 }
 
-@ContributesTo(AppScope::class)
+@Component(modules = [AppServicesInitializerModule::class])
+@SingleIn(AppScope::class)
 interface AppInitializerProvider {
     val appServicesInitializers: Set<AppServicesInitializer>
 }
 
-// Dagger expects at least one item in the Multibinding, so add this and we'll call it.
-@ContributesMultibinding(AppScope::class)
-@SingleIn(AppScope::class)
-class NoOpAppServicesInitializer @Inject constructor() : AppServicesInitializer{
-    override fun init() {
-        // no op
-    }
+@Module
+class AppServicesInitializerModule {
+    @Provides
+    @ElementsIntoSet
+    fun primeEmptyAppInits() = emptySet<AppServicesInitializer>()
 }
