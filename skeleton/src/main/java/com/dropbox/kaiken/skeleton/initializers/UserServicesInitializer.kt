@@ -1,8 +1,7 @@
 package com.dropbox.kaiken.skeleton.initializers
 
 import com.dropbox.common.inject.UserScope
-import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import dagger.Component
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ElementsIntoSet
@@ -35,13 +34,14 @@ interface UserServicesInitializer {
     fun userTeardown(userId: String)
 }
 
-@Component(modules = [UserServicesInitializerModule::class])
-@SingleIn(UserScope::class)
+@ContributesTo(UserScope::class)
 interface UserServicesInitializerProvider {
     val userServicesInitializers: Set<UserServicesInitializer>
 }
 
+// Dagger expects at least one contributor, so we give it an empty set.
 @Module
+@ContributesTo(UserScope::class)
 class UserServicesInitializerModule {
     @Provides
     @ElementsIntoSet

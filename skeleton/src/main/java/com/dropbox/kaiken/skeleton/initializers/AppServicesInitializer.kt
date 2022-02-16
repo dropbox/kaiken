@@ -1,8 +1,7 @@
 package com.dropbox.kaiken.skeleton.initializers
 
 import com.dropbox.common.inject.AppScope
-import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import dagger.Component
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ElementsIntoSet
@@ -30,13 +29,14 @@ interface AppServicesInitializer {
     fun init()
 }
 
-@Component(modules = [AppServicesInitializerModule::class])
-@SingleIn(AppScope::class)
+@ContributesTo(AppScope::class)
 interface AppInitializerProvider {
     val appServicesInitializers: Set<AppServicesInitializer>
 }
 
+// Dagger expects at least one contributor, so we give it an empty set.
 @Module
+@ContributesTo(AppScope::class)
 class AppServicesInitializerModule {
     @Provides
     @ElementsIntoSet
