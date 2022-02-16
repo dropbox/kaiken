@@ -25,4 +25,3 @@ object UserServicesModule {
     fun provideHelloWorldMessageProvider(userProfile: UserProfile): HelloWorldMessageProviderUser =
         RealWorldMessageProviderUser("Hello ${userProfile.name}!")
 }
-

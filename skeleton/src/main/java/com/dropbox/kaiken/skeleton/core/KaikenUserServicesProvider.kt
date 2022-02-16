@@ -23,10 +23,10 @@ import kotlinx.coroutines.runBlocking
  */
 @OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
 class KaikenUserServicesProvider(
-        private val applicationServices: AppServices,
-        private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
-        userEvents: Flow<UsersEvent>,
-        coroutineScope: CoroutineScope,
+    private val applicationServices: AppServices,
+    private val userServicesFactory: (AppServices, SkeletonUser) -> UserServices,
+    userEvents: Flow<UsersEvent>,
+    coroutineScope: CoroutineScope,
 ) : SkeletonUserServicesProvider {
     private var userServices: Map<String, KaikenUserServices> = emptyMap()
     private val lock = CompletableDeferred<Unit>()
@@ -39,19 +39,19 @@ class KaikenUserServicesProvider(
 
                     next.usersRemoved.forEach { user ->
                         result.remove(user.userId)
-                                ?.cast<UserServicesInitializerProvider>()
-                                ?.userServicesInitializers
-                                ?.forEach { userServicesInitializer -> userServicesInitializer.userTeardown(user.userId)  }
+                            ?.cast<UserServicesInitializerProvider>()
+                            ?.userServicesInitializers
+                            ?.forEach { userServicesInitializer -> userServicesInitializer.userTeardown(user.userId) }
                     }
 
                     next.usersAdded.forEach { user ->
-                        with (userServicesFactory(applicationServices, user) as KaikenUserServices) {
+                        with(userServicesFactory(applicationServices, user) as KaikenUserServices) {
                             result[user.userId] = this
                             cast<UserServicesInitializerProvider>()
-                                    .userServicesInitializers
-                                    .forEach {
-                                        it.initUser(user.userId)
-                                    }
+                                .userServicesInitializers
+                                .forEach {
+                                    it.initUser(user.userId)
+                                }
                         }
                     }
 
@@ -67,13 +67,12 @@ class KaikenUserServicesProvider(
     }
 
     override fun provideUserServicesOf(userId: String): UserServices? =
-            runBlocking {
-                provideUserServices(userId)
-            }
+        runBlocking {
+            provideUserServices(userId)
+        }
 
     suspend fun provideUserServices(userId: String): UserServices? {
         lock.await()
         return userServices[userId]
     }
-
 }
