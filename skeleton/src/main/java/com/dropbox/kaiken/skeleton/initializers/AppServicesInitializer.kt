@@ -24,9 +24,14 @@ import dagger.multibindings.ElementsIntoSet
  */
 interface AppServicesInitializer {
     /**
-     * Called when the app is started
+     * Called when app services is initialized
      */
     fun init()
+
+    /**
+     * Called when the app is torn down
+     */
+    fun teardown()
 }
 
 @ContributesTo(AppScope::class)
