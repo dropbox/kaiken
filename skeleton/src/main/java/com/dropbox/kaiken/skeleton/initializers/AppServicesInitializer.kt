@@ -27,11 +27,6 @@ interface AppServicesInitializer {
      * Called when app services is initialized
      */
     fun init()
-
-    /**
-     * Called when the app is torn down
-     */
-    fun teardown()
 }
 
 @ContributesTo(AppScope::class)
