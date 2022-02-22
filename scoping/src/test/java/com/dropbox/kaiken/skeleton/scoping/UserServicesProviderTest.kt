@@ -2,7 +2,6 @@ package com.dropbox.kaiken.skeleton.scoping
 
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.scoping.UserServicesProvider
-import com.dropbox.kaiken.scoping.UserTeardownHelper
 import com.dropbox.kaiken.scoping.ViewingUserSelector
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
@@ -45,8 +44,4 @@ private class FakeUserServicesProvider : UserServicesProvider {
     }
 }
 
-private class FakeUserServices : UserServices {
-    override fun getUserTeardownHelper(): UserTeardownHelper {
-        TODO("Not yet implemented")
-    }
-}
+private class FakeUserServices : UserServices

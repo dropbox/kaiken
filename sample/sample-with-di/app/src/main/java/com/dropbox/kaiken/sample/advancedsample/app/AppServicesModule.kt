@@ -5,13 +5,10 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.HelloWorldMess
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealTimeMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.RealWorldMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
-import com.dropbox.kaiken.scoping.AppTeardownHelper
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
-import com.squareup.anvil.annotations.ContributesBinding
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import javax.inject.Inject
 
 @Module
 @ContributesTo(AppScope::class)
@@ -24,13 +21,4 @@ object AppServicesModule {
     @Provides
     @SingleIn(AppScope::class)
     fun provideTimeMessageProvider(): TimeMessageProvider = RealTimeMessageProvider()
-}
-
-// You can implement your own teardown logic here.
-@ContributesBinding(AppScope::class)
-@SingleIn(AppScope::class)
-class NoOpTeardownHelper @Inject constructor() : AppTeardownHelper {
-    override fun teardown() {
-        // No op
-    }
 }

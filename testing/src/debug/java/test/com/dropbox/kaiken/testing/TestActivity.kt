@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.ScopedServicesProvider
 import com.dropbox.kaiken.scoping.UserServices
-import com.dropbox.kaiken.scoping.UserTeardownHelper
 
 abstract class TestActivity : AppCompatActivity() {
     override fun getApplicationContext(): Context {
@@ -27,14 +26,10 @@ class TestApplicationContext(baseApplicationContext: Context) :
 }
 
 class TestAppServices : AppServices, MyDependencies {
-    override fun getTeardownHelper() = error("Should not be called")
     override fun helloWorldGreeter() = noAuthHelloWorldSayer
 }
 
 private class TestUserServices : UserServices, MyDependencies {
-    override fun getUserTeardownHelper(): UserTeardownHelper {
-        TODO("Not yet implemented")
-    }
     override fun helloWorldGreeter() = userScopedHelloWorldSayer
 }
 

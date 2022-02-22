@@ -6,6 +6,8 @@ import com.dropbox.kaiken.skeleton.components.scoping.AppComponent
 import com.dropbox.kaiken.skeleton.core.KaikenConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonAccessTokenPair
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
+import com.dropbox.kaiken.skeleton.initializers.AppInitializerProvider
+import com.dropbox.kaiken.skeleton.scoping.fugazi.FakeSkeletonAppInitializer
 import com.dropbox.kaiken.skeleton.scoping.fugazi.FakeSkeletonOwner
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
@@ -22,6 +24,9 @@ class SkeletonOwnerTests {
             appServices, SkeletonUser("1", SkeletonAccessTokenPair("1", "1"))
         )
         assertThat(userServices).isNotNull()
+
+        val fakeAppInit = appServices.cast<AppInitializerProvider>().appServicesInitializers.filterIsInstance<FakeSkeletonAppInitializer>().first()
+        assertThat(fakeAppInit.initCalled).isEqualTo(1)
     }
 
     @Test

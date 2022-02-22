@@ -23,6 +23,26 @@ public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/dagger/Com_dropb
 	public static final fun getCom_dropbox_kaiken_skeleton_dagger_SdkSpec_scope ()Lkotlin/reflect/KClass;
 }
 
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_AppInitializerProviderKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppInitializerProvider_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppInitializerProvider_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModuleKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModule_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModule_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModuleKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModule_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModule_scope ()Lkotlin/reflect/KClass;
+}
+
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProviderKt {
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProvider_reference ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProvider_scope ()Lkotlin/reflect/KClass;
+}
+
 public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/usermanagement/Com_dropbox_kaiken_skeleton_usermanagement_StoreBindingKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_scope ()Lkotlin/reflect/KClass;
@@ -58,7 +78,6 @@ public final class com/dropbox/kaiken/skeleton/core/AppSkeletonInitializer$Compa
 public final class com/dropbox/kaiken/skeleton/core/AppSkeletonScopedServices : com/dropbox/kaiken/skeleton/dependencymanagement/SkeletonScopedServices {
 	public field userServicesProvider Lcom/dropbox/kaiken/scoping/UserServicesProvider;
 	public fun <init> (Lcom/dropbox/kaiken/skeleton/dagger/SdkSpec;)V
-	public final fun getAppServices ()Lcom/dropbox/kaiken/scoping/AppServices;
 	public fun getComponent ()Lcom/dropbox/kaiken/skeleton/dagger/SdkSpec;
 	public fun getUserServicesFactory ()Lkotlin/jvm/functions/Function2;
 	public fun getUserServicesProvider ()Lcom/dropbox/kaiken/scoping/UserServicesProvider;
@@ -193,6 +212,49 @@ public abstract interface class com/dropbox/kaiken/skeleton/dependencymanagement
 
 public final class com/dropbox/kaiken/skeleton/dependencymanagement/SkeletonScopedServices$DefaultImpls {
 	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/skeleton/dependencymanagement/SkeletonScopedServices;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/initializers/AppInitializerProvider {
+	public abstract fun getAppServicesInitializers ()Ljava/util/Set;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/initializers/AppServicesInitializer {
+	public abstract fun init ()V
+}
+
+public final class com/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule {
+	public fun <init> ()V
+	public final fun primeEmptyAppInits ()Ljava/util/Set;
+}
+
+public final class com/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule_PrimeEmptyAppInitsFactory : dagger/internal/Factory {
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule;)V
+	public static fun create (Lcom/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule;)Lcom/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule_PrimeEmptyAppInitsFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/util/Set;
+	public static fun primeEmptyAppInits (Lcom/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModule;)Ljava/util/Set;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/initializers/UserServicesInitializer {
+	public abstract fun initUser (Ljava/lang/String;)V
+	public abstract fun userTeardown (Ljava/lang/String;)V
+}
+
+public final class com/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule {
+	public fun <init> ()V
+	public final fun primeEmptyUserInits ()Ljava/util/Set;
+}
+
+public final class com/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule_PrimeEmptyUserInitsFactory : dagger/internal/Factory {
+	public fun <init> (Lcom/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule;)V
+	public static fun create (Lcom/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule;)Lcom/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule_PrimeEmptyUserInitsFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/util/Set;
+	public static fun primeEmptyUserInits (Lcom/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModule;)Ljava/util/Set;
+}
+
+public abstract interface class com/dropbox/kaiken/skeleton/initializers/UserServicesInitializerProvider {
+	public abstract fun getUserServicesInitializers ()Ljava/util/Set;
 }
 
 public final class com/dropbox/kaiken/skeleton/scoping/CastKt {
