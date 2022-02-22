@@ -13,9 +13,4 @@ class FakeSkeletonAppInitializer @Inject constructor() : AppServicesInitializer 
     override fun init() {
         initCalled += 1
     }
-
-    var teardownCalled = 0
-    override fun teardown() {
-        teardownCalled += 1
-    }
 }
