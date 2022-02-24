@@ -10,8 +10,7 @@ import dagger.multibindings.ElementsIntoSet
  * Interface to use when you have a component which you want to be called
  * immediately at app startup.  Be mindful anything done here will block the app from launching.
  *
- * @ContributesMultibinding(SdkScope::class)
- * @SingleIn(SdkScope::class)
+ * @ContributesMultibinding(AppScope::class)
  * class FooInitializer @Inject constructor(
  *     private val foo: Foo,
  *     private val bar: Bar,
