@@ -25,6 +25,10 @@
             android:exported="true" />
 
         <activity
+            android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.compose_basic.ComposeBasicActivity"
+            android:exported="true" />
+
+        <activity
             android:name="com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.HomeActivity"
             android:exported="true" />
     </application>
