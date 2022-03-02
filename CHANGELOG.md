@@ -2,6 +2,7 @@
 
 ## Version 3.0.0 Alpha 02 (2022-03-02)
 - Add ability to get called on app initialized and user initialized via multibindings
+- Add artifacts for app skeleton and skeleton components
 
 ## Version 2.0.6 (2022-01-20)
 - Fix an issue with Kotlin 1.6 versions - https://github.com/dropbox/kaiken/pull/138
