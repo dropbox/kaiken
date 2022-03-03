@@ -8,8 +8,8 @@ class ComposeBasicActivity : AuthRequiredComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // BasicScreen()
-            BasicRouter()
+            BasicScreen()
+            // BasicRouter()
         }
     }
 }
