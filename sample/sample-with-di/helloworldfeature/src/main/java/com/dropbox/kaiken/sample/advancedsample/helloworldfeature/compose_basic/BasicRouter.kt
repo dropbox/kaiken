@@ -29,7 +29,7 @@ sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: I
 @Composable
 fun BasicRouter() {
     val navController = rememberNavController()
-    val tabs = listOf(TabItem.Home)
+    val tabs = listOf(TabItem.Home, TabItem.Form)
 
     Scaffold(
         bottomBar = {
@@ -61,6 +61,10 @@ fun BasicRouter() {
         NavHost(navController = navController, startDestination = TabItem.Home.route) {
             composable(TabItem.Home.route) {
                 BasicScreen()
+            }
+
+            composable(TabItem.Form.route) {
+                Text("Form")
             }
         }
     }
