@@ -68,11 +68,10 @@ fun BasicRouter() {
 
             authRequiredComposable(TabItem.Form.route) { _: NavBackStackEntry, presenter: BasicPresenter ->
                 BasicFormScreen(
-                    model = presenter.model,
-                    handleName = { answer: BasicPresenter.AnswerName -> presenter.events.tryEmit(answer) },
-                    handleFlavor = { answer: BasicPresenter.AnswerFlavor -> presenter.events.tryEmit(answer) },
-                    handleColor = { answer: BasicPresenter.AnswerColor -> presenter.events.tryEmit(answer) },
-                )
+                    model = presenter.model
+                ) {
+                    answer: BasicPresenter.Event -> presenter.events.tryEmit(answer)
+                }
             }
         }
     }
