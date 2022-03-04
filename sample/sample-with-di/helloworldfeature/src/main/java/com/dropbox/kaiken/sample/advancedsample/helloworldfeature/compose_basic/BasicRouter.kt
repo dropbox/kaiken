@@ -13,12 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authRequiredComposable
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.FavoriteFilmsPresenter
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 
 sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: ImageVector) {
@@ -63,8 +66,11 @@ fun BasicRouter() {
                 BasicScreen()
             }
 
-            composable(TabItem.Form.route) {
-                Text("Form")
+            authRequiredComposable(TabItem.Form.route) { _: NavBackStackEntry, presenter: BasicPresenter ->
+                BasicFormScreen(
+                    model = presenter.model,
+                    handleAnswer = {} // fill me in
+                )
             }
         }
     }
