@@ -13,30 +13,71 @@ import androidx.compose.runtime.setValue
 @Composable
 fun BasicFormScreen(
     model: BasicPresenter.Model,
-    handleAnswer: (BasicPresenter.AnswerQuestion) -> Unit,
+    handleName: (BasicPresenter.AnswerName) -> Unit,
+    handleFlavor: (BasicPresenter.AnswerFlavor) -> Unit,
+    handleColor: (BasicPresenter.AnswerColor) -> Unit,
 ) {
     Column {
-        Text(text = "What's your name?")
-
-        QuestionForm(
-            defaultAnswer = model.userName,
-            handleAnswer = handleAnswer,
-        )
-
-        Text(text = "Your name is: ${model.userName}")
+        when(model.page) {
+            BasicPresenter.Page.NAME -> NameQuestion(model.userName, handleName)
+            BasicPresenter.Page.FLAVOR -> FlavorQuestion(model.flavor, handleFlavor)
+            BasicPresenter.Page.COLOR -> ColorQuestion(model.color, handleColor)
+            BasicPresenter.Page.SUMMARY -> Summary(model)
+        }
     }
 }
 
 @Composable
-fun QuestionForm(
+fun NameQuestion(
     defaultAnswer: String,
-    handleAnswer: (BasicPresenter.AnswerQuestion) -> Unit,
+    handleName: (BasicPresenter.AnswerName) -> Unit,
 ) {
     var answer by remember { mutableStateOf(defaultAnswer) }
 
+    Text(text = "What's your name?")
+
     TextField(value = answer, onValueChange = { answer = it })
 
-    Button(onClick = { handleAnswer(BasicPresenter.AnswerQuestion(answer)) }) {
+    Button(onClick = { handleName(BasicPresenter.AnswerName(answer)) }) {
         Text(text = "Submit")
     }
+}
+
+@Composable
+fun FlavorQuestion(
+    defaultAnswer: String,
+    handleFlavor: (BasicPresenter.AnswerFlavor) -> Unit,
+) {
+    var answer by remember { mutableStateOf(defaultAnswer) }
+
+    Text(text = "What's your favorite ice cream flavor?")
+
+    TextField(value = answer, onValueChange = { answer = it })
+
+    Button(onClick = { handleFlavor(BasicPresenter.AnswerFlavor(answer)) }) {
+        Text(text = "Submit")
+    }
+}
+
+@Composable
+fun ColorQuestion(
+    defaultAnswer: String,
+    handleColor: (BasicPresenter.AnswerColor) -> Unit,
+) {
+    var answer by remember { mutableStateOf(defaultAnswer) }
+
+    Text(text = "What's your favorite color?")
+
+    TextField(value = answer, onValueChange = { answer = it })
+
+    Button(onClick = { handleColor(BasicPresenter.AnswerColor(answer)) }) {
+        Text(text = "Submit")
+    }
+}
+
+@Composable
+fun Summary(model: BasicPresenter.Model) {
+    Text(text = "Your name is: ${model.userName}")
+    Text(text = "Your favorite ice cream flavor is: ${model.flavor}")
+    Text(text = "Your favorite color is: ${model.color}")
 }
