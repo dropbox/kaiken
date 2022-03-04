@@ -12,7 +12,7 @@ abstract class BasicPresenter : Presenter<BasicPresenter.Event, BasicPresenter.M
     data class AnswerQuestion(val answer: String): Event
 
     data class Model(
-        val userName: String = "Julio",
+        val userName: String = "",
     )
 
     sealed interface Effect
@@ -26,7 +26,7 @@ abstract class BasicPresenter : Presenter<BasicPresenter.Event, BasicPresenter.M
 class RealBasicPresenter @Inject constructor() : BasicPresenter() {
     override suspend fun eventHandler(event: Event) {
         when (event) {
-            //
+            is AnswerQuestion -> model = model.copy(userName = event.answer)
         }
     }
 }
