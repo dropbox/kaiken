@@ -1,5 +1,6 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.compose_basic
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -9,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.FormPresenter
+import com.zachklipp.compose.backstack.Backstack
 
 @Composable
 fun BasicFormScreen(
@@ -16,11 +19,17 @@ fun BasicFormScreen(
     handleEvent: (BasicPresenter.Event) -> Unit,
 ) {
     Column {
-        when(model.page) {
-            BasicPresenter.Page.NAME -> NameQuestion(model.userName, handleEvent)
-            BasicPresenter.Page.FLAVOR -> FlavorQuestion(model.flavor, handleEvent)
-            BasicPresenter.Page.COLOR -> ColorQuestion(model.color, handleEvent)
-            BasicPresenter.Page.SUMMARY -> Summary(model)
+        if (model.backstack.size > 1) {
+            BackHandler { handleEvent(BasicPresenter.PopBackstack) }
+        }
+
+        Backstack(model.backstack) {
+            when(it) {
+                BasicPresenter.Page.NAME -> NameQuestion(model.userName, handleEvent)
+                BasicPresenter.Page.FLAVOR -> FlavorQuestion(model.flavor, handleEvent)
+                BasicPresenter.Page.COLOR -> ColorQuestion(model.color, handleEvent)
+                BasicPresenter.Page.SUMMARY -> Summary(model)
+            }
         }
     }
 }
@@ -72,18 +81,22 @@ fun QuestionTemplate(
 ) {
     var answer by remember { mutableStateOf(defaultAnswer) }
 
-    Text(text = question)
+    Column {
+        Text(text = question)
 
-    TextField(value = answer, onValueChange = { answer = it })
+        TextField(value = answer, onValueChange = { answer = it })
 
-    Button(onClick = { handleEvent(answer) }) {
-        Text(text = "Submit")
+        Button(onClick = { handleEvent(answer) }) {
+            Text(text = "Submit")
+        }
     }
 }
 
 @Composable
 fun Summary(model: BasicPresenter.Model) {
-    Text(text = "Your name is: ${model.userName}")
-    Text(text = "Your favorite ice cream flavor is: ${model.flavor}")
-    Text(text = "Your favorite color is: ${model.color}")
+    Column {
+        Text(text = "Your name is: ${model.userName}")
+        Text(text = "Your favorite ice cream flavor is: ${model.flavor}")
+        Text(text = "Your favorite color is: ${model.color}")
+    }
 }
