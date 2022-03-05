@@ -8,7 +8,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,12 +29,13 @@ import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
 sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: ImageVector) {
     object Home : TabItem("home", R.string.home_tab_title, Icons.Filled.Home)
     object Form : TabItem("form", R.string.form_tab_title, Icons.Filled.CheckCircle)
+    object Films : TabItem("films", R.string.films_tab_title, Icons.Filled.Face)
 }
 
 @Composable
 fun BasicRouter() {
     val navController = rememberNavController()
-    val tabs = listOf(TabItem.Home, TabItem.Form)
+    val tabs = listOf(TabItem.Home, TabItem.Form, TabItem.Films)
 
     Scaffold(
         bottomBar = {
@@ -72,6 +75,12 @@ fun BasicRouter() {
                 ) {
                     answer: BasicPresenter.Event -> presenter.events.tryEmit(answer)
                 }
+            }
+
+            authRequiredComposable(TabItem.Films.route) { _: NavBackStackEntry, presenter: BasicFilmsPresenter ->
+                BasicFilmsScreen(
+                    model = presenter.model
+                )
             }
         }
     }
