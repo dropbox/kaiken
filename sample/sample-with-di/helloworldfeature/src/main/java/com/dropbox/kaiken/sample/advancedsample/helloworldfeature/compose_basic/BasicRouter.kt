@@ -80,7 +80,9 @@ fun BasicRouter() {
             authRequiredComposable(TabItem.Films.route) { _: NavBackStackEntry, presenter: BasicFilmsPresenter ->
                 BasicFilmsScreen(
                     model = presenter.model
-                )
+                ) {
+                    event: BasicFilmsPresenter.Event -> presenter.events.tryEmit(event)
+                }
             }
         }
     }
