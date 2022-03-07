@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,29 +28,42 @@ fun BasicFilmsScreen(
         CircularProgressIndicator()
         handleEvent(BasicFilmsPresenter.LoadFilms)
     } else {
-        FilmList(model.films)
+        FilmList(model.films, handleEvent)
     }
 }
 
 @Composable
-fun FilmList(films: List<Film>) {
+fun FilmList(
+    films: List<Film>,
+    handleEvent: (BasicFilmsPresenter.Event) -> Unit
+) {
     LazyColumn {
         films.forEach {
-            item { FilmRow(it) }
+            item { FilmRow(it, handleEvent) }
         }
     }
 }
 
 @Composable
-fun FilmRow(film: Film) {
+fun FilmRow(
+    film: Film,
+    handleEvent: (BasicFilmsPresenter.Event) -> Unit
+) {
     Column(Modifier
         .fillMaxHeight()
         .fillMaxWidth()
         .padding(12.dp)) {
-        Text(
-            text = "${film.releaseDate} - ${film.title}",
-            style = MaterialTheme.typography.h5
-        )
+        Row {
+            IconButton(onClick = { handleEvent(BasicFilmsPresenter.AddFavorite(film.id)) }) {
+                Icon(Icons.Filled.Add, "Add Favorite")
+            }
+
+            Text(
+                text = "${film.releaseDate} - ${film.title}",
+                style = MaterialTheme.typography.h5
+            )
+        }
+
         Text(
             text = film.description,
             style = MaterialTheme.typography.body1,
