@@ -39,6 +39,7 @@ sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: I
     object Home : TabItem("home", R.string.home_tab_title, Icons.Filled.Home)
     object Form : TabItem("form", R.string.form_tab_title, Icons.Filled.CheckCircle)
     object Films : TabItem("films", R.string.films_tab_title, Icons.Filled.Face)
+    object Favorites : TabItem("favorites", R.string.favorite_films_tab_title, Icons.Filled.Star)
 }
 
 @Composable
@@ -53,7 +54,7 @@ fun BasicRouter() {
         }
     }
 
-    val tabs = listOf(TabItem.Home, TabItem.Form, TabItem.Films)
+    val tabs = listOf(TabItem.Home, TabItem.Form, TabItem.Films, TabItem.Favorites)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -109,6 +110,22 @@ fun BasicRouter() {
                     model = presenter.model
                 ) {
                     event: BasicFilmsPresenter.Event -> presenter.events.tryEmit(event)
+                }
+            }
+
+            authRequiredComposable(TabItem.Favorites.route) { _: NavBackStackEntry, presenter: BasicFavoritesPresenter ->
+                LaunchedEffect(presenter.effects) {
+                    presenter.effects.collect {
+                        when (it) {
+                            is BasicFavoritesPresenter.ShowSnackbar -> showSnackbar(it.message)
+                        }
+                    }
+                }
+
+                BasicFavoritesScreen(
+                    model = presenter.model
+                ) {
+                    event: BasicFavoritesPresenter.Event -> presenter.events.tryEmit(event)
                 }
             }
         }
