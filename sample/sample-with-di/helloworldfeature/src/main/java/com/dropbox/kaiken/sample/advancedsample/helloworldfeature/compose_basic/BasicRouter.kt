@@ -1,18 +1,23 @@
 package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.compose_basic
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
@@ -24,7 +29,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authRequiredComposable
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.FavoriteFilmsPresenter
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example.ui.FormPresenter
 import com.dropbox.kaiken.sample_with_di.helloworldfeature.R
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: ImageVector) {
     object Home : TabItem("home", R.string.home_tab_title, Icons.Filled.Home)
@@ -35,9 +44,19 @@ sealed class TabItem(val route: String, @StringRes val titleId: Int, val icon: I
 @Composable
 fun BasicRouter() {
     val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+
+    val showSnackbar: (String) -> Job = { message ->
+        scope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(message)
+        }
+    }
+
     val tabs = listOf(TabItem.Home, TabItem.Form, TabItem.Films)
 
     Scaffold(
+        scaffoldState = scaffoldState,
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -78,6 +97,14 @@ fun BasicRouter() {
             }
 
             authRequiredComposable(TabItem.Films.route) { _: NavBackStackEntry, presenter: BasicFilmsPresenter ->
+                LaunchedEffect(presenter.effects) {
+                    presenter.effects.collect {
+                        when (it) {
+                            is BasicFilmsPresenter.ShowSnackbar -> showSnackbar(it.message)
+                        }
+                    }
+                }
+
                 BasicFilmsScreen(
                     model = presenter.model
                 ) {

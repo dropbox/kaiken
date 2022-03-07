@@ -25,6 +25,7 @@ abstract class BasicFilmsPresenter : Presenter<BasicFilmsPresenter.Event, BasicF
     )
 
     sealed interface Effect
+    data class ShowSnackbar(val message: String) : Effect
 }
 
 @SingleIn(AuthRequiredScreenScope::class)
@@ -51,5 +52,8 @@ class RealBasicFilmsPresenter @Inject constructor(
 
     private suspend fun addFavorite(filmId: String) = CoroutineScope(Dispatchers.IO).launch {
         favoritesRepository.addFavorite(Favorite(filmId))
+        CoroutineScope(Dispatchers.Main).launch {
+            emitEffect(ShowSnackbar("Favorite Added!"))
+        }
     }
 }
