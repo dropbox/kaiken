@@ -8,7 +8,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Ignore
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -28,7 +27,7 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN no users and provide services THEN return null`() = runBlockingTest {
+    fun `GIVEN kaiken user services WHEN no users and provide services THEN return null`() = coroutineScope.runBlockingTest {
         // GIVEN
         val servicesProvider = createKaikenUserServicesProviderTest()
 
@@ -41,7 +40,6 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    @Ignore("Need to investigate further")
     fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = coroutineScope.runBlockingTest {
         // GIVEN
         var userFactoryCounter = 0
@@ -65,7 +63,7 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN user removed and none exist THEN return null`() = runBlockingTest {
+    fun `GIVEN kaiken user services WHEN user removed and none exist THEN return null`() = coroutineScope.runBlockingTest {
         // GIVEN
         userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
         val servicesProvider = createKaikenUserServicesProviderTest()
@@ -79,7 +77,7 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() = runBlockingTest {
+    fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() = coroutineScope.runBlockingTest {
         // GIVEN
         val fakeUserServices = DummyUserServices()
         userFactory = { appServices, skeletonUser ->

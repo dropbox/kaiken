@@ -10,10 +10,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -34,6 +36,7 @@ class KaikenUserServicesProvider(
     init {
         coroutineScope.launch {
             userEvents
+                .shareIn(coroutineScope, started = SharingStarted.Eagerly)
                 .scan<UsersEvent, Map<String, KaikenUserServices>>(emptyMap()) { prev, next ->
                     val result = prev.toMutableMap()
 
