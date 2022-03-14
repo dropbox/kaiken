@@ -89,6 +89,14 @@ subprojects { Project project ->
     }
 }
 
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
+
 tasks.register("printVersionName") {
     doLast {
         println VERSION_NAME
