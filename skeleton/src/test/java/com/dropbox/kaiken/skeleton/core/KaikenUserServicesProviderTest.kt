@@ -43,7 +43,6 @@ class KaikenUserServicesProviderTest {
         }
     }
 
-
     @Test
     @SuppressWarnings
     fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() {
