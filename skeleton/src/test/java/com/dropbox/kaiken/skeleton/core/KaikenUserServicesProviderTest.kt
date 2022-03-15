@@ -4,14 +4,16 @@ import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.usermanagement.UsersEvent
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Ignore
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
+@OptIn(DelicateCoroutinesApi::class)
 @Suppress("DEPRECATION")
 class KaikenUserServicesProviderTest {
     private val userEvents = MutableStateFlow(UsersEvent(emptySet()))
@@ -28,74 +30,82 @@ class KaikenUserServicesProviderTest {
 
     @Test
     @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN no users and provide services THEN return null`() = runBlockingTest {
-        // GIVEN
-        val servicesProvider = createKaikenUserServicesProviderTest()
+    fun `GIVEN kaiken user services WHEN no users and provide services THEN return null`() {
+        GlobalScope.launch {
+            // GIVEN
+            val servicesProvider = createKaikenUserServicesProviderTest()
 
-        // WHEN
-        val actual = servicesProvider.provideUserServices("1234")
+            // WHEN
+            val actual = servicesProvider.provideUserServices("1234")
 
-        // THEN
-        assertThat(actual).isNull()
-    }
-
-    @Test
-    @SuppressWarnings
-    @Ignore("Need to investigate further")
-    fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() = coroutineScope.runBlockingTest {
-        // GIVEN
-        var userFactoryCounter = 0
-        val fakeUserServices = DummyUserServices()
-        userFactory = { appServices, skeletonUser ->
-            assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
-            assertThat(skeletonUser).isEqualTo(FAKE_USER)
-            userFactoryCounter += 1
-            fakeUserServices
+            // THEN
+            assertThat(actual).isNull()
         }
-        userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
-        val servicesProvider = createKaikenUserServicesProviderTest()
-
-        // WHEN
-        val actual = servicesProvider.provideUserServices(FAKE_ID)
-
-        // THEN
-        assertThat(actual).isEqualTo(fakeUserServices)
-        assertThat(userFactoryCounter).isEqualTo(1)
     }
 
     @Test
     @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN user removed and none exist THEN return null`() = runBlockingTest {
-        // GIVEN
-        userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
-        val servicesProvider = createKaikenUserServicesProviderTest()
+    fun `GIVEN kaiken user services WHEN user provided and user requested THEN create and return user`() {
+        GlobalScope.launch {
+            // GIVEN
+            var userFactoryCounter = 0
+            val fakeUserServices = DummyUserServices()
+            userFactory = { appServices, skeletonUser ->
+                assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
+                assertThat(skeletonUser).isEqualTo(FAKE_USER)
+                userFactoryCounter += 1
+                fakeUserServices
+            }
+            userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
+            val servicesProvider = createKaikenUserServicesProviderTest()
 
-        // WHEN
-        val actual = servicesProvider.provideUserServices(FAKE_ID)
+            // WHEN
+            val actual = servicesProvider.provideUserServices(FAKE_ID)
 
-        // THEN
-        assertThat(actual).isNull()
-    }
-
-    @Test
-    @SuppressWarnings
-    fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() = runBlockingTest {
-        // GIVEN
-        val fakeUserServices = DummyUserServices()
-        userFactory = { appServices, skeletonUser ->
-            assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
-            assertThat(skeletonUser).isEqualTo(FAKE_USER)
-            fakeUserServices
+            // THEN
+            assertThat(actual).isEqualTo(fakeUserServices)
+            assertThat(userFactoryCounter).isEqualTo(1)
         }
+    }
 
-        val servicesProvider = createKaikenUserServicesProviderTest()
+    @Test
+    @SuppressWarnings
+    fun `GIVEN kaiken user services WHEN user removed and none exist THEN return null`() {
+        GlobalScope.launch {
+            // GIVEN
+            userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
+            val servicesProvider = createKaikenUserServicesProviderTest()
 
-        // WHEN
-        userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
-        userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
+            // WHEN
+            val actual = servicesProvider.provideUserServices(FAKE_ID)
 
-        // THEN
-        assertThat(servicesProvider.provideUserServices(FAKE_ID)).isNull()
+            // THEN
+            assertThat(actual).isNull()
+        }
+    }
+
+    @Test
+    @SuppressWarnings
+    fun `GIVEN kaiken user services WHEN user is removed THEN teardown and return null user services`() {
+
+        GlobalScope.launch {
+            // GIVEN
+            val fakeUserServices = DummyUserServices()
+            userFactory = { appServices, skeletonUser ->
+                assertThat(appServices).isEqualTo(this@KaikenUserServicesProviderTest.appServices)
+                assertThat(skeletonUser).isEqualTo(FAKE_USER)
+                fakeUserServices
+            }
+
+            val servicesProvider = createKaikenUserServicesProviderTest()
+
+            // WHEN
+            userEvents.emit(UsersEvent(setOf(FAKE_USER), setOf(FAKE_USER), emptySet()))
+            userEvents.emit(UsersEvent(emptySet(), emptySet(), setOf(FAKE_USER)))
+
+            // THEN
+            assertThat(servicesProvider.provideUserServices(FAKE_ID)).isNull()
+        }
     }
 
     companion object {
