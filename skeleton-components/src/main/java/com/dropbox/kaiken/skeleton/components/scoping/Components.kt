@@ -20,6 +20,7 @@ import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.scoping.UserServices
+import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
@@ -51,7 +52,7 @@ interface UserComponent : UserServices {
     @ContributesSubcomponent.Factory
     interface Factory {
         fun userComponent(
-            @BindsInstance userId: Int
+            @BindsInstance user: SkeletonUser
         ): UserComponent
     }
 }

@@ -8,11 +8,11 @@ import com.dropbox.kaiken.skeleton.components.scoping.UserParentComponent
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
-import dagger.Module
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
+@ContributesBinding(SkeletonScope::class)
+@SingleIn(SkeletonScope::class)
 class KaikenConfig @Inject constructor() : SkeletonConfig {
     override val scopedServicesFactory: AppSpecificScopedServicesFactory
         get() = object : AppSpecificScopedServicesFactory {
@@ -23,14 +23,6 @@ class KaikenConfig @Inject constructor() : SkeletonConfig {
                 appServices: AppServices,
                 user: SkeletonUser,
             ): UserComponent = appServices.cast<UserParentComponent>().createUserComponent()
-                .userComponent(userId = user.userId.toInt())
+                .userComponent(user)
         }
-}
-
-@ContributesTo(SkeletonScope::class)
-@Module
-abstract class KaikenConfigBinding {
-    @SingleIn(SkeletonScope::class)
-    @Binds
-    abstract fun bindKaikenConfigBinding(real: KaikenConfig): SkeletonConfig
 }

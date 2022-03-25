@@ -6,6 +6,7 @@ import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
+import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
@@ -37,7 +38,7 @@ interface ApplicationInjector {
 class UserModule {
     @Provides
     @SingleIn(UserScope::class)
-    fun provideUserProfile(userId: Int) = UserProfile(userId.toString(), userId.toString())
+    fun provideUserProfile(user: SkeletonUser) = UserProfile(user.userId, user.userId)
 }
 
 @ContributesTo(SkeletonScope::class)
