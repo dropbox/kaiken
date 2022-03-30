@@ -1,64 +1,64 @@
-public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenConfigKt {
+public final class anvil/hint/binding/com/dropbox/kaiken/skeleton/core/KaikenConfigKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfig_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfig_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenConfig_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AppComponent_AppParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/AppComponent_AppParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AppComponent_AppParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AppComponent_AppParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AppComponent_AppParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_ParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalComponent_ParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_ParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_ScreenParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalScreenComponent_ScreenParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_ScreenParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_ScreenParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_ScreenParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_ParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredComponent_ParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_ParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_ParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_ParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_ScreenParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredScreenComponent_ScreenParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_ScreenParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_ScreenParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_ScreenParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_UserParentComponentKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/components/scoping/UserParentComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_UserParentComponent_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_UserParentComponent_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_UserParentComponent_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AppComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/AppComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AppComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AppComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalScreenComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthOptionalScreenComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredScreenComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_AuthRequiredScreenComponent_scope ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/Com_dropbox_kaiken_skeleton_components_scoping_UserComponentKt {
+public final class anvil/hint/subcomponent/com/dropbox/kaiken/skeleton/components/scoping/UserComponentKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_UserComponent_reference ()Lkotlin/reflect/KClass;
 	public static final fun getCom_dropbox_kaiken_skeleton_components_scoping_UserComponent_scope ()Lkotlin/reflect/KClass;
 }

@@ -2,11 +2,11 @@ ext.versions = [
         minSdk            : 21,
         targetSdk         : 31,
         compileSdk        : 31,
-        kotlin            : '1.5.31',
+        kotlin            : '1.6.10',
         ktlint            : '0.39.0',
 
         // Plugins
-        androidGradlePlugin         : '7.0.0',
+        androidGradlePlugin         : '7.1.0',
         dokkaGradlePlugin           : '1.6.0',
         ktlintGradle                : '10.2.0',
         spotlessGradlePlugin        : '3.26.1',
@@ -28,7 +28,10 @@ ext.versions = [
         incap                       : '0.3',
         javapoet                    : '1.13.0',
         kotlinpooet                 : '1.5.0',
-        kotlinpoet_interop         : '1.10.2',
+        kotlinpoet_interop          : '1.10.2',
+
+        // DI
+        anvil                       : '2.4.0',
 
         // Testing
         androidxTestCore            : '1.4.0',
@@ -40,14 +43,14 @@ ext.versions = [
         // Samples
         constraintLayout            : '2.0.4',
         javaxInject                 : '1',
-        dagger2Version              : '2.39.1',
+        dagger2Version              : '2.41',
 ]
 
 ext.deps = [
         // Other
         kotlinStdLib                : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
-        coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2",
-        coroutinesAndroid           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9",
+        coroutines                  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0",
+        coroutinesAndroid           : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0",
         javaxInject                 : "javax.inject:javax.inject:$versions.javaxInject",
         store                       : "com.dropbox.mobile.store:store4:4.0.4-KT15",
 
@@ -55,8 +58,8 @@ ext.deps = [
         androidx_fragment           : "androidx.fragment:fragment:$versions.androidxFragment",
         appcompat                   : "androidx.appcompat:appcompat:$versions.androidxAppCompat",
         composeActivity             : "androidx.activity:activity-compose:1.3.1",
-        composeMaterial             : "androidx.compose.material:material:1.0.5",
-        composeTooling              : "androidx.compose.ui:ui-tooling:1.0.5",
+        composeMaterial             : "androidx.compose.material:material:1.1.1",
+        composeTooling              : "androidx.compose.ui:ui-tooling:1.1.1",
         navgraph                    : "androidx.navigation:navigation-fragment-ktx:$versions.navGraph",
         nav_ui                      : "androidx.navigation:navigation-ui-ktx:$versions.navGraph",
         lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
@@ -70,6 +73,11 @@ ext.deps = [
         javapoet                    : "com.squareup:javapoet:$versions.javapoet",
         kotlinpoet                  : "com.squareup:kotlinpoet:$versions.kotlinpooet",
         kotlinpoet_interop          : "com.squareup:kotlinpoet-javapoet:$versions.kotlinpoet_interop",
+
+        // DI
+        anvil                       : "com.squareup.anvil:compiler:$versions.anvil",
+        anvil_api                   : "com.squareup.anvil:compiler-api:$versions.anvil",
+        anvil_utils                 : "com.squareup.anvil:compiler-utils:$versions.anvil",
 
         // Testing
         androidx_test_core          : "androidx.test:core:$versions.androidxTestCore",

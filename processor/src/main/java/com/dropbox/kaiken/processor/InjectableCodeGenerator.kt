@@ -7,9 +7,9 @@ import com.squareup.anvil.compiler.api.AnvilContext
 import com.squareup.anvil.compiler.api.CodeGenerator
 import com.squareup.anvil.compiler.api.GeneratedFile
 import com.squareup.anvil.compiler.api.createGeneratedFile
-import com.squareup.anvil.compiler.internal.asClassName
-import com.squareup.anvil.compiler.internal.classesAndInnerClass
-import com.squareup.anvil.compiler.internal.hasAnnotation
+import com.squareup.anvil.compiler.internal.reference.ClassReference
+import com.squareup.anvil.compiler.internal.reference.asClassName
+import com.squareup.anvil.compiler.internal.reference.classAndInnerClassReferences
 import com.squareup.anvil.compiler.internal.safePackageString
 import com.squareup.kotlinpoet.javapoet.KotlinPoetJavaPoetPreview
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.resolveClassByFqName
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtClass
-import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.calls.callUtil.createLookupLocation
 import org.jetbrains.kotlin.resolve.descriptorUtil.getAllSuperClassifiers
@@ -32,35 +31,35 @@ class InjectableCodeGenerator : CodeGenerator {
         ACTIVITY, FRAGMENT, INVALID
     }
 
-    @KotlinPoetJavaPoetPreview
+    // @KotlinPoetJavaPoetPreview
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
         projectFiles: Collection<KtFile>,
     ): Collection<GeneratedFile> {
-        return projectFiles.classesAndInnerClass(module).filter { clazz ->
-            clazz.hasAnnotation(FqName("com.dropbox.kaiken.annotation.Injectable"), module)
+        return projectFiles.classAndInnerClassReferences(module).filter { clazz ->
+            clazz.isAnnotatedWith(FqName("com.dropbox.kaiken.annotation.Injectable"))
         }.map(mapper(module, codeGenDir)).toList()
     }
 
     private fun mapper(
         module: ModuleDescriptor,
         codeGenDir: File
-    ): (KtClassOrObject) -> GeneratedFile =
-        { clazz: KtClassOrObject ->
+    ): (ClassReference.Psi) -> GeneratedFile =
+        { psi: ClassReference.Psi ->
             var classType = ClassType.INVALID
             val descriptor: ClassDescriptor? =
                 module.resolveClassByFqName(
-                    clazz.fqName!!,
-                    checkNotNull(clazz.createLookupLocation())
+                    psi.clazz.fqName!!,
+                    checkNotNull(psi.clazz.createLookupLocation())
                 )
 
             checkNotNull(descriptor).getAllSuperClassifiers().forEach {
                 if (it.isFragment()) {
-                    validateFragment(descriptor, clazz)
+                    validateFragment(descriptor, psi.clazz)
                     classType = ClassType.FRAGMENT
                 } else if (it.isAndroidActivity()) {
-                    validateActivity(descriptor, clazz)
+                    validateActivity(descriptor, psi.clazz)
                     classType = ClassType.ACTIVITY
                 }
             }
@@ -68,9 +67,9 @@ class InjectableCodeGenerator : CodeGenerator {
                 "Only Android Activities or Fragments can be annotated with" +
                     " ${Injectable::class.java.simpleName}"
             }
-            val className = clazz.asClassName()
+            val className = psi.asClassName()
             val packageName =
-                (clazz as KtClass).fqName!!.parent().safePackageString(dotPrefix = true)
+                (psi.clazz as KtClass).fqName!!.parent().safePackageString(dotPrefix = true)
 
             val fileSpec = if (classType == ClassType.ACTIVITY)
                 generateActivityFileSpec(

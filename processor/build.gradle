@@ -4,8 +4,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
-    api "com.squareup.anvil:compiler-api:2.3.10"
-    implementation "com.squareup.anvil:compiler-utils:2.3.10"
+    api deps.anvil
+    api deps.anvil_api
+    implementation deps.anvil_utils
 
     implementation deps.kotlinStdLib
 
