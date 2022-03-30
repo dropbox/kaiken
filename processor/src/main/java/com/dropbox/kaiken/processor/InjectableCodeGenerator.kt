@@ -11,7 +11,6 @@ import com.squareup.anvil.compiler.internal.reference.ClassReference
 import com.squareup.anvil.compiler.internal.reference.asClassName
 import com.squareup.anvil.compiler.internal.reference.classAndInnerClassReferences
 import com.squareup.anvil.compiler.internal.safePackageString
-import com.squareup.kotlinpoet.javapoet.KotlinPoetJavaPoetPreview
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.resolveClassByFqName
@@ -31,7 +30,6 @@ class InjectableCodeGenerator : CodeGenerator {
         ACTIVITY, FRAGMENT, INVALID
     }
 
-    // @KotlinPoetJavaPoetPreview
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
