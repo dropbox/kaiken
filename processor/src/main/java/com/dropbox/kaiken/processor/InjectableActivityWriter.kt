@@ -2,11 +2,14 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.dropbox.kaiken.processor.internal.generateContributesInjector
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.typeNameOf
+import kotlin.reflect.KClass
 
 /**
  * Generates a `Injector` interface definition and an `inject` function for the given annotated
@@ -32,6 +35,9 @@ import com.squareup.kotlinpoet.typeNameOf
  *     val injector: MyActivityInjector = this.locateInjector()
  *     injector.inject(this)
  * }
+ *
+ * @ContributesTo(Scope::class)
+ * interface MainActivityInjectorScopeContributor: MainActivityInjector
  * ```
  */
 private fun generateInjectExtensionFunctionForActivity(
@@ -74,7 +80,8 @@ private fun generateInjectInterfaceForActivity(
 internal fun generateActivityFileSpec(
     pack: String,
     interfaceName: String,
-    typeName: com.squareup.kotlinpoet.TypeName
+    typeName: TypeName,
+    authAwarenessScope: KClass<out Any>?
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
         interfaceName, typeName
@@ -82,10 +89,18 @@ internal fun generateActivityFileSpec(
     val interfaceTypeSpec = generateInjectInterfaceForActivity(
         interfaceName, typeName
     )
+    val contributesInjectorTypeSpec = generateContributesInjector(
+        pack, interfaceName, authAwarenessScope
+    )
     val fileBuilder = FileSpec.builder(pack, interfaceName)
 
     return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
         .addFunction(extensionFunctionSpec)
         .addType(interfaceTypeSpec)
+        .apply {
+            if (contributesInjectorTypeSpec != null) {
+                addType(contributesInjectorTypeSpec)
+            }
+        }
         .build()
 }

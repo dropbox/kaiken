@@ -3,14 +3,17 @@ package com.dropbox.kaiken.integration_tests
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.dropbox.common.inject.AuthRequiredScope
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.runtime.InjectorFactory
 import com.dropbox.kaiken.runtime.InjectorHolder
+import com.dropbox.kaiken.scoping.AuthRequiredActivity
 import javax.inject.Inject
 
-@Injectable
+@Injectable(scope = [AuthRequiredScope::class])
 class TestInjectorHolderActivity :
     AppCompatActivity(),
+    AuthRequiredActivity,
     InjectorHolder<TestInjectorHolderActivityInjector> {
     @Inject
     lateinit var message: String
