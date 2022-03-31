@@ -34,7 +34,7 @@ internal fun validateActivity(descriptor: ClassDescriptor?, clazz: KtClassOrObje
 
     check(descriptor.implementsInjectorHolder()) {
         "The class ${fqName.shortName()} does not implement" +
-            " DependencyProviderResolver"
+            " InjectorHolder"
     }
 }
 
