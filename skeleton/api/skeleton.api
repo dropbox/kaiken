@@ -1,51 +1,51 @@
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_CoroutineScopeBindingsKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/CoroutineScopeBindingsKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutineScopeBindings_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutineScopeBindings_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutineScopeBindings_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_CoroutinesBindingKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/CoroutinesBindingKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutinesBinding_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutinesBinding_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_CoroutinesBinding_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenAppServicesKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/KaikenAppServicesKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenAppServices_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenAppServices_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenAppServices_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/Com_dropbox_kaiken_skeleton_core_KaikenUserServicesKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/core/KaikenUserServicesKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenUserServices_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenUserServices_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_core_KaikenUserServices_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/dagger/Com_dropbox_kaiken_skeleton_dagger_SdkSpecKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/dagger/SdkSpecKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_dagger_SdkSpec_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_dagger_SdkSpec_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_dagger_SdkSpec_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_AppInitializerProviderKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/AppInitializerProviderKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppInitializerProvider_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppInitializerProvider_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppInitializerProvider_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModuleKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/AppServicesInitializerModuleKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModule_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModule_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_AppServicesInitializerModule_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModuleKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/UserServicesInitializerModuleKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModule_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModule_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerModule_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/Com_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProviderKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/initializers/UserServicesInitializerProviderKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProvider_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProvider_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_initializers_UserServicesInitializerProvider_scope0 ()Lkotlin/reflect/KClass;
 }
 
-public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/usermanagement/Com_dropbox_kaiken_skeleton_usermanagement_StoreBindingKt {
+public final class anvil/hint/merge/com/dropbox/kaiken/skeleton/usermanagement/StoreBindingKt {
 	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_reference ()Lkotlin/reflect/KClass;
-	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_scope ()Lkotlin/reflect/KClass;
+	public static final fun getCom_dropbox_kaiken_skeleton_usermanagement_StoreBinding_scope0 ()Lkotlin/reflect/KClass;
 }
 
 public final class com/dropbox/kaiken/skeleton/BuildConfig {
