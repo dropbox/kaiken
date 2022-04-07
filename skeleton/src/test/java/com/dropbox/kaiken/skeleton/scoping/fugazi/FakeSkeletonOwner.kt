@@ -4,9 +4,10 @@ import com.dropbox.kaiken.skeleton.core.AppSkeletonInitializer
 import com.dropbox.kaiken.skeleton.core.AppSkeletonScopedServices
 import com.dropbox.kaiken.skeleton.core.SkeletonOwner
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 
 class FakeSkeletonOwner(private val spec: SdkSpec) : SkeletonOwner {
-    override fun getSdkSpec(): SdkSpec = spec
+    override fun getSkeletonComponent(): SkeletonComponent = spec
     override var scopedServices: AppSkeletonScopedServices =
-        AppSkeletonInitializer.init(getSdkSpec()).appSkeletonDelegate
+        AppSkeletonInitializer.init(getSkeletonComponent()).appSkeletonDelegate
 }

@@ -6,9 +6,13 @@ import com.dropbox.kaiken.skeleton.components.scoping.AppComponent
 import com.dropbox.kaiken.skeleton.components.scoping.UserComponent
 import com.dropbox.kaiken.skeleton.components.scoping.UserParentComponent
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesBinding
+import com.squareup.anvil.annotations.MergeComponent
+import dagger.BindsInstance
+import dagger.Component
 import javax.inject.Inject
 
 @ContributesBinding(SkeletonScope::class)
@@ -16,8 +20,8 @@ import javax.inject.Inject
 class KaikenConfig @Inject constructor() : SkeletonConfig {
     override val scopedServicesFactory: AppSpecificScopedServicesFactory
         get() = object : AppSpecificScopedServicesFactory {
-            override fun createAppServices(sdkSpec: SdkSpec): AppComponent =
-                sdkSpec.cast<AppComponent.AppParentComponent>().appComponent()
+            override fun createAppServices(skeletonComponent: SkeletonComponent): AppComponent =
+                skeletonComponent.cast<AppComponent.AppParentComponent>().appComponent()
 
             override fun createUserServices(
                 appServices: AppServices,

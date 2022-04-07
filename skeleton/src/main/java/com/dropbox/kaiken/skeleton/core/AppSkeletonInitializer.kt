@@ -1,6 +1,7 @@
 package com.dropbox.kaiken.skeleton.core
 
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.dependencymanagement.SkeletonScopedServices
 import com.dropbox.kaiken.skeleton.scoping.cast
 
@@ -22,7 +23,7 @@ class AppSkeletonInitializer(val appSkeletonDelegate: AppSkeletonScopedServices)
         internal lateinit var appSkeleton: AppSkeletonInitializer
 
         fun init(
-            component: SdkSpec,
+            component: SkeletonComponent,
         ): AppSkeletonInitializer {
             check(!this::appSkeleton.isInitialized)
             appSkeleton = AppSkeletonInitializer(AppSkeletonScopedServices(component))

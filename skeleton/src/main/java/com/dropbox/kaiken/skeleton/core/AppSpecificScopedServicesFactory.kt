@@ -3,6 +3,7 @@ package com.dropbox.kaiken.skeleton.core
 import com.dropbox.kaiken.scoping.AppServices
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 
 /**
  * Factory that allows an Application that uses the AppSkeleton to provide factory methods for its scoped
@@ -17,7 +18,7 @@ interface AppSpecificScopedServicesFactory {
      * This method will be called once and only once by the Skeleton framework upon its instantiation.
      */
     fun createAppServices(
-        sdkSpec: SdkSpec
+        skeletonComponent: SkeletonComponent
     ): AppServices
 
     /**

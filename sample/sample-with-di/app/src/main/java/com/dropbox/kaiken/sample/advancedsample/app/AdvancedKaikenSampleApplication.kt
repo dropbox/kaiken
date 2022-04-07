@@ -5,9 +5,11 @@ import com.dropbox.common.inject.AppScope
 import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
+import com.dropbox.kaiken.skeleton.core.SkeletonConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesTo
@@ -16,15 +18,21 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import javax.inject.Inject
 
 class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
 
-    override fun getSdkSpec(): SdkSpec =
-        DaggerSkeletonComponent.factory().create(this) as DaggerSkeletonComponent
+    @Inject
+    lateinit var skeletonConfig: SkeletonConfig
+
+    override fun getSkeletonComponent(): SkeletonComponent =
+        DaggerRealComponent.factory().create(this)
 
     override fun onCreate() {
         super.onCreate()
         provideAppServices().cast<ApplicationInjector>().inject(this)
+        println(skeletonConfig)
+        println("HIII")
     }
 }
 
@@ -50,13 +58,14 @@ class SkeletonModule {
         application
 }
 
+
 @MergeComponent(SkeletonScope::class)
 @SingleIn(SkeletonScope::class)
-interface SkeletonComponent : SdkSpec {
+interface RealComponent : SkeletonComponent {
     @Component.Factory
     interface Factory {
         fun create(
             @BindsInstance app: SkeletonOwnerApplication,
-        ): SkeletonComponent
+        ): RealComponent
     }
 }

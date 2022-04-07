@@ -81,63 +81,63 @@ interface AuthRequiredComponent {
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope = AuthOptionalScope::class,
-    parentScope = AppScope::class
+   scope = AuthOptionalScope::class,
+   parentScope = AppScope::class
 )
 @SingleIn(AuthOptionalScope::class)
 interface AuthOptionalComponent : Injector {
-    @ContributesTo(AppScope::class)
-    interface ParentComponent {
-        fun createAuthOptionalComponent(): AuthOptionalComponent
-    }
+   @ContributesTo(AppScope::class)
+   interface ParentComponent {
+       fun createAuthOptionalComponent(): AuthOptionalComponent
+   }
 }
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope = AuthOptionalScreenScope::class,
-    parentScope = AppScope::class
+   scope = AuthOptionalScreenScope::class,
+   parentScope = AppScope::class
 )
 @SingleIn(AuthOptionalScreenScope::class)
 interface AuthOptionalScreenComponent : Injector {
-    @ContributesTo(AppScope::class)
-    interface ScreenParentComponent : Injector {
-        fun createAuthOptionalScreenComponent(): AuthOptionalScreenComponent
-    }
+   @ContributesTo(AppScope::class)
+   interface ScreenParentComponent : Injector {
+       fun createAuthOptionalScreenComponent(): AuthOptionalScreenComponent
+   }
 }
 
 @OptIn(ExperimentalAnvilApi::class)
 @ContributesSubcomponent(
-    scope = AuthRequiredScreenScope::class,
-    parentScope = UserScope::class
+   scope = AuthRequiredScreenScope::class,
+   parentScope = UserScope::class
 )
 @SingleIn(AuthRequiredScreenScope::class)
 interface AuthRequiredScreenComponent : Injector {
-    @ContributesTo(UserScope::class)
-    interface ScreenParentComponent : Injector {
-        fun createAuthRequiredScreenComponent(): AuthRequiredScreenComponent
-    }
+   @ContributesTo(UserScope::class)
+   interface ScreenParentComponent : Injector {
+       fun createAuthRequiredScreenComponent(): AuthRequiredScreenComponent
+   }
 }
 
 inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
-    InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
+   InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
 
 inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
-    InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
+   InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
 
 abstract class AuthAwareInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthAwareFragment,
-    InjectorHolder<T>
+   Fragment(),
+   AuthAwareFragment,
+   InjectorHolder<T>
 
 abstract class AuthOptionalInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthOptionalFragment,
-    InjectorHolder<T>
+   Fragment(),
+   AuthOptionalFragment,
+   InjectorHolder<T>
 
 abstract class AuthRequiredInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthRequiredFragment,
-    InjectorHolder<T>
+   Fragment(),
+   AuthRequiredFragment,
+   InjectorHolder<T>
 
 class InjectorViewModelFactory<InjectorType : Injector>(
     private val injectorFactory: InjectorFactory<InjectorType>
