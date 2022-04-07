@@ -10,7 +10,6 @@ import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.core.SkeletonConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
 import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
@@ -31,7 +30,7 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
     lateinit var time: TimeMessageProvider
 
     override fun getSkeletonComponent(): SkeletonComponent =
-        DaggerRealComponent.factory().create(this)
+        DaggerRealAppComponent.factory().create(this)
 
     override fun onCreate() {
         super.onCreate()
@@ -66,11 +65,11 @@ class SkeletonModule {
 
 @MergeComponent(SkeletonScope::class)
 @SingleIn(SkeletonScope::class)
-interface RealComponent : SkeletonComponent {
+interface RealAppComponent : SkeletonComponent {
     @Component.Factory
     interface Factory {
         fun create(
             @BindsInstance app: SkeletonOwnerApplication,
-        ): RealComponent
+        ): RealAppComponent
     }
 }
