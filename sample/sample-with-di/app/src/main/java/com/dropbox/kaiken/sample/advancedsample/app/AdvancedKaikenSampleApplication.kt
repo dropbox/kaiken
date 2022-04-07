@@ -1,9 +1,11 @@
 package com.dropbox.kaiken.sample.advancedsample.app
 
 import android.app.Application
+import android.util.Log
 import com.dropbox.common.inject.AppScope
 import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.common.inject.UserScope
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.TimeMessageProvider
 import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.core.SkeletonConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonOwnerApplication
@@ -25,14 +27,17 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
     @Inject
     lateinit var skeletonConfig: SkeletonConfig
 
+    @Inject
+    lateinit var time: TimeMessageProvider
+
     override fun getSkeletonComponent(): SkeletonComponent =
         DaggerRealComponent.factory().create(this)
 
     override fun onCreate() {
         super.onCreate()
         provideAppServices().cast<ApplicationInjector>().inject(this)
-        println(skeletonConfig)
-        println("HIII")
+        Log.d("TAG","Skeleton Config is ${skeletonConfig}")
+        Log.d("TAG","The time is ${time.tellTheTime()}")
     }
 }
 
