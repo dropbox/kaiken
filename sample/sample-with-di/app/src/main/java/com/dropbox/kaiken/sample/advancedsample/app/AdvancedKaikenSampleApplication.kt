@@ -35,8 +35,8 @@ class AdvancedKaikenSampleApplication : SkeletonOwnerApplication() {
     override fun onCreate() {
         super.onCreate()
         provideAppServices().cast<ApplicationInjector>().inject(this)
-        Log.d("TAG","Skeleton Config is $skeletonConfig")
-        Log.d("TAG","The time is ${time.tellTheTime()}")
+        Log.d("TAG", "Skeleton Config is $skeletonConfig")
+        Log.d("TAG", "The time is ${time.tellTheTime()}")
     }
 }
 
@@ -61,7 +61,6 @@ class SkeletonModule {
     fun provideApplication(application: SkeletonOwnerApplication): Application =
         application
 }
-
 
 @MergeComponent(SkeletonScope::class)
 @SingleIn(SkeletonScope::class)
