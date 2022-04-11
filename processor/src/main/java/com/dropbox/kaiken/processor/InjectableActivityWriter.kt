@@ -3,9 +3,13 @@ package com.dropbox.kaiken.processor
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
 import com.dropbox.kaiken.processor.internal.generateContributesInjector
+import com.squareup.anvil.annotations.ContributesTo
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.typeNameOf
@@ -80,8 +84,7 @@ private fun generateInjectInterfaceForActivity(
 internal fun generateActivityFileSpec(
     pack: String,
     interfaceName: String,
-    typeName: TypeName,
-    authAwarenessScope: KClass<out Any>?
+    typeName: TypeName
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunctionForActivity(
         interfaceName, typeName
@@ -89,18 +92,10 @@ internal fun generateActivityFileSpec(
     val interfaceTypeSpec = generateInjectInterfaceForActivity(
         interfaceName, typeName
     )
-    val contributesInjectorTypeSpec = generateContributesInjector(
-        pack, interfaceName, authAwarenessScope
-    )
     val fileBuilder = FileSpec.builder(pack, interfaceName)
 
     return fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
         .addFunction(extensionFunctionSpec)
         .addType(interfaceTypeSpec)
-        .apply {
-            if (contributesInjectorTypeSpec != null) {
-                addType(contributesInjectorTypeSpec)
-            }
-        }
         .build()
 }

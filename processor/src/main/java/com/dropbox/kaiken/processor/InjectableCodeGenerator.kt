@@ -2,7 +2,10 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.common.inject.AuthOptionalScope
 import com.dropbox.common.inject.AuthRequiredScope
+import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.annotation.Injectable
+import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
+import com.dropbox.kaiken.processor.internal.generateContributesInjector
 import com.google.auto.service.AutoService
 import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import com.squareup.anvil.compiler.api.AnvilContext
@@ -13,6 +16,7 @@ import com.squareup.anvil.compiler.internal.asClassName
 import com.squareup.anvil.compiler.internal.classesAndInnerClass
 import com.squareup.anvil.compiler.internal.hasAnnotation
 import com.squareup.anvil.compiler.internal.safePackageString
+import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.javapoet.KotlinPoetJavaPoetPreview
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
@@ -46,13 +50,13 @@ class InjectableCodeGenerator : CodeGenerator {
     ): Collection<GeneratedFile> {
         return projectFiles.classesAndInnerClass(module).filter { clazz ->
             clazz.hasAnnotation(FqName(INJECTABLE_FULLY_QUALIFIED_PATH), module)
-        }.map(mapper(module, codeGenDir)).toList()
+        }.flatMap(mapper(module, codeGenDir)).toList()
     }
 
     private fun mapper(
         module: ModuleDescriptor,
         codeGenDir: File
-    ): (KtClassOrObject) -> GeneratedFile =
+    ): (KtClassOrObject) -> List<GeneratedFile> =
         { clazz: KtClassOrObject ->
             var classType = ClassType.INVALID
             val descriptor: ClassDescriptor? =
@@ -71,8 +75,6 @@ class InjectableCodeGenerator : CodeGenerator {
                 }
             }
 
-            val authAwarenessScope: KClass<*>? = getAuthAwarenessScope(descriptor)
-
             check(classType != ClassType.INVALID) {
                 "Only Android Activities or Fragments can be annotated with" +
                     " ${Injectable::class.java.simpleName}"
@@ -86,27 +88,48 @@ class InjectableCodeGenerator : CodeGenerator {
                     packageName,
                     "${className.simpleName}Injector",
                     className,
-                    authAwarenessScope
                 ) else
                 generateFragmentFileSpec(
                     packageName,
                     "${className.simpleName}Injector",
                     className,
-                    authAwarenessScope,
                     true
                 )
-            createGeneratedFile(
+            val injectorClasses = createGeneratedFile(
                 codeGenDir = codeGenDir,
                 packageName = packageName,
                 fileName = "${className.simpleName}Injector",
                 content = fileSpec.toString()
             )
+
+            val authAwarenessScope: List<KClass<*>>? = getAuthAwarenessScope(descriptor)
+
+            val scopeClasses = authAwarenessScope?.mapNotNull { scope ->
+                val contributor = generateContributesInjector(packageName, "${className.simpleName}Injector", scope) ?: return@mapNotNull null
+                val fileBuilder = FileSpec.builder(packageName, "${className.simpleName}${scope.simpleName}Contributor")
+                val contributorFileSpec = fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
+                    .addType(contributor)
+                    .build()
+                createGeneratedFile(
+                    codeGenDir = codeGenDir,
+                    packageName = packageName,
+                    fileName = "${className.simpleName}${scope.simpleName}Contributor",
+                    content = contributorFileSpec.toString()
+                )
+            }
+
+            val result = mutableListOf<GeneratedFile>()
+            result.add(injectorClasses)
+            if (scopeClasses != null) {
+                result.addAll(scopeClasses)
+            }
+            result
         }
 
     override fun isApplicable(context: AnvilContext): Boolean = !context.disableComponentMerging
 
     @Suppress("UNCHECKED_CAST")
-    private fun getAuthAwarenessScope(descriptor: ClassDescriptor): KClass<*>? {
+    private fun getAuthAwarenessScope(descriptor: ClassDescriptor): List<KClass<*>>? {
         val customScope = descriptor.annotations.findAnnotation(FqName(INJECTABLE_FULLY_QUALIFIED_PATH))
             ?.allValueArguments
             ?.get(Name.identifier("scope"))
@@ -118,9 +141,10 @@ class InjectableCodeGenerator : CodeGenerator {
 
         val interfaces = descriptor.getSuperInterfaces().joinToString(",")
         return when {
-            customScope != null -> customScope
-            interfaces.contains("AuthOptional") -> AuthOptionalScope::class
-            interfaces.contains("AuthRequired") -> AuthRequiredScope::class
+            customScope != null -> listOf(customScope)
+            interfaces.contains("AuthAware") -> listOf(AuthOptionalScope::class, AuthRequiredScope::class)
+            interfaces.contains("AuthOptional") -> listOf(AuthOptionalScope::class, AuthRequiredScope::class)
+            interfaces.contains("AuthRequired") -> listOf(AuthRequiredScope::class)
             else -> null
         }
     }

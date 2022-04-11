@@ -81,14 +81,10 @@ internal fun generateFragmentFileSpec(
     pack: String,
     interfaceName: String,
     fragmentType: TypeName,
-    authAwarenessScope: KClass<*>?,
     shouldGenerateAuthAww: Boolean,
 ): FileSpec {
     val extensionFunctionSpec = generateInjectExtensionFunction(interfaceName, fragmentType)
     val interfaceSpec = generateInjectInterfaceSpec(interfaceName, fragmentType)
-    val contributesInjectorTypeSpec = generateContributesInjector(
-        pack, interfaceName, authAwarenessScope
-    )
 
     val fileBuilder = FileSpec.builder(pack, interfaceName)
 
@@ -96,10 +92,5 @@ internal fun generateFragmentFileSpec(
         .addImport("com.dropbox.kaiken.runtime", "findInjector")
         .addFunction(extensionFunctionSpec)
         .addType(interfaceSpec)
-        .apply {
-            if (contributesInjectorTypeSpec != null) {
-                addType(contributesInjectorTypeSpec)
-            }
-        }
         .build()
 }

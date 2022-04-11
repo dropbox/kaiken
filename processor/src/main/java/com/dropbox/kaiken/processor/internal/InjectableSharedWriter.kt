@@ -16,7 +16,7 @@ internal fun generateContributesInjector(
     if (authAwarenessScope == null) {
         return null
     }
-    val interfaceBuilder = TypeSpec.interfaceBuilder("${interfaceName}ScopeContributor")
+    val interfaceBuilder = TypeSpec.interfaceBuilder("${interfaceName}${authAwarenessScope.simpleName}Contributor")
     val contributionAnnotationScope = MemberName("com.dropbox.common.inject", "${authAwarenessScope.simpleName}")
     return interfaceBuilder
         .addAnnotation(

@@ -12,6 +12,7 @@ dependencies {
     implementation deps.dagger2
 
     api project(":annotations")
+    implementation project(path: ':runtime')
 
     debugImplementation deps.appcompat
 
