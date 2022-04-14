@@ -2,7 +2,6 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.common.inject.AuthOptionalScope
 import com.dropbox.common.inject.AuthRequiredScope
-import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.annotation.Injectable
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
 import com.dropbox.kaiken.processor.internal.generateContributesInjector

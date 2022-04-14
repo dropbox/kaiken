@@ -2,18 +2,12 @@ package com.dropbox.kaiken.processor
 
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.processor.internal.GENERATED_BY_TOP_COMMENT
-import com.dropbox.kaiken.processor.internal.generateContributesInjector
-import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.kotlinpoet.AnnotationSpec
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.typeNameOf
-import kotlin.reflect.KClass
 
 /**
  * Generates a `Injector` interface definition and an `inject` function for the given annotated
