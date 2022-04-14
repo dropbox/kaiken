@@ -14,6 +14,7 @@ import com.squareup.anvil.compiler.api.GeneratedFile
 import com.squareup.anvil.compiler.api.createGeneratedFile
 import com.squareup.anvil.compiler.internal.asClassName
 import com.squareup.anvil.compiler.internal.classesAndInnerClass
+import com.squareup.anvil.compiler.internal.fqName
 import com.squareup.anvil.compiler.internal.hasAnnotation
 import com.squareup.anvil.compiler.internal.safePackageString
 import com.squareup.kotlinpoet.FileSpec
@@ -31,7 +32,6 @@ import org.jetbrains.kotlin.resolve.constants.KClassValue
 import org.jetbrains.kotlin.resolve.descriptorUtil.getAllSuperClassifiers
 import org.jetbrains.kotlin.resolve.descriptorUtil.getSuperInterfaces
 import java.io.File
-import kotlin.reflect.KClass
 
 @ExperimentalStdlibApi
 @ExperimentalAnvilApi
@@ -102,18 +102,18 @@ class InjectableCodeGenerator : CodeGenerator {
                 content = fileSpec.toString()
             )
 
-            val authAwarenessScope: List<KClass<*>>? = getAuthAwarenessScope(descriptor)
+            val authAwarenessScope: List<FqName>? = getAuthAwarenessScope(descriptor)
 
-            val scopeClasses = authAwarenessScope?.mapNotNull { scope ->
-                val contributor = generateContributesInjector(packageName, "${className.simpleName}Injector", scope) ?: return@mapNotNull null
-                val fileBuilder = FileSpec.builder(packageName, "${className.simpleName}${scope.simpleName}Contributor")
+            val scopeClasses = authAwarenessScope?.mapNotNull { scopeFqName ->
+                val contributor = generateContributesInjector(packageName, "${className.simpleName}Injector", scopeFqName) ?: return@mapNotNull null
+                val fileBuilder = FileSpec.builder(packageName, "${className.simpleName}${scopeFqName.shortName().asString()}Contributor")
                 val contributorFileSpec = fileBuilder.addComment(GENERATED_BY_TOP_COMMENT)
                     .addType(contributor)
                     .build()
                 createGeneratedFile(
                     codeGenDir = codeGenDir,
                     packageName = packageName,
-                    fileName = "${className.simpleName}${scope.simpleName}Contributor",
+                    fileName = "${className.simpleName}${scopeFqName.shortName().asString()}Contributor",
                     content = contributorFileSpec.toString()
                 )
             }
@@ -129,22 +129,22 @@ class InjectableCodeGenerator : CodeGenerator {
     override fun isApplicable(context: AnvilContext): Boolean = !context.disableComponentMerging
 
     @Suppress("UNCHECKED_CAST")
-    private fun getAuthAwarenessScope(descriptor: ClassDescriptor): List<KClass<*>>? {
+    private fun getAuthAwarenessScope(descriptor: ClassDescriptor): List<FqName>? {
         val customScope = descriptor.annotations.findAnnotation(FqName(INJECTABLE_FULLY_QUALIFIED_PATH))
             ?.allValueArguments
             ?.get(Name.identifier("scope"))
             ?.let {
-                val kClassValue = (it.value as ArrayList<KClassValue>).firstOrNull()?.value as? KClassValue.Value.NormalClass
-                    ?: return null
-                Class.forName(kClassValue.classId.asSingleFqName().asString()).kotlin
+                (it.value as ArrayList<KClassValue>)
+                    .mapNotNull { scopeArrayValue -> scopeArrayValue.value as? KClassValue.Value.NormalClass }
+                    .map { kClassValue -> kClassValue.classId.asSingleFqName() }
             }
 
         val interfaces = descriptor.getSuperInterfaces().joinToString(",")
         return when {
-            customScope != null -> listOf(customScope)
-            interfaces.contains("AuthAware") -> listOf(AuthOptionalScope::class, AuthRequiredScope::class)
-            interfaces.contains("AuthOptional") -> listOf(AuthOptionalScope::class, AuthRequiredScope::class)
-            interfaces.contains("AuthRequired") -> listOf(AuthRequiredScope::class)
+            customScope != null -> customScope
+            interfaces.contains("AuthAware") -> listOf(AuthOptionalScope::class.fqName, AuthRequiredScope::class.fqName)
+            interfaces.contains("AuthOptional") -> listOf(AuthOptionalScope::class.fqName, AuthRequiredScope::class.fqName)
+            interfaces.contains("AuthRequired") -> listOf(AuthRequiredScope::class.fqName)
             else -> null
         }
     }
