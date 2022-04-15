@@ -6,18 +6,15 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeSpec
-import kotlin.reflect.KClass
+import org.jetbrains.kotlin.name.FqName
 
 internal fun generateContributesInjector(
     pack: String,
     interfaceName: String,
-    authAwarenessScope: KClass<out Any>?
-): TypeSpec? {
-    if (authAwarenessScope == null) {
-        return null
-    }
-    val interfaceBuilder = TypeSpec.interfaceBuilder("${interfaceName}ScopeContributor")
-    val contributionAnnotationScope = MemberName("com.dropbox.common.inject", "${authAwarenessScope.simpleName}")
+    authAwarenessScope: FqName
+): TypeSpec {
+    val interfaceBuilder = TypeSpec.interfaceBuilder("${interfaceName}${authAwarenessScope.shortName().asString()}Contributor")
+    val contributionAnnotationScope = MemberName(authAwarenessScope.parent().asString(), authAwarenessScope.shortName().asString())
     return interfaceBuilder
         .addAnnotation(
             AnnotationSpec.builder(ContributesTo::class)
