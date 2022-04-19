@@ -6,7 +6,7 @@ package com.dropbox.kaiken.scoping
  * Avoid using this class. This should only be used when it's not possible for the parent activity
  * to be an [AuthAwareScopeOwnerActivity].
  */
-interface AuthOptionalFragment : AuthAwareScopeOwnerFragment {
+interface AuthOptionalFragment : AuthAwareScopeOwnerFragment, UserProvider {
     @JvmDefault
     override val authRequired: Boolean
         get() = false
