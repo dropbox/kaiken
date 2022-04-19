@@ -19,6 +19,7 @@ import com.dropbox.kaiken.scoping.AuthAwareFragment
 import com.dropbox.kaiken.scoping.AuthOptionalFragment
 import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
+import com.dropbox.kaiken.scoping.UserProvider
 import com.dropbox.kaiken.scoping.UserServices
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
@@ -118,26 +119,17 @@ interface AuthRequiredScreenComponent : Injector {
     }
 }
 
-inline fun <reified T : Injector> DependencyProviderResolver.authOptionalInjectorFactory() =
-    InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
+inline fun <reified T : Injector, UserAndDependencyProvider> UserAndDependencyProvider.authOptionalInjectorFactory()
+        where UserAndDependencyProvider : UserProvider,
+              UserAndDependencyProvider : DependencyProviderResolver = if (user != null) {
+        authInjector()
+    } else {
+        InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
+    }
 
 inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
     InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
 
-abstract class AuthAwareInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthAwareFragment,
-    InjectorHolder<T>
-
-abstract class AuthOptionalInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthOptionalFragment,
-    InjectorHolder<T>
-
-abstract class AuthRequiredInjectorHolder<T : Injector> :
-    Fragment(),
-    AuthRequiredFragment,
-    InjectorHolder<T>
 
 class InjectorViewModelFactory<InjectorType : Injector>(
     private val injectorFactory: InjectorFactory<InjectorType>
