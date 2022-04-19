@@ -1,6 +1,5 @@
 package com.dropbox.kaiken.skeleton.components.scoping
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dropbox.common.inject.AppScope
@@ -12,12 +11,8 @@ import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.common.inject.UserScope
 import com.dropbox.kaiken.Injector
 import com.dropbox.kaiken.runtime.InjectorFactory
-import com.dropbox.kaiken.runtime.InjectorHolder
 import com.dropbox.kaiken.runtime.InjectorViewModel
 import com.dropbox.kaiken.scoping.AppServices
-import com.dropbox.kaiken.scoping.AuthAwareFragment
-import com.dropbox.kaiken.scoping.AuthOptionalFragment
-import com.dropbox.kaiken.scoping.AuthRequiredFragment
 import com.dropbox.kaiken.scoping.DependencyProviderResolver
 import com.dropbox.kaiken.scoping.UserProvider
 import com.dropbox.kaiken.scoping.UserServices
@@ -122,14 +117,13 @@ interface AuthRequiredScreenComponent : Injector {
 inline fun <reified T : Injector, UserAndDependencyProvider> UserAndDependencyProvider.authOptionalInjectorFactory()
         where UserAndDependencyProvider : UserProvider,
               UserAndDependencyProvider : DependencyProviderResolver = if (user != null) {
-        authInjector()
-    } else {
-        InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
-    }
+    authInjector()
+} else {
+    InjectorFactory { (resolveDependencyProvider() as AuthOptionalComponent.ParentComponent).createAuthOptionalComponent() as T }
+}
 
 inline fun <reified T : Injector> DependencyProviderResolver.authInjector() =
     InjectorFactory { (resolveDependencyProvider() as AuthRequiredComponent.ParentComponent).createAuthRequiredComponent() as T }
-
 
 class InjectorViewModelFactory<InjectorType : Injector>(
     private val injectorFactory: InjectorFactory<InjectorType>
