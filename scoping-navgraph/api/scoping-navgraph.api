@@ -4,10 +4,12 @@ public final class com/dropbox/kaiken/scoping_navgraph/AuthAwareNavHostFragment 
 
 public final class com/dropbox/kaiken/scoping_navgraph/AuthOptionalNavHostFragment : androidx/navigation/fragment/NavHostFragment, com/dropbox/kaiken/scoping/AuthOptionalFragment {
 	public fun <init> ()V
+	public fun getUser ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 }
 
 public final class com/dropbox/kaiken/scoping_navgraph/AuthRequiredNavHostFragment : androidx/navigation/fragment/NavHostFragment, com/dropbox/kaiken/scoping/AuthRequiredFragment {
 	public fun <init> ()V
+	public fun getUser ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 }
 
 public final class com/dropbox/kaiken/scoping_navgraph/BuildConfig {

@@ -77,21 +77,11 @@ public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/A
 	public abstract fun appComponent ()Lcom/dropbox/kaiken/skeleton/components/scoping/AppComponent;
 }
 
-public abstract class com/dropbox/kaiken/skeleton/components/scoping/AuthAwareInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthAwareFragment {
-	public fun <init> ()V
-	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
-}
-
 public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalComponent : com/dropbox/kaiken/Injector {
 }
 
 public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalComponent$ParentComponent {
 	public abstract fun createAuthOptionalComponent ()Lcom/dropbox/kaiken/skeleton/components/scoping/AuthOptionalComponent;
-}
-
-public abstract class com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthOptionalFragment {
-	public fun <init> ()V
-	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
 }
 
 public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/AuthOptionalScreenComponent : com/dropbox/kaiken/Injector {
@@ -108,11 +98,6 @@ public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/A
 	public abstract fun createAuthRequiredComponent ()Lcom/dropbox/kaiken/skeleton/components/scoping/AuthRequiredComponent;
 }
 
-public abstract class com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredInjectorHolder : androidx/fragment/app/Fragment, com/dropbox/kaiken/runtime/InjectorHolder, com/dropbox/kaiken/scoping/AuthRequiredFragment {
-	public fun <init> ()V
-	public fun locateInjector ()Lcom/dropbox/kaiken/Injector;
-}
-
 public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/AuthRequiredScreenComponent : com/dropbox/kaiken/Injector {
 }
 
@@ -122,7 +107,7 @@ public abstract interface class com/dropbox/kaiken/skeleton/components/scoping/A
 
 public final class com/dropbox/kaiken/skeleton/components/scoping/ComponentsKt {
 	public static final synthetic fun authInjector (Lcom/dropbox/kaiken/scoping/DependencyProviderResolver;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
-	public static final synthetic fun authOptionalInjectorFactory (Lcom/dropbox/kaiken/scoping/DependencyProviderResolver;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
+	public static final synthetic fun authOptionalInjectorFactory (Lcom/dropbox/kaiken/scoping/UserProvider;)Lcom/dropbox/kaiken/runtime/InjectorFactory;
 }
 
 public final class com/dropbox/kaiken/skeleton/components/scoping/InjectorViewModelFactory : androidx/lifecycle/ViewModelProvider$Factory {

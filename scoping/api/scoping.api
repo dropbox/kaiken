@@ -53,13 +53,15 @@ public final class com/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment$Defaul
 	public static fun resolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment;)Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalActivity : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerActivity, com/dropbox/kaiken/scoping/DependencyProviderResolver {
+public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalActivity : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerActivity, com/dropbox/kaiken/scoping/DependencyProviderResolver, com/dropbox/kaiken/scoping/UserProvider {
 	public fun getAuthRequired ()Z
+	public fun getUser ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 }
 
 public final class com/dropbox/kaiken/scoping/AuthOptionalActivity$DefaultImpls {
 	public static fun finishIfInvalidAuth (Lcom/dropbox/kaiken/scoping/AuthOptionalActivity;)Z
 	public static fun getAuthRequired (Lcom/dropbox/kaiken/scoping/AuthOptionalActivity;)Z
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/AuthOptionalActivity;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun getViewingUserSelector (Lcom/dropbox/kaiken/scoping/AuthOptionalActivity;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun resolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthOptionalActivity;)Ljava/lang/Object;
 }
@@ -73,17 +75,18 @@ public final class com/dropbox/kaiken/scoping/AuthOptionalBroadcastReceiver$Defa
 	public static fun onReceiveResolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthOptionalBroadcastReceiver;Landroid/content/Context;Landroid/content/Intent;)Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalFragment : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment {
+public abstract interface class com/dropbox/kaiken/scoping/AuthOptionalFragment : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment, com/dropbox/kaiken/scoping/UserProvider {
 	public fun getAuthRequired ()Z
 }
 
 public final class com/dropbox/kaiken/scoping/AuthOptionalFragment$DefaultImpls {
 	public static fun finishIfInvalidAuth (Lcom/dropbox/kaiken/scoping/AuthOptionalFragment;)Z
 	public static fun getAuthRequired (Lcom/dropbox/kaiken/scoping/AuthOptionalFragment;)Z
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/AuthOptionalFragment;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun resolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthOptionalFragment;)Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredActivity : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerActivity, com/dropbox/kaiken/scoping/DependencyProviderResolver {
+public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredActivity : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerActivity, com/dropbox/kaiken/scoping/DependencyProviderResolver, com/dropbox/kaiken/scoping/RequiredUserProvider {
 	public fun getAuthRequired ()Z
 	public fun requireViewingUserSelector ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 }
@@ -91,6 +94,7 @@ public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredActivity 
 public final class com/dropbox/kaiken/scoping/AuthRequiredActivity$DefaultImpls {
 	public static fun finishIfInvalidAuth (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Z
 	public static fun getAuthRequired (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Z
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun getViewingUserSelector (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun requireViewingUserSelector (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun resolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthRequiredActivity;)Ljava/lang/Object;
@@ -105,13 +109,14 @@ public final class com/dropbox/kaiken/scoping/AuthRequiredBroadcastReceiver$Defa
 	public static fun onReceiveResolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthRequiredBroadcastReceiver;Landroid/content/Context;Landroid/content/Intent;)Ljava/lang/Object;
 }
 
-public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredFragment : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment {
+public abstract interface class com/dropbox/kaiken/scoping/AuthRequiredFragment : com/dropbox/kaiken/scoping/AuthAwareScopeOwnerFragment, com/dropbox/kaiken/scoping/RequiredUserProvider {
 	public fun getAuthRequired ()Z
 }
 
 public final class com/dropbox/kaiken/scoping/AuthRequiredFragment$DefaultImpls {
 	public static fun finishIfInvalidAuth (Lcom/dropbox/kaiken/scoping/AuthRequiredFragment;)Z
 	public static fun getAuthRequired (Lcom/dropbox/kaiken/scoping/AuthRequiredFragment;)Z
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/AuthRequiredFragment;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 	public static fun resolveDependencyProvider (Lcom/dropbox/kaiken/scoping/AuthRequiredFragment;)Ljava/lang/Object;
 }
 
@@ -120,11 +125,27 @@ public abstract interface class com/dropbox/kaiken/scoping/DependencyProviderRes
 	public abstract fun resolveDependencyProvider ()Ljava/lang/Object;
 }
 
+public abstract interface class com/dropbox/kaiken/scoping/RequiredUserProvider : com/dropbox/kaiken/scoping/UserProvider {
+	public abstract fun getUser ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
+}
+
+public final class com/dropbox/kaiken/scoping/RequiredUserProvider$DefaultImpls {
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/RequiredUserProvider;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
+}
+
 public abstract interface class com/dropbox/kaiken/scoping/ScopedServicesProvider : com/dropbox/kaiken/scoping/AppServicesProvider, com/dropbox/kaiken/scoping/UserServicesProvider {
 }
 
 public final class com/dropbox/kaiken/scoping/ScopedServicesProvider$DefaultImpls {
 	public static fun provideUserServicesOf (Lcom/dropbox/kaiken/scoping/ScopedServicesProvider;Lcom/dropbox/kaiken/scoping/ViewingUserSelector;)Lcom/dropbox/kaiken/scoping/UserServices;
+}
+
+public abstract interface class com/dropbox/kaiken/scoping/UserProvider {
+	public abstract fun getUser ()Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
+}
+
+public final class com/dropbox/kaiken/scoping/UserProvider$DefaultImpls {
+	public static fun getUser (Lcom/dropbox/kaiken/scoping/UserProvider;)Lcom/dropbox/kaiken/scoping/ViewingUserSelector;
 }
 
 public abstract interface class com/dropbox/kaiken/scoping/UserServices {
