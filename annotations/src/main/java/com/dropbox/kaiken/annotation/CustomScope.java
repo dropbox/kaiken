@@ -21,14 +21,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import kotlin.Unit;
-import kotlin.reflect.KClass;
-
 /**
- * Marks an Android UI object (i.e. activities and fragments) as being injectable.
+ * Marks a class as a marker for a custom scope. Class should be abstract and have a private constructor
+ * See [CustomScopeGenerator]
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
-public @interface Injectable {
-    Class<?>[] scope() default {};
+public @interface CustomScope {
+    Class<?> parentScope();
 }
