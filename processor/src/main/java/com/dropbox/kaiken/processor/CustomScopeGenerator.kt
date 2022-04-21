@@ -37,6 +37,37 @@ import org.jetbrains.kotlin.resolve.calls.callUtil.createLookupLocation
 import org.jetbrains.kotlin.resolve.constants.KClassValue
 import java.io.File
 
+/**
+ * Adds a generator to help defining custom scopes to use in kaiken. It is used when a class is
+ * annotated with [CustomScope]. This helps simplify creating new scopes by generating most
+ * boilerplate required for their usage
+ *
+ * <pre>
+ *     @CustomScope(parentScope = UserScope::class)
+ *     abstract class MyCustomScope private constructor()
+ * </pre>
+ *
+ * It generates two items
+ * 1. A subcomponent
+ * 2. An InjectorFactory
+ *
+ * <pre>
+ *    @ContributesSubcomponent(
+ *      scope=MyCustomScope::class,
+ *      parentScope=UserScope::class
+ *    )
+ *    @SingleIn(MyCustomScope::class)
+ *    public interface MyCustomScopeComponent : Injector {
+ *      @ContributesTo(UserScope::class)
+ *      public interface ParentComponent : Injector {
+ *          public fun createMyCustomScopeComponent(): MyCustomScopeComponent
+ *      }
+ *    }
+ *    public inline fun <reified T : Injector> DependencyProviderResolver.myCustomScopeInjectorFactory() =
+ *      InjectorFactory { (resolveDependencyProvider() as
+ *      MyCustomScopeComponent.ParentComponent).createMyCustomScopeComponent() as T }
+ * </pre>
+ */
 @ExperimentalStdlibApi
 @ExperimentalAnvilApi
 @AutoService(CodeGenerator::class)
