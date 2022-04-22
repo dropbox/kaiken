@@ -22,6 +22,10 @@ public abstract class com/dropbox/common/inject/UserScope {
 public abstract interface class com/dropbox/kaiken/Injector {
 }
 
+public abstract interface annotation class com/dropbox/kaiken/annotation/CustomScope : java/lang/annotation/Annotation {
+	public abstract fun parentScope ()Ljava/lang/Class;
+}
+
 public abstract interface annotation class com/dropbox/kaiken/annotation/Injectable : java/lang/annotation/Annotation {
 	public abstract fun scope ()[Ljava/lang/Class;
 }
