@@ -1,3 +1,7 @@
+# Archived
+
+We have made the decision to archive this project.  We appreciate all the input and support of this project over the years.   If you need to make changes, please consider forking the repository.  Thank you. 
+
 # Kaiken
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/kaiken-scoping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.dropbox.kaiken/kaiken-scoping/)
