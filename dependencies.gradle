@@ -22,6 +22,8 @@ ext.versions = [
         androidxAppCompat           : '1.3.0',
         navGraph                    : '2.3.2',
         androidLifecycle            : '2.2.0',
+        composeBackstack           : '0.9.0+1.0.0-beta07',
+        navigationCompose           : '2.4.0-beta02',
 
         // Annotation Processing
         autoservice                 : '1.0.1',
@@ -61,6 +63,8 @@ ext.deps = [
         nav_ui                      : "androidx.navigation:navigation-ui-ktx:$versions.navGraph",
         lifecycle_viewmodel         : "androidx.lifecycle:lifecycle-viewmodel:$versions.androidLifecycle",
         material                    : "com.google.android.material:material:1.2.1",
+        composeBackstack            : "com.zachklipp:compose-backstack:$versions.composeBackstack",
+        navigationCompose           : "androidx.navigation:navigation-compose:$versions.navigationCompose",
 
         // Annotation Processing
         autoservice_annotations     : "com.google.auto.service:auto-service-annotations:$versions.autoservice",

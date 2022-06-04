@@ -1,6 +1,7 @@
-package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
 
 import com.dropbox.common.inject.UserScope
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.delay

@@ -23,7 +23,7 @@ interface LoginScreenComponent : Injector {
 fun LoginRouter() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "login") {
-        authAwareComposable("login") { entry: NavBackStackEntry, presenter: LoginPresenter ->
+        authAwareComposable("login") { _: NavBackStackEntry, presenter: LoginPresenter ->
             LaunchedEffect(presenter.effects) {
                 presenter.effects.collect {
                     when (it) {

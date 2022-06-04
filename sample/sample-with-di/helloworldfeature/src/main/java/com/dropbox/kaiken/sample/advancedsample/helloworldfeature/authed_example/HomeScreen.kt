@@ -1,4 +1,4 @@
-package com.dropbox.kaiken.sample.advancedsample.helloworldfeature
+package com.dropbox.kaiken.sample.advancedsample.helloworldfeature.authed_example
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
@@ -7,10 +7,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.dropbox.common.inject.AuthRequiredScreenScope
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.BasePresenter
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.Presenter
+import com.dropbox.kaiken.sample.advancedsample.helloworldfeature.UserProfile
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.squareup.anvil.annotations.ContributesMultibinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,6 +29,7 @@ abstract class HomePresenter : Presenter<HomePresenter.HomeEvent, HomePresenter.
     )
 
     sealed interface HomeEffect
+    object ListSuccessfulSnackbar : HomeEffect
 }
 
 @SingleIn(AuthRequiredScreenScope::class)
@@ -54,6 +59,16 @@ class RealHomePresenter @Inject constructor(val userApi: UserApi, profile: UserP
 fun HomeScreen(
     model: HomePresenter.HomeModel,
     handleLoadSomething: () -> Boolean,
+    handleSnackbarButtonClicked: (String, String) -> Job
+) {
+    HomeScreenInner(model, handleLoadSomething, handleSnackbarButtonClicked)
+}
+
+@Composable
+fun HomeScreenInner(
+    model: HomePresenter.HomeModel,
+    handleLoadSomething: () -> Boolean,
+    handleSnackbarButtonClicked: (String, String) -> Job
 ) {
     MaterialTheme {
         if (!model.loading) {
@@ -61,6 +76,12 @@ fun HomeScreen(
                 Text("Welcome ${model.userId}")
                 if (model.userList.isNotEmpty()) {
                     Text("List is here now.")
+                }
+
+                Button(
+                    onClick = { handleSnackbarButtonClicked("Snackbar clicked", "OK") }
+                ) {
+                    Text("Show Snackbar")
                 }
 
                 Button(
