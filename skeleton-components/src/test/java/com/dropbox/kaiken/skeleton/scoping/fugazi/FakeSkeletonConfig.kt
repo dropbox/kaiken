@@ -9,7 +9,7 @@ import com.dropbox.kaiken.skeleton.core.AppSpecificScopedServicesFactory
 import com.dropbox.kaiken.skeleton.core.KaikenConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonConfig
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.scoping.SingleIn
 import com.dropbox.kaiken.skeleton.scoping.cast
 import com.squareup.anvil.annotations.ContributesBinding
@@ -20,8 +20,8 @@ import javax.inject.Inject
 class FakeSkeletonConfig @Inject constructor() : SkeletonConfig {
     override val scopedServicesFactory: AppSpecificScopedServicesFactory
         get() = object : AppSpecificScopedServicesFactory {
-            override fun createAppServices(sdkSpec: SdkSpec): AppServices =
-                sdkSpec
+            override fun createAppServices(skeletonComponent: SkeletonComponent): AppServices =
+                skeletonComponent
                     .cast<AppComponent.AppParentComponent>()
                     .appComponent()
 

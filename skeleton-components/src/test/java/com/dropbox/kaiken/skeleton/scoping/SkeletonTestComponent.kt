@@ -3,7 +3,7 @@ package com.dropbox.kaiken.skeleton.scoping
 import com.dropbox.common.inject.AppScope
 import com.dropbox.common.inject.SkeletonScope
 import com.dropbox.kaiken.skeleton.core.SkeletonUser
-import com.dropbox.kaiken.skeleton.dagger.SdkSpec
+import com.dropbox.kaiken.skeleton.dagger.SkeletonComponent
 import com.dropbox.kaiken.skeleton.usermanagement.UserSupplier
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flow
 
 @MergeComponent(SkeletonScope::class)
 @SingleIn(SkeletonScope::class)
-interface SkeletonTestComponent : SdkSpec {
+interface SkeletonTestComponent : SkeletonComponent {
     @Component.Factory
     interface Factory {
         fun create(): SkeletonTestComponent

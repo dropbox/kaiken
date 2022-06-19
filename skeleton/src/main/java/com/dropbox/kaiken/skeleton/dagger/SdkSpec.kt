@@ -13,3 +13,5 @@ import com.squareup.anvil.annotations.ContributesTo
 interface SdkSpec {
     fun getSkeletonConfig(): SkeletonConfig
 }
+
+interface SkeletonComponent : SdkSpec
